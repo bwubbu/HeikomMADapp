@@ -1,0 +1,186 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.HeikomMAD.CreatePetition">
+
+    <include layout="@layout/header" />
+
+
+    <View
+        android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/roundedpage"
+        android:translationY="145dp">
+    </View>
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:src="@drawable/back_button"
+        android:fontFamily="@font/rubik_bold"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#4C9A2A"
+        android:translationX="15dp"
+        android:translationY="20dp"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_margin="4dp"
+        android:translationY="150dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STEP 1: TITLE"
+                    android:fontFamily="@font/rubik_bold"
+                    android:textStyle="bold"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/titleBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Start with an action verb...."
+                    android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STEP 2: DESCRIPTION"
+                    android:fontFamily="@font/rubik_bold"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginTop="16dp"/>
+
+                <EditText
+                    android:id="@+id/descriptionBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Who is affected?\nWhat is at stake?\nWhy is now the time to act?"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STEP 3: TARGET"
+                    android:fontFamily="@font/rubik_bold"
+                    android:textStyle="bold"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/targetBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="How many target to reach?"
+                    android:inputType="number"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STEP 4: IMAGE"
+                    android:fontFamily="@font/rubik_bold"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:id="@+id/imagePlaceholder"
+                    android:layout_width="113dp"
+                    android:layout_height="109dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    android:tag="@drawable/imageplaceholder"
+                    android:src="@drawable/imageplaceholder" />
+
+                <Button
+                    android:id="@+id/attachImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attach Image"
+                    android:backgroundTint="@color/light_green" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STEP 5: COUNCIL"
+                    android:fontFamily="@font/rubik_bold"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginTop="16dp"/>
+
+                <EditText
+                    android:id="@+id/councilBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Who are taking the responsibilities?"
+                    android:inputType="text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/postButton"
+                    android:text="Post"
+                    android:fontFamily="@font/rubik_bold"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_green"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

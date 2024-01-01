@@ -1,0 +1,135 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.HeikomMAD.PetitionDetail">
+
+    <include layout="@layout/header" />
+
+    <View
+        android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/roundedpage"
+        android:translationY="145dp">
+    </View>
+
+    <TextView
+        android:id="@+id/whyMatters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Why this petition matters"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="27dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:translationY="180dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#4C9A2A"
+        app:cardCornerRadius="250dp"
+        android:translationX="55dp"
+        android:translationY="225dp">
+
+        <ImageView
+            android:id="@+id/authorProfile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/petitionDetailHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By\nAim\nTo"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="140dp"
+        android:translationY="220dp"/>
+
+    <TextView
+        android:id="@+id/petitionBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shawn"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="200dp"
+        android:translationY="220dp"/>
+
+    <TextView
+        android:id="@+id/petitionAim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_medium"
+        android:text="2000"
+        android:textSize="18dp"
+        android:translationX="200dp"
+        android:translationY="241dp" />
+
+    <TextView
+        android:id="@+id/petitionTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menteri Besar Kedah"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="200dp"
+        android:translationY="261dp"/>
+
+
+    <ScrollView
+        android:id="@+id/article"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center_horizontal"
+        android:translationY="310dp">
+
+        <TextView
+            android:id="@+id/articleText"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="Killer Seaweed is a type of seaweed that will kill any people despite the differences in race, religion, and nationality. Scientists believe that this kind of seaweed are coming from the Bikini Bottom which is the hometown of Spongebob Squarepant. Killer Seaweed is a type of seaweed that will kill any people despite the differences in race, religion, and nationality. Scientists believe that this kind of seaweed are coming from the Bikini Bottom which is the hometown of Spongebob Squarepant. Killer Seaweed is a type of seaweed that will kill any people despite the differences in race, religion, and nationality. Scientists believe that this kind of seaweed are coming from the Bikini Bottom which is the hometown of Spongebob Squarepant."
+            android:fontFamily="@font/rubik_medium"
+            android:textSize="18dp"
+            android:padding="10dp"
+            android:background="@drawable/text_background"
+            android:layout_gravity="center_horizontal"/>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:translationY="730dp">
+
+        <Button
+            android:id="@+id/approveButton"
+            android:text="Sign this Petition"
+            android:fontFamily="@font/rubik_bold"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_green"
+            android:layout_marginEnd="8dp"
+            />
+
+        <Button
+            android:id="@+id/rejectButton"
+            android:text="Sign this Petition"
+            android:fontFamily="@font/rubik_bold"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/grey"
+            />
+    </LinearLayout>
+</FrameLayout>

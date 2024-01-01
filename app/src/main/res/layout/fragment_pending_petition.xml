@@ -1,0 +1,107 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.HeikomMAD.RecentPetition">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4C9A2A"
+        android:orientation="vertical">
+        <include layout="@layout/header" />
+
+        <LinearLayout
+            android:id="@+id/page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/roundedpage"
+            >
+            <TextView
+                android:id="@+id/Happening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What's happening in Heikom"
+                android:textColor="@color/light_green"
+                android:textSize="20dp"
+                android:fontFamily="@font/rubik_bold"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="5dp"
+                />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/SearchBar"
+                android:layout_width="320dp"
+                android:layout_height="30dp"
+                android:background="@drawable/boxshadow"
+                android:layout_gravity="center_horizontal"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search by Title"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="2dp">
+
+                <Button
+                    android:id="@+id/PendingButton"
+                    android:text="PENDING "
+                    android:textSize="12dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/main_green"/>
+
+                <Button
+                    android:id="@+id/ApprovedButton"
+                    android:text="APPROVED"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/grey"/>
+
+                <Button
+                    android:id="@+id/RejectedButton"
+                    android:text="REJECTED"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/grey"/>
+
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:fillViewport="true"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/petitionPList"
+                        android:layout_width="match_parent"
+                        android:paddingVertical="20dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

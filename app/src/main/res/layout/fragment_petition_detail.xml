@@ -1,0 +1,161 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.HeikomMAD.PetitionDetail">
+
+    <include layout="@layout/header" />
+
+    <View
+        android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/roundedpage"
+        android:translationY="145dp">
+    </View>
+
+    <TextView
+        android:id="@+id/whyMatters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Why this petition matters"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="27dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:translationY="150dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#4C9A2A"
+        app:cardCornerRadius="250dp"
+        android:translationX="55dp"
+        android:translationY="195dp">
+
+        <ImageView
+            android:id="@+id/authorProfile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/petitionDetailHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By\nOn\nTo"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="140dp"
+        android:translationY="190dp"/>
+
+    <TextView
+        android:id="@+id/Author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="180dp"
+        android:translationY="190dp"/>
+
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="180dp"
+        android:translationY="211dp"/>
+
+    <TextView
+        android:id="@+id/Council"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationX="180dp"
+        android:translationY="231dp"/>
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:translationY="300dp"
+        android:scaleY="2"
+        android:layout_gravity="center_horizontal"
+        android:progress="50"/>
+
+    <TextView
+        android:id="@+id/target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationY="280dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="% completed"
+        android:fontFamily="@font/rubik_medium"
+        android:textSize="18dp"
+        android:translationY="320dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <ScrollView
+        android:id="@+id/article"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center_horizontal"
+        android:translationY="350dp">
+
+        <TextView
+            android:id="@+id/Desc"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:fontFamily="@font/rubik_medium"
+            android:textSize="18dp"
+            android:padding="10dp"
+            android:background="@drawable/text_background"
+            android:layout_gravity="center_horizontal"/>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/signButton"
+        android:text="Sign this Petition"
+        android:fontFamily="@font/rubik_bold"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/light_green"
+        android:layout_gravity="center_horizontal"
+        android:translationY="760dp"
+        />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:src="@drawable/back_button"
+        android:fontFamily="@font/rubik_bold"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#4C9A2A"
+        android:translationX="15dp"
+        android:translationY="20dp"
+        />
+
+</FrameLayout>
