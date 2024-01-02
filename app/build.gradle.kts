@@ -53,4 +53,6 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.5.2")
     implementation("com.github.bumptech.glide:glide:4.11.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
 }

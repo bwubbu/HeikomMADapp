@@ -45,4 +45,27 @@
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="reward_button_description">Navigate to Reward Report</string>
+
+
+    <string-array name="couponImage">
+        <item>coupon1</item>
+        <item>coupon2</item>
+        <item>coupon3</item>
+    </string-array>
+
+
+    <string-array name="couponText">
+        <item>Blue Archive Coupon</item>
+        <item>Swimsuit Coupon</item>
+        <item>Cat Coupon</item>
+    </string-array>
+
+    <string-array name="couponDesc">
+        <item>Sensei can enjoy all the cunny girl in Kavitos</item>
+        <item>Swimsuit for love and live. Uwooo</item>
+        <item>Cat hissssssssssssssssss</item>
+    </string-array>
+
 </resources>
