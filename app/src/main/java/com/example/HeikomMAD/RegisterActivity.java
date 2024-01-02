@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -184,14 +185,14 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email",
                                         Toast.LENGTH_LONG).show();
 
-                                /*
+
                                 //homepage after registration
                                 Intent intent = new Intent(RegisterActivity.this, HomePageActivity.class);
                                 //prevent user from going back to register activity if back button is pressed
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
                                                 | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-                                finish(); */
+                                finish();
                             } else {
                                 Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email",
                                         Toast.LENGTH_LONG).show();

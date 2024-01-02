@@ -64,7 +64,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
                 if (task.isSuccessful()) {
                     Toast.makeText(ForgotPasswordActivity.this, "Please check your inbox for password reset link", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent (ForgotPasswordActivity.this, MainActivity.class);
+                    Intent intent = new Intent (ForgotPasswordActivity.this, AuthActivity.class);
 
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

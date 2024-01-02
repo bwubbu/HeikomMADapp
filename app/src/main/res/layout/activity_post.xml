@@ -9,7 +9,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MostRecent">
 
-    <include layout="@layout/header"/>
+    <include layout="@layout/header_forum"/>
 
 
     <RelativeLayout

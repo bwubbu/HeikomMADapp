@@ -8,18 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class AuthActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_auth);
 
         Button buttonLogin = findViewById(R.id.logInButton);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                Intent intent = new Intent(AuthActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
         });
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         regText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(AuthActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

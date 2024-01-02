@@ -9,7 +9,7 @@
         android:id="@+id/rewardHome"
         android:name="com.example.HeikomMAD.RewardHome"
         android:label="RewardHome"
-        tools:layout="@layout/activity_main"/>
+        tools:layout="@layout/activity_auth"/>
     <fragment
         android:id="@+id/rewardPage"
         android:name="com.example.HeikomMAD.TaskPage"
