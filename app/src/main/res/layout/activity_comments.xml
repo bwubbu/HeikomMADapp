@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/menu_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommentsActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        app:navigationIcon="@drawable/chevron_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        app:titleTextColor="@color/light_green"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/bottom"/>
+
+    <RelativeLayout
+        android:backgroundTint="#ACDF87"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom"
+        android:background="#fff"
+        android:padding="6dp"
+        android:layout_alignParentBottom="true">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/image_card_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#4C9A2A"
+            app:cardCornerRadius="250dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:textSize="20dp"
+            android:fontFamily="@font/rubik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image_card_view"
+            android:hint="Add A Comment..."
+            android:id="@+id/add_commnent"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:layout_marginStart="15dp"
+            android:layout_toLeftOf="@+id/post"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/post"
+            android:text="POST"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:layout_centerVertical="true"
+            android:textColor="#fff"
+            android:fontFamily="@font/rubik"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

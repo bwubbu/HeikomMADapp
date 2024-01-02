@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MostRecent">
+
+    <include layout="@layout/header"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <include layout="@layout/navigateforum"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/header_title"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Recent Post"-->
+            <!--                android:textColor="#000000"-->
+            <!--                android:fontFamily="@font/rubik_bold"-->
+            <!--                android:textSize="26dp"-->
+            <!--                android:layout_marginTop="280dp"-->
+            <!--                />-->
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="290dp"
+                android:textSize="28dp"
+                android:fontFamily="@font/rubik_bold"
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/titleTextView"
+                android:layout_marginEnd="2dp"
+                />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>
