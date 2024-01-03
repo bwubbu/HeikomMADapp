@@ -65,9 +65,16 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".PostActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".CommentsActivity"
+            android:label="Comments Activity">
+        </activity>
+
         <activity
             android:name=".InformativeSection"
             android:exported="false" />

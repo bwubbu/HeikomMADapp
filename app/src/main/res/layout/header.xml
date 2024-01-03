@@ -24,21 +24,22 @@
         android:textColor="#ffffff"
         android:textSize="64px"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/headerDesc"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="113dp"
         android:fontFamily="@font/rubik_medium"
         android:text="The Community's Platform for change"
         android:textColor="#ffffff"
         android:textSize="40px"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.143"
+        app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

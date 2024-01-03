@@ -131,6 +131,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
 
+
         holder.isLikes(post.getKey(), holder.likes, post);
         holder.nrLikes(holder.likesCounter, post.getKey());
 
@@ -178,7 +179,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
 
+
         private TextView postTitle, postDescription, likesCounter, commentCounts;
+
         private ImageView likes, imageProfile, commentIcon, bookmark ;
 
         public PostViewHolder(@NonNull View itemView) {
@@ -263,6 +266,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 //
 //
 
+
+
 //
 //                    // Update the likes count in the database
 //                    likesCountRef.setValue(currentLikesCount);
@@ -280,8 +285,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
-
         private void isLikes(String postid, ImageView imageView, Post post) {
+
             if (postid != null) {
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -297,6 +302,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
                         if (firebaseUser != null && dataSnapshot.child(firebaseUser.getUid()).exists()) {
+
                             imageView.setImageResource(R.drawable.likedicon);
                             imageView.setTag("liked");
                         } else {
@@ -311,9 +317,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     }
                 });
             } else {
+
                 Log.e("FirebaseData", "postid is null in isLikes");
             }
         }
+
 
 
         private void updateLikesCount (String postKey, Post post){

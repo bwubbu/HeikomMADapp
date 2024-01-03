@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ public class PendingPetition extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_pending_petition, container, false);
-        TextView headerDesc = rootView.findViewById(R.id.headerDesc);
-        headerDesc.setText("The Society’s Platform for Change");
+//        TextView headerDesc = rootView.findViewById(R.id.headerDesc);
+//        headerDesc.setText("The Society’s Platform for Change");
 
 
         ListView petitionList = rootView.findViewById(R.id.petitionPList);
