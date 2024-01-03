@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/HeikomMAD"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HeikomMAD"
+        tools:targetApi="31">
+        <activity
+            android:name=".Post"
+            android:exported="false" />
+        <activity
+            android:name=".CreatePostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskCard"
+            android:exported="false" />
+        <activity
+            android:name=".RewardsMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PetitionPendingItem"
+            android:exported="false" />
+        <activity
+            android:name=".PetitionMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PetitionListItem"
+            android:exported="false" />
+        <activity
+            android:name=".PhoneCallPermission"
+            android:exported="false" />
+        <activity
+            android:name=".UploadProfilePictureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PopUpWindow"
+            android:exported="false" />
+        <activity
+            android:name=".FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomePageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home_page"
+            android:theme="@style/Theme.HeikomMAD" />
+        <activity
+            android:name=".LogInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InformativeSection"
+            android:exported="false" />
+        <activity
+            android:name=".AuthActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

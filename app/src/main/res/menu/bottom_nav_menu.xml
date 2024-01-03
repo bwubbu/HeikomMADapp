@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/bmHome"
+        android:title="Home"
+        android:icon="@drawable/ic_home" />
+
+    <item android:id="@+id/bmReward"
+        android:title="Reward"
+        android:icon="@drawable/ic_circle" />
+
+    <item android:id="@+id/bmChat"
+        android:title="Chat"
+        android:icon="@drawable/ic_chat" />
+
+    <item android:id="@+id/bmInfo"
+        android:title="Info"
+        android:icon="@drawable/ic_info" />
+
+</menu>

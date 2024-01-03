@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_background"
+    android:gravity="center">
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:background="@drawable/createposticon"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REPORT HERE!"
+            android:textAlignment="center"
+            android:textColor="#3E7E10"
+            android:fontFamily="@font/rubik_bold"
+            android:padding="10dp"
+            android:textSize="24dp">
+
+        </TextView>
+
+
+        <View
+            android:layout_marginTop="-5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1.7dp"
+            android:layout_marginBottom="10dp"
+            android:background="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:fontFamily="@font/rubik_bold"
+            android:paddingLeft="25dp"
+            android:paddingTop="5dp"
+            android:textSize="22dp">
+
+        </TextView>
+
+        <EditText
+            android:paddingStart="10dp"
+            android:id="@+id/titleinput"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:background="@drawable/inputfield"
+            android:layout_height="30dp">
+
+        </EditText>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:fontFamily="@font/rubik_bold"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:textSize="22dp">
+
+        </TextView>
+
+        <EditText
+            android:paddingStart="10dp"
+            android:gravity="start"
+            android:id="@+id/descriptioninput"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:background="@drawable/inputfield"
+            android:layout_height="150dp">
+
+        </EditText>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/submit_button"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="#4C9A2A"
+                android:shadowColor="#000000"
+                android:text="SUBMIT"
+                android:textSize="12dp"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="#e5e5e5"
+                android:shadowColor="#000000"
+                android:text="CANCEL"
+                android:textSize="12dp"
+                android:layout_marginLeft="3dp"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PopUpWindow"
+    android:background="#F5F5F5">
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/firefighter2"
+        android:rotationY="177"
+        android:id="@+id/firefighter_img"/>
+
+    <TextView
+        android:id="@+id/TV_thankyou"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firefighter_img"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Thank You!"
+        android:textAlignment="center"
+        android:textColor="#4C9A2A"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TV_thankyou"
+        android:fontFamily="@font/poppins_bold"
+        android:text="By making your voice heard,you help us improve HeiKom"
+        android:textAlignment="center"
+        android:textColor="#4C9A2A"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+
+
+</RelativeLayout>

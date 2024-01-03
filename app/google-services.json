@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "949794886764",
+    "firebase_url": "https://heikommadapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "heikommadapp",
+    "storage_bucket": "heikommadapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949794886764:android:71576bbbd682456c113449",
+        "android_client_info": {
+          "package_name": "com.example.HeikomMAD"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkwfNAxcZ_BRmKXblGCG4LHzpmJVYxMek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

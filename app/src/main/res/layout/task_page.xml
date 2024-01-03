@@ -1,0 +1,103 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/green_with_white_bg"
+    android:id="@+id/taskPage"
+    tools:context=".TaskPage">
+
+    <TextView
+        android:fontFamily="@font/rubik_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="0dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Welcome Wan Ahmad Ni"
+        android:textSize="25dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp">
+
+        <include layout="@layout/activity_rectangle_shape"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBarTP"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="325dp"
+            android:layout_height="15dp"
+            android:layout_gravity="right|center"
+            android:layout_marginEnd="10dp"
+            android:max="30000"
+            android:progress="0"
+            android:progressDrawable="@drawable/custom_progress_bar"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|center"
+            android:src="@drawable/ba"
+            />
+    </FrameLayout>
+    <!--
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pointTest"
+        android:text="Placeholder to test points"
+        />
+
+    <Button
+        android:id="@+id/addPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add Point"
+        />
+        -->
+
+
+    <TextView
+        android:fontFamily="@font/rubik_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weekly Task"
+        android:textSize="14sp"
+        android:layout_gravity="start"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completed Task"
+        android:id="@+id/testCompletedTask"
+        android:textSize="14sp"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/taskRecycleViewTP"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>
+
+

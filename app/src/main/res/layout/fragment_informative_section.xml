@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InformativeSection">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="82dp"
+            android:fontFamily="@font/rubik"
+            android:text="Flash Flood"
+            android:textSize="19dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IVArticle3" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="11dp"
+            android:fontFamily="@font/rubik"
+            android:text="Haze In KL"
+            android:textSize="19dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IVArticle1" />
+
+        <TextView
+            android:id="@+id/TVArticle"
+            android:layout_width="260dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/rubik_bold"
+            android:text="Recent Articles"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IVHelpline" />
+
+        <Button
+            android:id="@+id/btnHelpline"
+            android:layout_width="223dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="138dp"
+            android:layout_marginEnd="61dp"
+            android:text="Helpline"
+            android:textColorHighlight="#03A9F4"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/IVHelpline"
+            android:layout_width="80dp"
+            android:layout_height="84dp"
+
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="130dp"
+            android:src="@drawable/img_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="69dp"
+            android:fontFamily="@font/rubik"
+            android:text="Car Accident"
+            android:textSize="19dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IVArticle2" />
+
+        <ImageView
+            android:id="@+id/IVArticle2"
+            android:layout_width="180dp"
+            android:layout_height="162dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/caraccident"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TVArticle" />
+
+        <ImageView
+            android:id="@+id/IVArticle4"
+            android:layout_width="180dp"
+            android:layout_height="162dp"
+            android:layout_marginStart="32dp"
+
+            android:layout_marginTop="24dp"
+            android:src="@drawable/food"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/rubik"
+            android:text="Food Inflation"
+            android:textSize="19dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/IVArticle4" />
+
+        <ImageView
+            android:id="@+id/IVArticle3"
+            android:layout_width="180dp"
+            android:layout_height="162dp"
+            android:layout_marginTop="24dp"
+
+            android:layout_marginEnd="19dp"
+            android:src="@drawable/flood"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <ImageView
+            android:id="@+id/IVArticle1"
+            android:layout_width="180dp"
+            android:layout_height="162dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/haze"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TVArticle" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

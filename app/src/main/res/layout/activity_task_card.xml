@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/taskText"
+    app:contentPadding="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="#FFFFFF"
+    android:layout_margin="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/TVTaskView"
+                android:fontFamily="@font/rubik_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Pay Your Bill"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/taskIcon1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/TVTaskView"
+                android:layout_alignStart="@id/TVTaskView"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_home" />
+
+            <ImageView
+                android:id="@+id/taskIcon2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/TVTaskView"
+                android:layout_alignStart="@id/TVTaskView"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_home" />
+
+            <TextView
+                android:id="@+id/taskPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="210dp"
+                android:text="Points Place"
+                android:gravity="right"
+                android:fontFamily="@font/rubik_bold"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+
+                />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+
+
+

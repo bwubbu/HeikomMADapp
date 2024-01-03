@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.HeikomMAD.RecentPetition">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4C9A2A"
+        android:orientation="vertical">
+        <include layout="@layout/header" />
+
+        <LinearLayout
+            android:id="@+id/page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/roundedpage"
+            >
+            <TextView
+                android:id="@+id/Happening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What's happening in Heikom"
+                android:textColor="@color/light_green"
+                android:textSize="20dp"
+                android:fontFamily="@font/rubik_bold"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/SearchBar"
+                    android:hint="Search By Title"
+                    android:ellipsize="start"
+                    android:gravity="center_horizontal"
+                    android:layout_width="250dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/boxshadow"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Search by Title"
+                    android:layout_marginTop="7dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/refreshButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/refresh_button"
+                    android:backgroundTint="@color/grey"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/CreatePetition"
+                android:text="CREATE PETITION"
+                android:textSize="12dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/rubik_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/main_green"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:fillViewport="true"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/petitionList"
+                        android:layout_width="match_parent"
+                        android:paddingVertical="20dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+
+            </ScrollView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</FrameLayout>
