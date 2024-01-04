@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RewardRedeem#newInstance} factory method to
+ * Use the {@link RewardScrap#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RewardRedeem extends Fragment {
+public class RewardScrap extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class RewardRedeem extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public RewardRedeem() {
+    public RewardScrap() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class RewardRedeem extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RewardRedeem.
+     * @return A new instance of fragment RewardScrap.
      */
     // TODO: Rename and change types and number of parameters
-    public static RewardRedeem newInstance(String param1, String param2) {
-        RewardRedeem fragment = new RewardRedeem();
+    public static RewardScrap newInstance(String param1, String param2) {
+        RewardScrap fragment = new RewardScrap();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class RewardRedeem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reward_redeem, container, false);
+        return inflater.inflate(R.layout.fragment_reward_scrap, container, false);
     }
 }

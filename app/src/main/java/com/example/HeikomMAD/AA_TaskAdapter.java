@@ -52,7 +52,6 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
 
         holder.textView.setText(currentTask.getTaskText());
         holder.imageView.setImageResource(currentTask.getImageFirst());
-        holder.imageView2.setImageResource(currentTask.getImageSecond());
         holder.bindIntValue(currentTask.getPointsVal());
 
 

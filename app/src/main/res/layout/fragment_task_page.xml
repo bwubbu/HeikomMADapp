@@ -5,29 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/green_with_white_bg"
     android:id="@+id/taskPage"
     tools:context=".TaskPage">
 
-    <TextView
-        android:fontFamily="@font/rubik_bold"
+    <include layout="@layout/header" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="0dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="Welcome Wan Ahmad Ni"
-        android:textSize="25dp" />
+        android:layout_height="20dp"
+        android:background="@drawable/roundedpage"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp">
@@ -53,21 +43,7 @@
             android:src="@drawable/ba"
             />
     </FrameLayout>
-    <!--
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pointTest"
-        android:text="Placeholder to test points"
-        />
 
-    <Button
-        android:id="@+id/addPoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add Point"
-        />
-        -->
 
 
     <TextView
@@ -75,17 +51,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Weekly Task"
-        android:textSize="14sp"
+        android:textSize="20sp"
         android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="5dp" />
 
     <TextView
+        android:fontFamily="@font/rubik"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Completed Task"
         android:id="@+id/testCompletedTask"
+        android:layout_marginLeft="10dp"
         android:textSize="14sp"
         />
 

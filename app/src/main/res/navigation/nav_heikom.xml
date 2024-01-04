@@ -2,29 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_heikom"
+    android:id="@+id/navigate_heikom"
     app:startDestination="@id/rewardHome">
 
     <fragment
         android:id="@+id/rewardHome"
-        android:name="com.example.HeikomMAD.RewardHome"
+        android:name="com.example.HeikomMAD.RewardReport"
         android:label="RewardHome"
-        tools:layout="@layout/activity_auth"/>
-    <fragment
-        android:id="@+id/rewardPage"
-        android:name="com.example.HeikomMAD.TaskPage"
-        android:label="fragment_reward_page"
-        tools:layout="@layout/task_page" />
+        tools:layout="@layout/fragment_reward_report"/>
     <fragment
         android:id="@+id/rewardTask"
-        android:name="com.example.HeikomMAD.RewardTask"
-        android:label="fragment_reward_task"
-        tools:layout="@layout/fragment_reward_task" />
+        android:name="com.example.HeikomMAD.TaskPage"
+        android:label="fragment_reward_page"
+        tools:layout="@layout/fragment_task_page" />
     <fragment
         android:id="@+id/rewardRedeem"
-        android:name="com.example.HeikomMAD.RewardRedeem"
+        android:name="com.example.HeikomMAD.RewardCoupon"
         android:label="fragment_reward_home"
-        tools:layout="@layout/fragment_reward_home" />
+        tools:layout="@layout/fragment_reward_coupon" />
     <fragment
         android:id="@+id/rewardReport"
         android:name="com.example.HeikomMAD.RewardReport"

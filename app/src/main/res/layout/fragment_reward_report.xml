@@ -7,38 +7,15 @@
     android:layout_height="match_parent"
     >
 
-    <!-- Background ImageView -->
+    <include layout="@layout/header" />
 
-
-    <!-- Redeem Your Reward TextView -->
-    <ImageView
-        android:id="@+id/imageView"
+    <View
+        android:id="@+id/page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/green_with_white_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:paddingTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:fontFamily="@font/rubik_bold"
-            android:layout_marginTop="30dp"
-            android:padding="5dp"
-            android:textSize="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Welcome Wan Ahmad" />
-    </LinearLayout>
+        android:background="@drawable/roundedpage"
+        android:translationY="145dp">
+    </View>
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/circleFrame"
@@ -80,6 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/rubik_bold"
+        android:textStyle="bold"
         android:text="Placeholder A- Stating about whether you are in login"
         app:layout_constraintBottom_toTopOf="@+id/redeemPoints"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +68,7 @@
 
     <TextView
         android:id="@+id/redeemPoints"
+        android:fontFamily="@font/rubik"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -110,9 +90,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/redeemPoints">
 
-        <!-- Circular Progress Bar 1 -->
 
-        <!-- Circular Progress Bar 2 -->
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/weeklyProgressBar"
@@ -168,7 +146,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:cpb_background_progressbar_color_direction="top_to_bottom"
             app:cpb_indeterminate_mode="false"
-            app:cpb_progress="60"/>
+            app:cpb_progress="100"/>
 
         <ImageView
             android:id="@+id/weeklyIcon"
@@ -188,12 +166,16 @@
         android:id="@+id/textView"
         android:layout_width="170dp"
         android:layout_height="37dp"
+        android:layout_marginTop="44dp"
         android:layout_marginBottom="168dp"
+        android:clickable="true"
         android:text="Activities"
+        android:textAlignment="center"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView2"
         app:layout_constraintVertical_bias="1.0" />
@@ -202,8 +184,8 @@
         android:id="@+id/rewardReportButton"
         android:layout_width="148dp"
         android:layout_height="60dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="266dp"
         android:background="@null"
         android:contentDescription="@string/reward_button_description"
         android:padding="20dp"
@@ -212,10 +194,12 @@
         app:layout_constraintStart_toEndOf="@+id/textView" />
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="365dp"
+        android:layout_height="221dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.404"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 

@@ -14,18 +14,18 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class RewardHome extends Fragment {
+public class RewardCoupon extends Fragment {
 
     ArrayList<CardModel> cardModels = new ArrayList<>();
 
     int[] couponImages = {R.drawable.coupon1,R.drawable.coupon2,R.drawable.coupon3};
 
-    public RewardHome() {
+    public RewardCoupon() {
         // Required empty public constructor
     }
 
-    public static RewardHome newInstance() {
-        RewardHome fragment = new RewardHome();
+    public static RewardCoupon newInstance() {
+        RewardCoupon fragment = new RewardCoupon();
         return fragment;
     }
 
@@ -42,7 +42,7 @@ public class RewardHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_reward_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_reward_coupon, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.couponRV);
 

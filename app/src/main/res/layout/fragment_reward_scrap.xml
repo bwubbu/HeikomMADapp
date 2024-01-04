@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/green_with_white_bg"
-    tools:context=".RewardRedeem">
+    tools:context=".RewardScrap">
 
-    <!-- GifImageView -->
+    <include layout="@layout/header" />
 
-    <!-- Linear Layout for Text -->
-
-    <!-- Text: Redeem Your Reward -->
+    <View
+        android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/roundedpage"
+        android:translationY="145dp">
+    </View>
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/circleFrame"
@@ -44,21 +47,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <TextView
-        android:fontFamily="@font/rubik_bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="0dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="Welcome Wan Ahmad Ni"
-        android:textSize="25dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -3,26 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/green_with_white_bg"
     >
 
-    <TextView
-        android:fontFamily="@font/rubik_bold"
+    <include layout="@layout/header" />
+
+    <View
+        android:id="@+id/page"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="0dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="Welcome Wan Ahmad Ni"
-        android:textSize="25dp" />
+        android:layout_height="match_parent"
+        android:background="@drawable/roundedpage"
+        android:translationY="145dp">
+    </View>
 
     <TextView
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Popular"
@@ -33,7 +28,7 @@
         android:id="@+id/couponRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="270dp"/>
+        android:layout_marginTop="240dp"/>
 </FrameLayout>
 
 

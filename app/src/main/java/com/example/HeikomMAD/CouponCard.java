@@ -34,7 +34,7 @@ public class CouponCard extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_reward_redeem.
+     * @return A new instance of fragment fragment_reward_scrap.
      */
     // TODO: Rename and change types and number of parameters
     public static CouponCard newInstance(String param1, String param2) {

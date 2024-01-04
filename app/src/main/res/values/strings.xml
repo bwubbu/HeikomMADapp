@@ -57,15 +57,15 @@
 
 
     <string-array name="couponText">
-        <item>Blue Archive Coupon</item>
-        <item>Swimsuit Coupon</item>
-        <item>Cat Coupon</item>
+        <item>Grab Coupon</item>
+        <item>AEON Coupon</item>
+        <item>Cat Food Coupon</item>
     </string-array>
 
     <string-array name="couponDesc">
-        <item>Sensei can enjoy all the cunny girl in Kavitos</item>
-        <item>Swimsuit for love and live. Uwooo</item>
-        <item>Cat hissssssssssssssssss</item>
+        <item>Enjoy the 10 Ringgit off in your next order</item>
+        <item>5% off on your next bill</item>
+        <item>High quality cat food can be redeemed in the Community Hall</item>
     </string-array>
 
 </resources>

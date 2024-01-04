@@ -3,7 +3,6 @@ package com.example.HeikomMAD;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -65,7 +63,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.task_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_task_page, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.taskRecycleViewTP);
 
@@ -120,7 +118,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         taskText text = new taskText();
 
         for(int i=0;i< text.taskText.length;i++){
-            taskModel.add(new TaskModel(text.taskText[i],text.icon[i],text.icon2[i],text.points[i]));
+            taskModel.add(new TaskModel(text.taskText[i],text.icon[i],text.points[i]));
         }
     }
 

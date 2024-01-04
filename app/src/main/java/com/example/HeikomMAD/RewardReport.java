@@ -122,10 +122,15 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         View.OnClickListener OCLpoint = new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Navigation.findNavController(view).navigate(R.id.rewardRedeem);
+                Navigation.findNavController(view).navigate(R.id.rewardTask);
             }
         };
         pointButton.setOnClickListener(OCLpoint);
+
+        //Making the textview for the points to be clickable and redirect it to redeem
+        TextView redeemTV = view.findViewById(R.id.redeemPoints);
+        redirectTextRedeem(redeemTV);
+
 
 
         //Making icon clickbale redirect to another fragment
@@ -139,13 +144,13 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
             new Handler().postDelayed(() -> dailyIcon.setBackgroundColor(originalColor), 200); // Change back after a delay
 
             // Navigate to another fragment using Navigation Component
-            Navigation.findNavController(view).navigate(R.id.rewardPage);
+            Navigation.findNavController(view).navigate(R.id.rewardTask);
         });
 
 
         weeklyIcon = view.findViewById(R.id.weeklyIcon);
         weeklyIcon.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate((R.id.rewardPage));
+            Navigation.findNavController(view).navigate((R.id.rewardTask));
         });
 
         // Fetch the completed tasks count
@@ -190,4 +195,10 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         float progress = (completedTasksCount / totalTasks) * 100;
         return progress;
     }
+
+    public void redirectTextRedeem(TextView textView) {
+        textView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.rewardRedeem));
+    }
+
+
 }
