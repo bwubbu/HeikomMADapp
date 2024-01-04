@@ -37,6 +37,16 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        TextView regButton = findViewById(R.id.logInButton);
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Redirect to LogInActivity
+                Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
         editTextLoginEmail = findViewById(R.id.login_email);
         editTextLoginPwd = findViewById(R.id.login_password);
         progressBar = findViewById(R.id.progress_bar);

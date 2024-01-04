@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +45,16 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        TextView regButton = findViewById(R.id.regButton);
+        regButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Redirect to LogInActivity
+                Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
+        });
 
         checkBoxTermsAndConditions = findViewById(R.id.radio_button_terms);
         progressBar = findViewById(R.id.progress_bar);
