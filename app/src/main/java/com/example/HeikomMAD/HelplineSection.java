@@ -1,5 +1,7 @@
 package com.example.HeikomMAD;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +9,80 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HelplineSection#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HelplineSection extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HelplineSection() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HelplineSection.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HelplineSection newInstance(String param1, String param2) {
-        HelplineSection fragment = new HelplineSection();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    Button btnBack;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_helpline_section, container, false);
+        View view = inflater.inflate(R.layout.fragment_helpline_section, container, false);
+        Button btnPolice = view.findViewById(R.id.btnPolice);
+        btnPolice.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View v) {
+
+                                             Intent policeIntent = new Intent(Intent.ACTION_DIAL);
+                                             policeIntent.setData(Uri.parse("tel:0173948957"));
+                                             getActivity().startActivity(policeIntent);
+                                         }
+                                     }
+        );
+
+        Button btnAmbulance = view.findViewById(R.id.btnAmbulance);
+        btnAmbulance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ambulanceIntent = new Intent(Intent.ACTION_DIAL);
+                ambulanceIntent.setData(Uri.parse("tel:0173948957"));
+                startActivity(ambulanceIntent);
+            }
+        });
+        Button btnFiremen = view.findViewById(R.id.btnFiremen);
+        btnFiremen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent firemenIntent = new Intent(Intent.ACTION_DIAL);
+                firemenIntent.setData(Uri.parse("tel:0173948957"));
+                startActivity(firemenIntent);
+//                call(btnFiremen);
+            }
+        });
+        btnBack = view.findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new InformativeSection() ,null).commit();
+            }
+        });
+
+        return view;
     }
+//    void call(Button btn) {
+//        if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+//            Intent callIntent = new Intent(Intent.ACTION_CALL);
+//            String number = (String) btn.getText();
+//            callIntent.setData(Uri.parse("tel:" + number));
+//            getActivity().startActivity(callIntent);
+//        } else {
+//            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},
+//                    CALL_PERMISSION_REQUEST_CODE);
+//        }
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == CALL_PERMISSION_REQUEST_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+
+
+
+
+
 }
