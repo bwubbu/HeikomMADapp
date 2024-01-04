@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
 
-        getSupportActionBar().setTitle("Home");
+
 
         textViewWelcome=findViewById(R.id.textview_show_welcome);
         textViewDob=findViewById(R.id.textview_show_dob);
@@ -71,6 +72,19 @@ public class UserProfileActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             showUserProfile(firebaseUser);
         }
+
+
+        Button btnUpdateProfile=findViewById(R.id.update_profile_button);
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserProfileActivity.this,UpdateProfileActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
+
 
     }
     //Users coming to UserProfileActivity after successful Registration

@@ -44,15 +44,14 @@ public class UploadProfilePictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_profile_picture);
 
-        getSupportActionBar().setTitle("Uplaod Profile Picture");
+
         authProfile=FirebaseAuth.getInstance();
         Button buttonUploadPicChoose=findViewById(R.id.upload_pic_choose_button);
         Button buttonUploadPic=findViewById(R.id.upload_pic_button);
         progressBar=findViewById(R.id.progressBar);
         imageViewUploadPic=findViewById(R.id.imageVIew_profile_dp);
         firebaseUser=authProfile.getCurrentUser();
-
-        storageReference= FirebaseStorage.getInstance().getReference("Display pics");
+        storageReference= FirebaseStorage.getInstance("gs://heikommad.appspot.com").getReference("Display pics");
         Uri uri=firebaseUser.getPhotoUrl();
         //Set User's current Dp in Imageview (If uploaded already)
         Picasso.with(UploadProfilePictureActivity.this).load(uri).into(imageViewUploadPic);
