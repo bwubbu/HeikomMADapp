@@ -11,7 +11,8 @@ public class PhoneCallPermission extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);
+//        setContentView(R.layout.activity_auth);
+        setContentView(R.layout.activity_phone_call_permission);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container,new InformativeSection(),null);

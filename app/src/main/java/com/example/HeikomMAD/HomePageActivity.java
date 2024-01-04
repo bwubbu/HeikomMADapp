@@ -55,7 +55,7 @@ public class HomePageActivity extends AppCompatActivity {
         buttonInfoSect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomePageActivity.this, InformativeSection.class);
+                Intent intent = new Intent(HomePageActivity.this, PhoneCallPermission.class);
                 startActivity(intent);
             }
         });
