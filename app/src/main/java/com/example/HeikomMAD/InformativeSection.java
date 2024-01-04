@@ -67,6 +67,9 @@ public class InformativeSection extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_informative_section, container, false);
+        // Assuming you have two views, view1 and view2
+
+
         buttonHelpline  =view.findViewById(R.id.btnHelpline);
         buttonHelpline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,4 +124,5 @@ public class InformativeSection extends Fragment {
 
         return view;
     }
+
 }
