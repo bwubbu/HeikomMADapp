@@ -56,11 +56,11 @@
                     android:layout_marginTop="30dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/register_full_name"
+                        android:id="@+id/register_user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:hint="Full Name"
+                        android:hint="Username"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>

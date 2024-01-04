@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText registerFullName, registerEmail, registerPassword, registerDateofBirth, registerMobile, registerConfirmPassword;
+    private TextInputEditText registerUserName, registerEmail, registerPassword, registerDateofBirth, registerMobile, registerConfirmPassword;
     private ProgressBar progressBar;
     private CheckBox checkBoxTermsAndConditions;
     private static final String TAG = "RegisterActivity";
@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         checkBoxTermsAndConditions = findViewById(R.id.radio_button_terms);
         progressBar = findViewById(R.id.progress_bar);
-        registerFullName = findViewById(R.id.register_full_name);
+        registerUserName = findViewById(R.id.register_user_name);
         registerEmail = findViewById(R.id.register_email);
         registerPassword = findViewById(R.id.register_password);
         registerDateofBirth = findViewById(R.id.register_doB);
@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String textFullName = registerFullName.getText().toString();
+                String textFullName = registerUserName.getText().toString();
                 String textEmail = registerEmail.getText().toString();
                 String textPassword = registerPassword.getText().toString();
                 String textConfirmPassword = registerConfirmPassword.getText().toString();
@@ -90,9 +90,9 @@ public class RegisterActivity extends AppCompatActivity {
                 mobileMatcher = mobilePattern.matcher(textMobile);
 
                 if (TextUtils.isEmpty(textFullName)) {
-                    Toast.makeText(RegisterActivity.this, "Please enter your full name", Toast.LENGTH_LONG).show();
-                    registerFullName.setError("Full name is required");
-                    registerFullName.requestFocus();
+                    Toast.makeText(RegisterActivity.this, "Please enter your Username", Toast.LENGTH_LONG).show();
+                    registerUserName.setError("Username is required");
+                    registerUserName.requestFocus();
                 } else if (TextUtils.isEmpty(textEmail)) {
                     Toast.makeText(RegisterActivity.this, "Please enter your Email", Toast.LENGTH_LONG).show();
                     registerEmail.setError("Email is required");
@@ -151,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //Firebase authentication to to register user with the credentials given
-    private void registerUser(String textFullName, String textEmail, String textPassword, String textConfirmPassword, String textDoB, String textMobile) {
+    private void registerUser(String textUserName, String textEmail, String textPassword, String textConfirmPassword, String textDoB, String textMobile) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         //create user profile
@@ -163,11 +163,11 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser firebaseUser = auth.getCurrentUser();
 
                     //Update display name of User
-                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textFullName).build();
+                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textUserName).build();
                     firebaseUser.updateProfile(profileChangeRequest);
 
                     //Enter User Data into Firebase Realtime Database
-                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textDoB, textMobile);
+                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textUserName, textDoB, textMobile);
 
                     //Extracting User reference from db for 'registered users'
                     DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
@@ -184,10 +184,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email",
                                         Toast.LENGTH_LONG).show();
-
-
-                                //homepage after registration
-                                Intent intent = new Intent(RegisterActivity.this, HomePageActivity.class);
+                                //Back to Auth Activity
+                                Intent intent = new Intent(RegisterActivity.this, AuthActivity.class);
                                 //prevent user from going back to register activity if back button is pressed
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
                                                 | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -197,7 +195,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email",
                                         Toast.LENGTH_LONG).show();
                             }
-
                             progressBar.setVisibility(View.GONE);
                         }
                     });

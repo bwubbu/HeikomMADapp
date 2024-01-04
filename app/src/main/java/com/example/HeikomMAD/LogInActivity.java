@@ -60,7 +60,7 @@ public class LogInActivity extends AppCompatActivity {
                 String textEmail = editTextLoginEmail.getText().toString();
                 String textPwd = editTextLoginPwd.getText().toString();
 
-                if(TextUtils.isEmpty(textEmail)) {
+                if (TextUtils.isEmpty(textEmail)) {
                     Toast.makeText(LogInActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
                     editTextLoginEmail.setError("Email is required");
                     editTextLoginEmail.requestFocus();
@@ -82,39 +82,43 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void loginUser(String email, String pwd) {
-        authProfile.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(LogInActivity.this,new OnCompleteListener<AuthResult>() {
+        authProfile.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(LogInActivity.this, "You are now logged in",Toast.LENGTH_SHORT).show();
-
-                    //Get instance of current user
+                if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
-                    //check if email is verified
-                    if (firebaseUser.isEmailVerified()){
+                    // Check if email is verified
+                    if (firebaseUser.isEmailVerified()) {
+                        // Open User Profile or perform other actions
                         Toast.makeText(LogInActivity.this, "You are now logged in", Toast.LENGTH_SHORT).show();
 
-                        //Open User Profile
+                        // Redirect to HomePageActivity
+                        Intent intent = new Intent(LogInActivity.this, HomePageActivity.class);
+                        startActivity(intent);
+                        finish(); // Finish the current activity to prevent going back to the login screen
+
                     } else {
+                        // If email is not verified, send verification email and sign out
                         firebaseUser.sendEmailVerification();
-                        authProfile.signOut();  //Sign out user
+                        authProfile.signOut();  // Sign out user
                         showAlertDialog();
                     }
                 } else {
                     try {
                         throw task.getException();
-                    } catch(FirebaseAuthInvalidUserException e) {
+                    } catch (FirebaseAuthInvalidUserException e) {
                         editTextLoginEmail.setError("User does not exist or is no longer valid. Please register again.");
                         editTextLoginEmail.requestFocus();
                     } catch (FirebaseAuthInvalidCredentialsException e) {
-                        editTextLoginEmail.setError("Invalid Credentials. Kindly check and re-enter");
-                        editTextLoginEmail.requestFocus();
+                        editTextLoginPwd.setError("Invalid Credentials. Kindly check and re-enter");
+                        editTextLoginPwd.requestFocus();
                     } catch (Exception e) {
                         Log.e(TAG, e.getMessage());
                         Toast.makeText(LogInActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -142,20 +146,5 @@ public class LogInActivity extends AppCompatActivity {
 
         //Show the AlertDialog
         alertDialog.show();
-    }
-
-    //Check if user is already logged in.
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (authProfile.getCurrentUser() != null) {
-            Toast.makeText(LogInActivity.this, "Already Logged In!", Toast.LENGTH_SHORT).show();
-
-            //Start HomePageActivity
-            startActivity(new Intent(LogInActivity.this, HomePageActivity.class));
-            finish();
-        } else {
-            Toast.makeText(LogInActivity.this, "You can Log In now", Toast.LENGTH_SHORT).show();
-        }
     }
 }
