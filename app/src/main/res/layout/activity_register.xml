@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/comfortaa_bold"
-                    android:text="REGISTER"
+                    android:text="REGISTR"
                     android:textColor="#3E7E10"
                     android:textSize="40sp"
                     android:textStyle="bold"
