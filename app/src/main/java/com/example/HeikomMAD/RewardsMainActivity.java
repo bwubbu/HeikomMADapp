@@ -1,21 +1,13 @@
 package com.example.HeikomMAD;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 public class RewardsMainActivity extends AppCompatActivity {
 
@@ -48,7 +40,7 @@ public class RewardsMainActivity extends AppCompatActivity {
                 navController.navigate(R.id.rewardReport);
                 return true;
             }
-            else if (item.getItemId() == R.id.bmChat) {
+            else if (item.getItemId() == R.id.bmForum) {
                 navController.navigate(R.id.rewardRedeem);
                 return true;
             }

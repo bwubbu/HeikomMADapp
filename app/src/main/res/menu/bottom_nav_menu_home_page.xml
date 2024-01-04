@@ -9,9 +9,10 @@
         android:title="Reward"
         android:icon="@drawable/ic_circle" />
 
-    <item android:id="@+id/bmChat"
-        android:title="Chat"
-        android:icon="@drawable/ic_chat" />
+    <item
+        android:id="@+id/bmForum"
+        android:icon="@drawable/ic_chat"
+        android:title="Forum" />
 
     <item android:id="@+id/bmInfo"
         android:title="Info"
