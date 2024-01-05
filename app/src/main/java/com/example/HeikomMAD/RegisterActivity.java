@@ -13,6 +13,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -69,6 +70,17 @@ public class RegisterActivity extends AppCompatActivity {
         radioGroupRegGender=findViewById(R.id.radio_group_reg_gender);
         registerMobile = findViewById(R.id.register_mobile);
         registerConfirmPassword = findViewById(R.id.register_confirm_password);
+
+        ImageView backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Redirect to LogInActivity
+                Intent intent = new Intent(RegisterActivity.this, AuthActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         registerDateofBirth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +184,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, AuthActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
     //Firebase authentication to to register user with the credentials given
     private void registerUser(String textUserName, String textEmail, String textPassword, String textConfirmPassword, String textDoB, String textGender, String textMobile) {
         FirebaseAuth auth = FirebaseAuth.getInstance();

@@ -10,24 +10,35 @@
     tools:context=".RegisterActivity">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="10dp">
 
         <ImageView
             android:id="@+id/backButton"
-            android:layout_width="66dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="12dp"
-            app:srcCompat="@drawable/back_button" />
-
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/back_button"
+            android:layout_gravity="center">
+        </ImageView>
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="30dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="10dp">
 
@@ -63,7 +74,6 @@
                         android:id="@+id/register_user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:hint="Username"
                         android:inputType="textPersonName" />
 
@@ -79,7 +89,6 @@
                         android:id="@+id/register_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:hint="Email"
                         android:inputType="textEmailAddress" />
 
@@ -95,7 +104,6 @@
                         android:id="@+id/register_doB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:hint="Date of Birth"
                         android:inputType="text"
                         android:focusable="false"/>
@@ -147,7 +155,6 @@
                         android:id="@+id/register_mobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:hint="Phone Number"
                         android:inputType="number" />
 
@@ -164,7 +171,6 @@
                         android:id="@+id/register_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:hint="Password"
                         android:inputType="textPassword" />
 
@@ -181,7 +187,6 @@
                         android:id="@+id/register_confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:hint="Confirm Password"
                         android:inputType="textPassword" />
 
@@ -251,5 +256,4 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
 </ScrollView>

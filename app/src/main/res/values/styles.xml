@@ -2,7 +2,6 @@
 <resources>
 
     <style name = "ToolbarStyle" parent = "@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-
         <item name="android:fontFamily">@font/rubik_bold</item>
         <item name="android:textSize">28dp</item>
 

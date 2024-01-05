@@ -40,14 +40,13 @@ public class LogInActivity extends AppCompatActivity {
 
         TextView regButton = findViewById(R.id.logInButton);
         regButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+
             public void onClick(View v) {
                 // Redirect to LogInActivity
                 Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
-
         ImageView backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +99,15 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, AuthActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void loginUser(String email, String pwd) {

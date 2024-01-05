@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -34,6 +35,17 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
         editTextPwdResetEmail = findViewById(R.id.change_password_email);
         buttonPwdReset = findViewById(R.id.resetPwdButton);
         progressBar = findViewById(R.id.progress_bar);
+
+        ImageView backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Redirect to LogInActivity
+                Intent intent = new Intent(ForgotPasswordActivity.this, RegisterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         buttonPwdReset.setOnClickListener(new View.OnClickListener() {
             @Override
