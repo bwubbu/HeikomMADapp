@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewGender=findViewById(R.id.textview_show_gendre);
         textViewFullName=findViewById(R.id.textview_show_full_name);
         textViewPhoneMobile=findViewById(R.id.textview_show_phone);
-        ProgressBar progressBar=findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
         //set OnClickListener on ImageView to open uploadProfilePicture
         imageView=findViewById(R.id.imageVIew_profile_dp);
@@ -112,7 +112,7 @@ public class UserProfileActivity extends AppCompatActivity {
         String userID=firebaseUser.getUid();
 
 
-        //Extracting User Reference from Database "Registed Users"
+        //Extracting User Reference from Database "Registezd Users"
         DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
         referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

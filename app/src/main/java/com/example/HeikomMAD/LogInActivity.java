@@ -12,6 +12,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,16 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Redirect to LogInActivity
                 Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Redirect to LogInActivity
+                Intent intent = new Intent(LogInActivity.this, AuthActivity.class);
                 startActivity(intent);
             }
         });

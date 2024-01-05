@@ -124,7 +124,7 @@
             android:padding="6dp"
             android:textSize="16sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_upload_picture"
             android:layout_width="400dp"
             android:layout_height="50dp"
@@ -132,14 +132,14 @@
             android:layout_marginLeft="78dp"
             android:layout_marginTop="23dp"
             android:layout_marginRight="78dp"
-            android:background="@drawable/rectangle_button"
+            android:background="@drawable/rectangle"
             android:gravity="center_horizontal|center_vertical"
             android:text="Upload profile picture"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="400dp"
             android:layout_height="50dp"
             android:id="@+id/button_update_profile"
@@ -152,7 +152,7 @@
             android:layout_below="@id/button_upload_picture"
             android:textSize="20dp"
             android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/rectangle_button"/>
+            android:background="@drawable/rectangle"/>
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleLarge"

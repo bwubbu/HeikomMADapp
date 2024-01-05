@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText registerUserName, registerEmail, registerPassword, registerDateofBirth, registerMobile, registerConfirmPassword;
     private ProgressBar progressBar;
+    private RadioGroup radioGroupRegGender;
+    private RadioButton radioButtonRegGenderSelected;
     private CheckBox checkBoxTermsAndConditions;
     private static final String TAG = "RegisterActivity";
     private DatePickerDialog picker;
@@ -62,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerEmail = findViewById(R.id.register_email);
         registerPassword = findViewById(R.id.register_password);
         registerDateofBirth = findViewById(R.id.register_doB);
+        radioGroupRegGender=findViewById(R.id.radio_group_reg_gender);
         registerMobile = findViewById(R.id.register_mobile);
         registerConfirmPassword = findViewById(R.id.register_confirm_password);
 
@@ -93,6 +98,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String textPassword = registerPassword.getText().toString();
                 String textConfirmPassword = registerConfirmPassword.getText().toString();
                 String textDoB = registerDateofBirth.getText().toString();
+                int selectedGenderID=radioGroupRegGender.getCheckedRadioButtonId();
+                radioButtonRegGenderSelected=findViewById(selectedGenderID);
+                String textGender = radioButtonRegGenderSelected.getText().toString();
                 String textMobile = registerMobile.getText().toString();
 
                 String mobileRegex = "^01\\d{8}$";
@@ -116,6 +124,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please Enter your Date of Birth", Toast.LENGTH_LONG).show();
                     registerDateofBirth.setError("Date of Birth is required.");
                     registerDateofBirth.requestFocus();
+                }else if (TextUtils.isEmpty(radioButtonRegGenderSelected.getText())){
+                    Toast.makeText(RegisterActivity.this,"Please select your gender",Toast.LENGTH_LONG).show();
+                    radioButtonRegGenderSelected.setError("Gender is required");
+                    radioButtonRegGenderSelected.requestFocus();
                 } else if (TextUtils.isEmpty(textMobile)) {
                     Toast.makeText(RegisterActivity.this, "Please Enter your Phone Number", Toast.LENGTH_LONG).show();
                     registerMobile.setError("Phone number is required.");
@@ -154,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }else {
                     checkBoxTermsAndConditions.setError(null);
                     progressBar.setVisibility(View.VISIBLE);
-                    registerUser(textFullName, textEmail, textPassword, textConfirmPassword, textDoB, textMobile);
+                    registerUser(textFullName, textEmail, textPassword, textConfirmPassword, textDoB, textGender, textMobile);
 
                 }
             }
@@ -162,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //Firebase authentication to to register user with the credentials given
-    private void registerUser(String textUserName, String textEmail, String textPassword, String textConfirmPassword, String textDoB, String textMobile) {
+    private void registerUser(String textUserName, String textEmail, String textPassword, String textConfirmPassword, String textDoB, String textGender, String textMobile) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         //create user profile
@@ -170,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email", Toast.LENGTH_LONG).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
 
                     //Update display name of User
@@ -178,7 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
                     firebaseUser.updateProfile(profileChangeRequest);
 
                     //Enter User Data into Firebase Realtime Database
-                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textUserName, textDoB, textMobile);
+                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textUserName, textDoB, textGender, textMobile);
 
                     //Extracting User reference from db for 'registered users'
                     DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
@@ -193,8 +205,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 //Send Verification Email
                                 firebaseUser.sendEmailVerification();
 
-                                Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email",
-                                        Toast.LENGTH_LONG).show();
                                 //Back to Auth Activity
                                 Intent intent = new Intent(RegisterActivity.this, AuthActivity.class);
                                 //prevent user from going back to register activity if back button is pressed
