@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_reward" />
 
     <View
         android:id="@+id/page"

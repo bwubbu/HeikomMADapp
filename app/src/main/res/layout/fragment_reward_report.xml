@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     >
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_reward" />
 
     <View
         android:id="@+id/page"
