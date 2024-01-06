@@ -239,7 +239,7 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
     @Override
     public void onActivitySaved() {
-        activitiesModels.clear(); // Clear the current list of activities
+        //activitiesModels.clear(); // Clear the current list of activities
         activitiesModels.addAll(DataManager.getInstance().getClickedTask()); // Get the latest activities
         if (adapter != null) {
             adapter.notifyDataSetChanged(); // Notify adapter of data changes

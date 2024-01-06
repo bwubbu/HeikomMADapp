@@ -11,6 +11,7 @@ public class CardModel {
     int points;
 
     private float alphaValue;
+    private String cardId;
 
 
     public boolean isClicked() {
@@ -52,6 +53,14 @@ public class CardModel {
 
     public void setAlphaValue(float alpha) {
         alphaValue = alpha;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
     }
 }
 

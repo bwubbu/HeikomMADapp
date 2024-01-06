@@ -128,6 +128,32 @@ public class FirebasePointManager {
             }
         });
     }
+    public void deductPointsFromUser(String userId, int pointsToDeduct, PointUpdateListener listener) {
+        pointsRef.child(userId).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Integer currentPoints = dataSnapshot.getValue(Integer.class);
+                    if (currentPoints == null) currentPoints = 0;
+                    if (currentPoints >= pointsToDeduct) {
+                        pointsRef.child(userId).child("points").setValue(currentPoints - pointsToDeduct)
+                                .addOnSuccessListener(aVoid -> listener.onPointUpdateSuccess())
+                                .addOnFailureListener(e -> listener.onPointUpdateFailure(e.getMessage()));
+                    } else {
+                        listener.onPointUpdateFailure("Insufficient points");
+                    }
+                } else {
+                    listener.onPointUpdateFailure("User not found");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onPointUpdateFailure(databaseError.getMessage());
+            }
+        });
+    }
+
 
     public interface PointUpdateListener {
         void onPointUpdateSuccess();
