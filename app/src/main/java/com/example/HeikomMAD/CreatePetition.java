@@ -40,7 +40,7 @@ public class CreatePetition extends Fragment {
 
     private final int PICK_IMAGE_REQUEST = 1;
 
-    private String userID = "KjZXD4UpGzbn3v6GqQiF88S1obe2";
+    private String userID = "1k8vM9yMWKdzXGIcXFZlAz5VRWZ2";
     private String name = "jx";
     private ImageView imagePlaceholder;
 
@@ -100,7 +100,7 @@ public class CreatePetition extends Fragment {
                     Toast.makeText(getContext(), "Council must not be blank!", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommad-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Petitions");
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommadapp-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Petition");
                     LocalDate currentDate = LocalDate.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                     String formattedDate = currentDate.format(formatter);

@@ -8,57 +8,175 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PetitionDetail#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.app.Dialog;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class PetitionDetail extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public PetitionDetail() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PetitionDetail.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PetitionDetail newInstance(String param1, String param2) {
-        PetitionDetail fragment = new PetitionDetail();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    private String userID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_petition_detail, container, false);
+        View Inflater = inflater.inflate(R.layout.fragment_petition_detail, container, false);
+
+        Bundle b = this.getArguments();
+        String ID = b.getString("PetitionID");
+
+        // Connect to firebase auth to get current user id
+        userID = "1k8vM9yMWKdzXGIcXFZlAz5VRWZ2";
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommadapp-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Petition").child(ID);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PetitionDetailItem Item = snapshot.getValue(PetitionDetailItem.class);
+                String signedUserListString = snapshot.child("signedUser").getValue(String.class);
+                Item.setSignedUser(signedUserListString);
+
+
+                TextView headerDesc = Inflater.findViewById(R.id.headerDesc);
+                headerDesc.setText("");
+                TextView headerUser = Inflater.findViewById(R.id.headerUser);
+                headerUser.setText(Item.getTitle());
+
+
+                TextView author= Inflater.findViewById(R.id.Author);
+                TextView date= Inflater.findViewById(R.id.Date);
+                TextView council= Inflater.findViewById(R.id.Council);
+                TextView target= Inflater.findViewById(R.id.target);
+                TextView desc= Inflater.findViewById(R.id.Desc);
+                TextView percentage = Inflater.findViewById(R.id.percentage);
+                ProgressBar progressBar = Inflater.findViewById(R.id.progressBar);
+                ImageView profile = Inflater.findViewById(R.id.authorProfile);
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference imageRef = storage.getReference().child(Item.getImagePath());
+
+                final long ONE_MEGABYTE = 1024 * 1024;
+                imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Glide.with(getContext()).load(bytes).into(profile);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+
+                author.setText(Item.getAuthor());
+                date.setText(Item.getDate());
+                council.setText(Item.getCouncil());
+                target.setText( Item.CurrentSignAmount() + " / " + Item.getTarget() + "");
+                double completePercent = (double) Item.CurrentSignAmount()/ (double) Item.getTarget() * 100;
+                percentage.setText(String.format("%.2f", completePercent ) + "% completed");
+                progressBar.setProgress((int) completePercent);
+
+                desc.setText(Item.getDesc());
+
+                Button signButton = Inflater.findViewById(R.id.signButton);
+
+                if (Item.getSignedUserArrayList().contains(userID) || Item.getIsSuccess()) {
+                    signButton.setVisibility(View.GONE);
+                }
+                signButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showSignConfirmation(Item.getSignedUserArrayList(),Item.getTarget(), Inflater, mDatabase, ID);
+                    }
+                });
+
+                ImageButton backButton = Inflater.findViewById(R.id.backButton);
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.petitionMain, new RecentPetition());
+                        ft.commit();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        return Inflater;
+    }
+
+    void showSignConfirmation(ArrayList<String> signedUserList,int target, View Inflater, DatabaseReference mDatabase, String petitionID){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.sign_confirmation);
+
+        final Button sign = dialog.findViewById(R.id.sign);
+        final Button cancel = dialog.findViewById(R.id.cancel);
+
+        sign.setOnClickListener((v) -> {
+            signedUserList.add(userID);
+            Button signButton = Inflater.findViewById(R.id.signButton);
+            TextView targetView= Inflater.findViewById(R.id.target);
+            TextView percentage = Inflater.findViewById(R.id.percentage);
+            ProgressBar progressBar = Inflater.findViewById(R.id.progressBar);
+            targetView.setText( signedUserList.size() + " / " + target + "");
+            double completePercent = (double) signedUserList.size()/ (double) target * 100;
+            percentage.setText(String.format("%.2f", completePercent ) + "% completed");
+            progressBar.setProgress((int) completePercent);
+            signButton.setVisibility(View.GONE);
+
+            mDatabase.child("signedUser").setValue(signedUserList.toString());
+
+            if (signedUserList.size() >= target) {
+                mDatabase.child("isSuccess").setValue(true);
+            }
+
+            dialog.dismiss();
+            Toast.makeText(getContext(), "You have successfully signed !", Toast.LENGTH_SHORT).show();
+        });
+
+        cancel.setOnClickListener((v) -> {
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }

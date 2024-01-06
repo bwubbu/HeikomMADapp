@@ -40,9 +40,11 @@ private BottomNavigationView bottomNavigationView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommad-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Petitions");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommadapp-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Petition");
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recent_petition, container, false);
+        TextView headerUser = rootView.findViewById(R.id.headerUser);
+        headerUser.setText("It's All About CHANGES");
         TextView headerDesc = rootView.findViewById(R.id.headerDesc);
         headerDesc.setText("The Society’s Platform for Change");
 
