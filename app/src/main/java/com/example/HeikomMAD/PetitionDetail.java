@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +47,8 @@ import java.util.Arrays;
 
 public class PetitionDetail extends Fragment {
     private String userID;
+    private String name;
+    private User currentUser;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +58,19 @@ public class PetitionDetail extends Fragment {
         String ID = b.getString("PetitionID");
 
         // Connect to firebase auth to get current user id
-        userID = "1k8vM9yMWKdzXGIcXFZlAz5VRWZ2";
+        name = " ";
+        userID = " ";
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser != null) {
+            // Set userID and name based on the current user
+            userID = firebaseUser.getUid();
+            name = firebaseUser.getDisplayName();
+
+            // Create a User object
+            currentUser = new User(userID, name, null);  // Set imageUrl to null for now, you can set it if needed
+        }
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommadapp-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Petition").child(ID);
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -108,7 +124,7 @@ public class PetitionDetail extends Fragment {
 
                 Button signButton = Inflater.findViewById(R.id.signButton);
 
-                if (Item.getSignedUserArrayList().contains(userID) || Item.getIsSuccess()) {
+                if (Item.getSignedUserArrayList().contains(currentUser.getUserId()) || Item.getIsSuccess()) {
                     signButton.setVisibility(View.GONE);
                 }
                 signButton.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +168,7 @@ public class PetitionDetail extends Fragment {
         final Button cancel = dialog.findViewById(R.id.cancel);
 
         sign.setOnClickListener((v) -> {
-            signedUserList.add(userID);
+            signedUserList.add(currentUser.getUserId());
             Button signButton = Inflater.findViewById(R.id.signButton);
             TextView targetView= Inflater.findViewById(R.id.target);
             TextView percentage = Inflater.findViewById(R.id.percentage);
