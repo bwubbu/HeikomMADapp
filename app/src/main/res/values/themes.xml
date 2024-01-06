@@ -5,5 +5,5 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.TestAssignment" parent="Base.Theme.HeikomMAD" />
+    <style name="Theme.HeikomMAD" parent="Base.Theme.HeikomMAD" />
 </resources>
