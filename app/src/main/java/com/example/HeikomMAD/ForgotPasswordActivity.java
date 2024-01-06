@@ -41,7 +41,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
             @Override
             public void onClick(View v) {
                 // Redirect to LogInActivity
-                Intent intent = new Intent(ForgotPasswordActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, LogInActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -67,6 +67,14 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
             }
         });
     }
+
+     public void onBackPressed() {
+         super.onBackPressed();
+         Intent intent = new Intent(this, LogInActivity.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+         startActivity(intent);
+         finish();
+     }
 
      private void resetPassword(String email) {
         authProfile = FirebaseAuth.getInstance();

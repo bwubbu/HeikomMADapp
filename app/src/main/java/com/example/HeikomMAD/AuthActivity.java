@@ -1,5 +1,6 @@
 package com.example.HeikomMAD;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
