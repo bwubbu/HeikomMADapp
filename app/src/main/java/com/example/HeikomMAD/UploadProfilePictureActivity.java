@@ -51,7 +51,7 @@ public class UploadProfilePictureActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressBar);
         imageViewUploadPic=findViewById(R.id.imageVIew_profile_dp);
         firebaseUser=authProfile.getCurrentUser();
-        storageReference= FirebaseStorage.getInstance("gs://heikommad.appspot.com").getReference("Display pics");
+        storageReference= FirebaseStorage.getInstance("gs://heikommadapp.appspot.com").getReference("Display pics");
         Uri uri=firebaseUser.getPhotoUrl();
         //Set User's current Dp in Imageview (If uploaded already)
         Picasso.with(UploadProfilePictureActivity.this).load(uri).into(imageViewUploadPic);
@@ -90,6 +90,9 @@ public class UploadProfilePictureActivity extends AppCompatActivity {
                             //Finally set the display image of the user after upload
                             UserProfileChangeRequest profileUpdates=new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build() ;
                             firebaseUser.updateProfile(profileUpdates);
+                            Picasso.with(UploadProfilePictureActivity.this).invalidate(uri);
+                            // Load the new image into the ImageView
+                            Picasso.with(UploadProfilePictureActivity.this).load(uri).into(imageViewUploadPic);
                         }
                     });
                     progressBar.setVisibility(View.GONE);

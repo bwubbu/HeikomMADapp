@@ -9,16 +9,30 @@
     tools:context=".UserProfileActivity"
     android:background="@color/white">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:background="@drawable/leaf_background2"
             android:id="@+id/RL2">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack4"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/light_green"
+                android:contentDescription="return button"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/backarrow"
+                app:iconSize="36dp"
+                app:iconTint="@color/black"
+                app:layout_anchorGravity="bottom|center"
+                 />
 
 
             <ImageView
