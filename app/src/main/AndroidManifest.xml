@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HeikomMAD"
         tools:targetApi="31">
         <activity
+            android:name=".AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".Post"
             android:exported="false" />
         <activity
@@ -47,8 +50,8 @@
             android:exported="false" />
         <activity
             android:name=".PopUpWindow"
-            android:theme="@style/Theme.HeikomMAD"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.HeikomMAD" />
         <activity
             android:name=".FeedbackActivity"
             android:exported="false" />
@@ -66,21 +69,18 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".PostActivity"
             android:exported="false" />
-
         <activity
             android:name=".CommentsActivity"
-            android:label="Comments Activity">
-        </activity>
-
+            android:label="Comments Activity"></activity>
         <activity
             android:name=".InformativeSection"
             android:exported="false" />
         <activity
-            android:name=".AuthActivity"
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

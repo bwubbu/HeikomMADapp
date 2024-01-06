@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="40dp"
             android:layout_marginStart="80dp"
             android:layout_marginEnd="87dp"
             android:fontFamily="@font/rubik_light"
@@ -29,13 +30,14 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/upload_pic_choose_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/textView_upload_pic_head"
             android:layout_marginTop="35dp"
-            android:background="@drawable/round_button"
+            android:background="@drawable/rectangle"
+            android:textColor="@color/white"
             android:text="Choose Picture"
             android:textAlignment="center"
             android:textSize="24dp" />
@@ -47,13 +49,14 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/border_image"
             android:layout_below="@id/upload_pic_choose_button"/>
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/upload_pic_button"
+            android:textColor="@color/white"
             android:textSize="25dp"
             android:textAlignment="center"
-            android:background="@drawable/rectangle_button"
+            android:background="@drawable/rectangle"
             android:layout_below="@id/imageVIew_profile_dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="70dp"

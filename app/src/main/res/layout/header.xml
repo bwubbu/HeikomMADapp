@@ -44,18 +44,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="344dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="316dp"
+        android:layout_marginTop="30dp"
         android:background="#4C9A2A"
         app:cardCornerRadius="250dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:scaleType="centerCrop"
             android:src="@drawable/avatar" />
     </androidx.cardview.widget.CardView>
