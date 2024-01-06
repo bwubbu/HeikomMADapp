@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,6 +44,8 @@ public class CreatePetition extends Fragment {
 
     private String userID = "1k8vM9yMWKdzXGIcXFZlAz5VRWZ2";
     private String name = "jx";
+
+    private User currentUser;
     private ImageView imagePlaceholder;
 
     private Bitmap selectedImage;
@@ -55,6 +59,17 @@ public class CreatePetition extends Fragment {
         TextView headerUser = Inflater.findViewById(R.id.headerUser);
         headerUser.setText("Create Your Own Petition");
         // Inflate the layout for this fragment
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser != null) {
+            // Set userID and name based on the current user
+            userID = firebaseUser.getUid();
+            name = firebaseUser.getDisplayName();
+
+            // Create a User object
+            currentUser = new User(userID, name, null);  // Set imageUrl to null for now, you can set it if needed
+        }
 
         imagePlaceholder = Inflater.findViewById(R.id.imagePlaceholder);
         Button postButton = Inflater.findViewById(R.id.postButton);
@@ -107,7 +122,7 @@ public class CreatePetition extends Fragment {
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
-                    String imagePath = "PetitionImages/" + name + "_" + formattedDate + "_" + council + "_" + title + "_" + Instant.now() + ".jpg";
+                    String imagePath = "PetitionImages/" + currentUser.getUsername() + "_" + formattedDate + "_" + council + "_" + title + "_" + Instant.now() + ".jpg";
                     StorageReference imageRef = storageRef.child(imagePath);
 
                     ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
@@ -124,7 +139,7 @@ public class CreatePetition extends Fragment {
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            mDatabase.push().setValue(new PetitionDetailItem(title, name, formattedDate, council, Integer.parseInt(target), desc, userID, false, "[]", imagePath)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            mDatabase.push().setValue(new PetitionDetailItem(title, currentUser.getUsername(), formattedDate, council, Integer.parseInt(target), desc, currentUser.getUserId(), false, "[]", imagePath)).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
