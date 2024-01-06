@@ -1,5 +1,6 @@
 package com.example.HeikomMAD;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class FeedbackActivity extends AppCompatActivity {
     private Firebase ref;
     private EditText feedback;
+    private BottomNavigationView bottomNavigationView;
 
     RatingBar rt;
     Button button;
@@ -37,6 +42,34 @@ public class FeedbackActivity extends AppCompatActivity {
         feedback=findViewById(R.id.editTextFeedback);
         Firebase.setAndroidContext(this);
         ref=new Firebase("https://console.firebase.google.com/project/heikommad/database/heikommad-default-rtdb/data/~2F");
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+                @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.bmHome) {
+                    Intent homeIntent = new Intent(FeedbackActivity.this, HomePageActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                } else if (itemId == R.id.bmReward) {
+                    Intent rewardIntent = new Intent(FeedbackActivity.this, RewardsMainActivity.class);
+                    startActivity(rewardIntent);
+                    return true;
+                } else if (itemId == R.id.bmForum) {
+                    Intent forumIntent = new Intent(FeedbackActivity.this, PostActivity.class);
+                    startActivity(forumIntent);
+                    return true;
+                } else if (itemId == R.id.bmInfo) {
+                    Intent infoIntent = new Intent(FeedbackActivity.this, PhoneCallPermission.class);
+                    startActivity(infoIntent);
+                } else if (itemId == R.id.bmUser) {
+                    Intent profileIntent = new Intent(FeedbackActivity.this, UserProfileActivity.class);
+                    startActivity(profileIntent);
+                }
+                return false;
+            }
+        });
 
 
 

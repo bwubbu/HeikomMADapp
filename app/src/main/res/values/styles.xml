@@ -6,4 +6,11 @@
         <item name="android:textSize">28dp</item>
 
     </style>
+
+    <style name="styleColor">
+        <item name="android:colorPrimary">#FFFFFF</item>
+        <item name="android:colorAccent">#FFFFFF</item>
+        <!-- Add more color attributes as needed -->
+    </style>
+
 </resources>

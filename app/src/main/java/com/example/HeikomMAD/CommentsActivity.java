@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +85,7 @@ public class CommentsActivity extends AppCompatActivity {
         addComment = findViewById(R.id.add_commnent);
 
         imageCardView = findViewById(R.id.image_card_view);
-        image_profile = imageCardView.findViewById(R.id.image_profile);
+        image_profile = imageCardView.findViewById(R.id.imageprofiletoolbar);
         post = findViewById(R.id.post);
 
         Intent intent = getIntent();
@@ -106,7 +107,7 @@ public class CommentsActivity extends AppCompatActivity {
             }
         });
 
-        getImage();
+        showCommentDetails(firebaseUser);
         readComments();
 
     }
@@ -147,26 +148,54 @@ public class CommentsActivity extends AppCompatActivity {
 
 
 
-    private void getImage(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+//    private void getImage(){
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+//
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                User user = snapshot.getValue(User.class);
+//                if (user != null) {
+//                    Glide.with(getApplicationContext()).load(user.getImageUrl()).into(image_profile);
+//                } else {
+//                    image_profile.setImageResource(R.drawable.avatar);
+//
+//
+//                }
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
-        reference.addValueEventListener(new ValueEventListener() {
+    private void showCommentDetails(FirebaseUser firebaseUser) {
+        String userID = firebaseUser.getUid();
+
+
+        //Extracting User Reference from Database "Registezd Users"
+        DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user != null) {
-                    Glide.with(getApplicationContext()).load(user.getImageUrl()).into(image_profile);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ReadWriteUserDetailsProfile readUserDetails = snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                if (readUserDetails != null) {
+
+                    Uri uri = firebaseUser.getPhotoUrl();
+                    Picasso.with(getApplicationContext()).load(uri).into(image_profile);
+
+
                 } else {
-                    image_profile.setImageResource(R.drawable.avatar);
-
-
+                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
     }

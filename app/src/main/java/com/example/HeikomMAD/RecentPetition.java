@@ -1,5 +1,6 @@
 package com.example.HeikomMAD;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +23,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RecentPetition extends Fragment {
-
+private BottomNavigationView bottomNavigationView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +50,34 @@ public class RecentPetition extends Fragment {
         AutoCompleteTextView searchBar = rootView.findViewById(R.id.SearchBar);
 
         ArrayList<PetitionListItem> list = new ArrayList<>();
+
+        bottomNavigationView = rootView.findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.bmHome) {
+                    Intent homeIntent = new Intent(getContext(), HomePageActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                } else if (itemId == R.id.bmReward) {
+                    Intent rewardIntent = new Intent(getContext(), RewardsMainActivity.class);
+                    startActivity(rewardIntent);
+                    return true;
+                } else if (itemId == R.id.bmForum) {
+                    Intent forumIntent = new Intent(getContext(), PostActivity.class);
+                    startActivity(forumIntent);
+                    return true;
+                } else if (itemId == R.id.bmInfo) {
+                    Intent infoIntent = new Intent(getContext(), PhoneCallPermission.class);
+                    startActivity(infoIntent);
+                } else if (itemId == R.id.bmUser) {
+                    Intent profileIntent = new Intent(getContext(), UserProfileActivity.class);
+                    startActivity(profileIntent);
+                }
+                return false;
+            }
+        });
 
 
 

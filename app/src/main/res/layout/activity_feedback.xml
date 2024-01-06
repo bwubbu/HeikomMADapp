@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FeedbackActivity"
-    android:background="@color/white">
+    android:background="@color/light_green">
+
 
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/textView13"
         android:layout_width="387dp"
         android:layout_height="49dp"
-        android:fontFamily="@font/rubik_light"
+        android:fontFamily="@font/rubik_medium"
         android:text="Care to share more about it?"
         android:textSize="24sp"
         android:textStyle=""
@@ -24,13 +26,14 @@
         app:layout_constraintVertical_bias="0.394" />
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/textView11"
-        android:layout_width="147dp"
-        android:layout_height="43dp"
-        android:fontFamily="@font/rubik_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik_bold"
         android:text="Feedback"
         android:textColor="#050505"
-        android:textSize="30sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,8 +46,9 @@
         android:id="@+id/tv13"
         android:layout_width="248dp"
         android:layout_height="33dp"
-        android:fontFamily="@font/rubik_light"
+        android:fontFamily="@font/rubik_medium"
         android:text="How did we do?"
+        android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle=""
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +61,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="377dp"
-        android:layout_height="312dp"
+        android:layout_height="180dp"
         android:background="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,10 +75,11 @@
             android:layout_width="358dp"
             android:layout_height="271dp"
             android:ems="10"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
             android:hint="Write your comment here ...."
             android:inputType="text"
-            android:text="Write your comments here...."
-            android:textSize="14sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.842"
@@ -85,16 +90,17 @@
 
     <Button
         android:id="@+id/buttonSubmit"
-        android:layout_width="250dp"
-        android:layout_height="91dp"
-        android:background="@drawable/round_button"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
         android:fontFamily="@font/rubik_light"
         android:gravity="center"
+        android:textColor="@color/white"
         android:onClick="feedbackSent"
+        android:backgroundTint="#4C9A2A"
         android:text="Submit"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="20sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,11 +110,12 @@
         app:layout_constraintVertical_bias="0.27" />
 
     <RatingBar
+        android:progressTint="#FFDF00"
+        android:progressBackgroundTint="#FFFFFF"
         android:id="@+id/ratingBar"
         android:layout_width="231dp"
         android:layout_height="52dp"
         android:numStars="5"
-        android:rating="2.5"
         android:stepSize="0.5"
         android:isIndicator="false"
         android:layout_marginBottom="64dp"
@@ -116,6 +123,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="-16dp"
+            android:layout_marginRight="-10dp"
+            android:background="@color/white"
+            android:backgroundTint="#00000000"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="50dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:backgroundTint="@color/main_green"
+                app:itemTextColor="#ffffff"
+                app:itemIconTint="#ffffff"
+                app:menu="@menu/bottom_nav_menu_home_page" />
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

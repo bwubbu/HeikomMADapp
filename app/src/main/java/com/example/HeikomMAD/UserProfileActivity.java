@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private String fullName,email,doB,gender,mobile;
     private ImageView imageView;
     private FirebaseAuth authProfile;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -50,7 +53,35 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewPhoneMobile=findViewById(R.id.textview_show_phone);
         progressBar = findViewById(R.id.progressBar);
 
-        //set OnClickListener on ImageView to open uploadProfilePicture
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bmUser);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.bmHome) {
+                    Intent homeIntent = new Intent(UserProfileActivity.this, HomePageActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                } else if (itemId == R.id.bmReward) {
+                    Intent rewardIntent = new Intent(UserProfileActivity.this, RewardsMainActivity.class);
+                    startActivity(rewardIntent);
+                    return true;
+                } else if (itemId == R.id.bmForum) {
+                    Intent forumIntent = new Intent(UserProfileActivity.this, PostActivity.class);
+                    startActivity(forumIntent);
+                    return true;
+                } else if (itemId == R.id.bmInfo) {
+                    Intent infoIntent = new Intent(UserProfileActivity.this, PhoneCallPermission.class);
+                    startActivity(infoIntent);
+                } else if (itemId == R.id.bmUser) {
+                    Intent profileIntent = new Intent(UserProfileActivity.this, UserProfileActivity.class);
+                    startActivity(profileIntent);
+                }
+                return false;
+            }
+        });
+
         imageView=findViewById(R.id.imageVIew_profile_dp);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

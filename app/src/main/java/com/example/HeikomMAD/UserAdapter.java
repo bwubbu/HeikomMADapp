@@ -46,8 +46,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            usernameTextView = itemView.findViewById(R.id.username); // ID from user_item.xml
-            profileImageView = itemView.findViewById(R.id.image_profile); // ID from user_item.xml
+            usernameTextView = itemView.findViewById(R.id.usernameComment); // ID from user_item.xml
+            profileImageView = itemView.findViewById(R.id.image_profile_comment); // ID from user_item.xml
         }
 
         public void bind(User user) {

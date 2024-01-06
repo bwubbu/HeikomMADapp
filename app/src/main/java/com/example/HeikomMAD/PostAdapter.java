@@ -1,6 +1,8 @@
 package com.example.HeikomMAD;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,7 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
-        return new PostViewHolder(view);
+        return new PostViewHolder(view,parent.getContext());
     }
 
     @Override
@@ -84,7 +88,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 //                    }
 //                }
 //            });
-
 
 
         holder.bookmark.setOnClickListener(new View.OnClickListener() {
@@ -130,8 +133,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
-
-
+        holder.showPostsDetails(firebaseUser);
         holder.isLikes(post.getKey(), holder.likes, post);
         holder.nrLikes(holder.likesCounter, post.getKey());
 
@@ -139,7 +141,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             @Override
             public void onClick(View v) {
-                if (holder.likes.getTag().equals("like")){
+                if (holder.likes.getTag().equals("like")) {
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getKey())
                             .child(firebaseUser.getUid()).setValue(true);
                 } else {
@@ -179,13 +181,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
 
+        private Context context;
+        private TextView postTitle, postDescription, likesCounter, commentCounts, usernamePosts;
 
-        private TextView postTitle, postDescription, likesCounter, commentCounts;
+        private ImageView likes, profilepicPosts, commentIcon, bookmark;
 
-        private ImageView likes, imageProfile, commentIcon, bookmark ;
-
-        public PostViewHolder(@NonNull View itemView) {
+        public PostViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
+            this.context = context;
+            profilepicPosts = itemView.findViewById(R.id.image_profile_posts);
+            usernamePosts = itemView.findViewById(R.id.usernamePosts);
             bookmark = itemView.findViewById(R.id.bookmark);
             commentCounts = itemView.findViewById(R.id.commentsCount);
             commentIcon = itemView.findViewById(R.id.commentIcon);
@@ -267,7 +272,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 //
 
 
-
 //
 //                    // Update the likes count in the database
 //                    likesCountRef.setValue(currentLikesCount);
@@ -323,8 +327,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
-
-        private void updateLikesCount (String postKey, Post post){
+        private void updateLikesCount(String postKey, Post post) {
             DatabaseReference likesCountRef = FirebaseDatabase.getInstance().getReference().child("Posts").child(postKey).child("likesCount");
 
             likesCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -369,6 +372,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 Log.e("FirebaseData", "postid is null or empty in nrLikes");
             }
         }
+
         private void getComments(String postKey, TextView commentCounts) {
             if (postKey != null) {
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postKey).child("Comments");
@@ -445,6 +449,37 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 // Handle the case where firebaseUser is null
                 Log.e("FirebaseData", "FirebaseUser is null in isBookmarked");
             }
+        }
+
+        private void showPostsDetails(FirebaseUser firebaseUser) {
+            String userID = firebaseUser.getUid();
+
+
+            //Extracting User Reference from Database "Registezd Users"
+            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
+            referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ReadWriteUserDetailsProfile readUserDetails = snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                    if (readUserDetails != null) {
+                        String username = firebaseUser.getDisplayName();
+                        usernamePosts.setText(username);
+
+                        //Set user DP
+                        Uri uri = firebaseUser.getPhotoUrl();
+                        Picasso.with(context).load(uri).into(profilepicPosts);
+
+
+                    } else {
+                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

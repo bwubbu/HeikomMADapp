@@ -2,15 +2,19 @@ package com.example.HeikomMAD;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +24,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +34,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,13 +48,16 @@ public class PostActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
     private List<String> myBookmarks;
-    private RecyclerView recyclerView_saves;
-    private PostAdapter postAdapter_saves;
-    private List<Post> postList_saves;
+
+    private String username;
+    private BottomNavigationView bottomNavigationView;
+
+    private TextView headerUser, usernamePosts;
 
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
+    private ImageView headerProfilepic,profilepicPosts;
 
     private EditText searchBar;
     private String lastOrderBy = "timestamp";
@@ -65,12 +77,39 @@ public class PostActivity extends AppCompatActivity {
 
             editor.putString("profileid", publisher);
             editor.apply();
-
-
         }
 
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bmForum);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.bmHome) {
+                    Intent homeIntent = new Intent(PostActivity.this, HomePageActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                } else if (itemId == R.id.bmReward) {
+                    Intent rewardIntent = new Intent(PostActivity.this, RewardsMainActivity.class);
+                    startActivity(rewardIntent);
+                    return true;
+                } else if (itemId == R.id.bmForum) {
+                    Intent forumIntent = new Intent(PostActivity.this, PostActivity.class);
+                    startActivity(forumIntent);
+                    return true;
+                } else if (itemId == R.id.bmInfo) {
+                    Intent infoIntent = new Intent(PostActivity.this, PhoneCallPermission.class);
+                    startActivity(infoIntent);
+                } else if (itemId == R.id.bmUser) {
+                    Intent profileIntent = new Intent(PostActivity.this, UserProfileActivity.class);
+                    startActivity(profileIntent);
+                }
+                return false;
+            }
+        });
 
-
+        headerProfilepic = findViewById(R.id.headerProfilepic);
+        headerUser = findViewById(R.id.headerUser);
         searchBar = findViewById(R.id.search_bar);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -82,19 +121,18 @@ public class PostActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Create and set the adapter
         postAdapter = new PostAdapter(postList);
         recyclerView.setAdapter(postAdapter);
+//        fetchPostsFromFirebase("timestamp");
+        showUserProfile(firebaseUser);
 
 
         // Initialize Firebase Realtime Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
 
 
-        // Fetch data based on the default button (Most Recent)
 
 
-        // Set onClick listeners for your buttons
         Button mostRecentButton = findViewById(R.id.mostRecent);
         Button mostLikedButton = findViewById(R.id.mostLiked);
         Button mostCommentedButton = findViewById(R.id.mostCommented);
@@ -103,6 +141,7 @@ public class PostActivity extends AppCompatActivity {
 
 
         titleTextView.setText("Click on any of the buttons to begin!");
+        fetchPostsFromFirebase("timestamp");
 
 
         myBookmarksButton.setOnClickListener(v -> {
@@ -153,31 +192,6 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                // Handle submission if needed
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                // Check if newText is empty; if not, perform search
-//                if (!newText.isEmpty()) {
-//                    // Perform a search based on the new text
-//                    performSearch(newText);
-//                } else {
-//                    // If the search query is empty, fetch default posts
-//                    fetchPostsFromFirebase(lastOrderBy);
-//                }
-//                return true;
-//            }
-//        });
-
-
-
-
-
 
         findViewById(R.id.createPostButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +226,42 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("SearchPosts", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+
+    private void showUserProfile(FirebaseUser firebaseUser){
+        String userID=firebaseUser.getUid();
+
+
+        //Extracting User Reference from Database "Registezd Users"
+        DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                if (readUserDetails!=null){
+                    username =firebaseUser.getDisplayName();
+
+                    headerUser.setText("Welcome, "+ username + "!");
+
+//                    usernamePosts.setText(username + ".");
+
+                    //Set user DP
+                    Uri uri=firebaseUser.getPhotoUrl();
+
+                    Picasso.with(PostActivity.this).load(uri).into(headerProfilepic);
+//                    Picasso.with(PostActivity.this).load(uri).into(profilepicPosts);
+
+
+                }else{
+                    Toast.makeText(PostActivity.this,"Something went wrong!",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PostActivity.this,"Something went wrong!",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -269,70 +319,6 @@ public class PostActivity extends AppCompatActivity {
 
         postAdapter.notifyDataSetChanged();
     }
-
-//    private void performSearch(String searchText) {
-//        DatabaseReference searchReference = FirebaseDatabase.getInstance().getReference("Posts");
-//
-//        searchReference.orderByChild("titleLowerCase")
-//                .startAt(searchText.toLowerCase())
-//                .endAt(searchText.toLowerCase() + "\uf8ff")
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        List<String> postKeys = new ArrayList<>();
-//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                            String postKey = String.valueOf(dataSnapshot.getKey());
-//                            postKeys.add(postKey);
-//                        }
-//
-//                        // After getting post keys, perform search using the list
-//                        searchPosts(postKeys);
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        Log.e("SearchPosts", "Failed to read value.", error.toException());
-//                    }
-//                });
-//    }
-//    private void searchPosts(List<String> postKeys) {
-//        DatabaseReference searchReference = FirebaseDatabase.getInstance().getReference("Posts");
-//        List<Post> postListSearch = new ArrayList<>();
-//
-//        for (String postKey : postKeys) {
-//            DatabaseReference postReference = searchReference.child(postKey);
-//
-//            postReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    Post post = dataSnapshot.getValue(Post.class);
-//                    if (post != null) {
-//                        post.setKey(postKey);
-//                        postListSearch.add(post);
-//                    }
-//
-//                    // Update the UI only when all searched posts are processed
-//                    if (postListSearch.size() == postKeys.size()) {
-//                        postList.clear();
-//                        postList.addAll(postListSearch);
-//                        postAdapter.notifyDataSetChanged();
-//
-//                        // Set a title or update UI as needed
-//                        titleTextView.setText("Search Results");
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Log.e("SearchPosts", "Failed to read value.", error.toException());
-//                }
-//            });
-//        }
-//    }
-
-
-
-
 
 
     private void fetchPostsFromFirebase(String orderBy) {

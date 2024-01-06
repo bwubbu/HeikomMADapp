@@ -47,6 +47,7 @@
             android:exported="false" />
         <activity
             android:name=".PopUpWindow"
+            android:theme="@style/Theme.HeikomMAD"
             android:exported="false" />
         <activity
             android:name=".FeedbackActivity"

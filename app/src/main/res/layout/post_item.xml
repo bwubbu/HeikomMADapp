@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/image_profile"
+                    android:id="@+id/image_profile_posts"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"
@@ -44,12 +44,12 @@
             <TextView
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/username"
+                android:id="@+id/usernamePosts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_bold"
                 android:layout_weight="1"
-                android:text=""
+                android:text="From"
                 android:textSize="16dp" />
 
             <ImageView
