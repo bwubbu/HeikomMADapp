@@ -209,7 +209,7 @@ public class PetitionDetail extends Fragment {
         referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                ReadWriteUserDetails readUserDetails=snapshot.getValue(ReadWriteUserDetails.class);
                 if (readUserDetails!=null){
                     //Set user DP
                     Uri uri=firebaseUser.getPhotoUrl();

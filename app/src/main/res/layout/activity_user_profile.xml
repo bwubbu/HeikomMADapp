@@ -207,7 +207,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Update Profile"
-            android:background="@drawable/round_button"
+            android:background="@drawable/rectangle"
+            android:textColor="@color/white"
             android:id="@+id/update_profile_button"
             />
 
