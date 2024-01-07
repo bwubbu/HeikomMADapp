@@ -1,5 +1,6 @@
 package com.example.HeikomMAD;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +51,7 @@ public class PetitionDetail extends Fragment {
     private String userID;
     private String name;
     private User currentUser;
+    private ImageView profilePic;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +88,9 @@ public class PetitionDetail extends Fragment {
                 headerDesc.setText("");
                 TextView headerUser = Inflater.findViewById(R.id.headerUser);
                 headerUser.setText(Item.getTitle());
+                profilePic = Inflater.findViewById(R.id.profilePic);
+
+                showUserProfile(firebaseUser);
 
 
                 TextView author= Inflater.findViewById(R.id.Author);
@@ -194,5 +200,31 @@ public class PetitionDetail extends Fragment {
         });
 
         dialog.show();
+    }
+
+    private void showUserProfile(FirebaseUser firebaseUser){
+        String userID=firebaseUser.getUid();
+
+        DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                if (readUserDetails!=null){
+                    //Set user DP
+                    Uri uri=firebaseUser.getPhotoUrl();
+
+                    Picasso.with(getContext()).load(uri).into(profilePic);
+
+
+                }else{
+                    Toast.makeText(getContext(),"Something went wrong!",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(),"Something went wrong!",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

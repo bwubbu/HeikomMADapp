@@ -27,11 +27,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -42,12 +47,12 @@ public class CreatePetition extends Fragment {
 
     private final int PICK_IMAGE_REQUEST = 1;
 
-    private String userID = "1k8vM9yMWKdzXGIcXFZlAz5VRWZ2";
-    private String name = "jx";
+    private String userID = " ";
+    private String name = " ";
 
     private User currentUser;
     private ImageView imagePlaceholder;
-
+    private ImageView profilePic;
     private Bitmap selectedImage;
 
     @Override
@@ -58,9 +63,12 @@ public class CreatePetition extends Fragment {
         headerDesc.setText("In 5 Simple Steps");
         TextView headerUser = Inflater.findViewById(R.id.headerUser);
         headerUser.setText("Create Your Own Petition");
-        // Inflate the layout for this fragment
+        profilePic = Inflater.findViewById(R.id.profilePic);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        showUserProfile(firebaseUser);
+        // Inflate the layout for this fragment
+
 
         if (firebaseUser != null) {
             // Set userID and name based on the current user
@@ -191,5 +199,30 @@ public class CreatePetition extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void showUserProfile(FirebaseUser firebaseUser){
+        String userID=firebaseUser.getUid();
+
+        DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                if (readUserDetails!=null){
+                    //Set user DP
+                    Uri uri=firebaseUser.getPhotoUrl();
+
+                    Picasso.with(getContext()).load(uri).into(profilePic);
+
+
+                }else{
+                    Toast.makeText(getContext(),"Something went wrong!",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(),"Something went wrong!",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
