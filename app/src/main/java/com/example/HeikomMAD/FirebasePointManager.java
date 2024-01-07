@@ -210,6 +210,27 @@ public class FirebasePointManager {
         });
     }
 
+    public void fetchCompletedTaskCount(String userId, PointFetchListener listener) {
+        DatabaseReference userActivitiesRef = pointsRef.child(userId).child("completedTasks");
+        userActivitiesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int completedTaskCount = (int) dataSnapshot.getChildrenCount();
+                    listener.onPointFetchSuccess(completedTaskCount);
+                } else {
+                    listener.onPointFetchFailure("No completed tasks found for user");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onPointFetchFailure(databaseError.getMessage());
+            }
+        });
+    }
+
+
 
     private ArrayList<ActivitiesModels> convertToActivitiesModels(ArrayList<CompletedTask> completedTasks) {
         ArrayList<ActivitiesModels> activities = new ArrayList<>();

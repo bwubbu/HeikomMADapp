@@ -151,19 +151,7 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
             String userId = firebaseUser.getUid();
 
-            //testing activities
-            // Fetch completed tasks
-            firebasePointManager.fetchCompletedTasks(userId, new FirebasePointManager.ActivitiesFetchListener() {
-                @Override
-                public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
-                    activitiesAdapter.updateActivities(tasks);
-                }
-
-                @Override
-                public void onActivitiesFetchFailure(String message) {
-                    Log.e("RewardReport", "Error fetching completed tasks: " + message);
-                }
-            });
+            //calling the activites from the database
             firebasePointManager.fetchCompletedTasks(firebaseUser.getUid(), new FirebasePointManager.ActivitiesFetchListener() {
                 @Override
                 public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
@@ -228,8 +216,25 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
             Navigation.findNavController(view).navigate((R.id.rewardTask));
         });
 
+        // Fetch the completed tasks count for the user
+        /*
+        firebasePointManager.fetchCompletedTaskCount(firebaseUser.getUid(), new FirebasePointManager.PointFetchListener() {
+            @Override
+            public void onPointFetchSuccess(int completedTaskCount) {
+                // Update circular progress bar
+                circularProgressBar.setProgress(completedTaskCount);
+                circularProgressBar.setProgressMax(dataManager.getTaskCount()); // Assuming this is the total task count
+            }
+
+            @Override
+            public void onPointFetchFailure(String message) {
+                Log.e("RewardReport", "Error fetching completed tasks count: " + message);
+            }
+        });
+
+         */
         // Fetch the completed tasks count
-        int completedTasksCount = dataManager.getCompletedTasksCount(getContext());
+        int completedTasksCount = 1;
         int taskCount = dataManager.getTaskCount();
         System.out.println("Task Count:" + completedTasksCount);
         System.out.println("Model Size:" + taskModels.size());
