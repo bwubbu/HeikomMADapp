@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FirebasePointManager {
 
@@ -25,6 +26,7 @@ public class FirebasePointManager {
         pointsRef.child(userId).setValue(userReward);
     }
 
+    /*
     public void fetchPointsForUser(String userId, PointFetchListener listener) {
         pointsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -47,6 +49,33 @@ public class FirebasePointManager {
             }
         });
     }
+
+     */
+
+    public void fetchPointsForUser(String userId, PointFetchListener listener) {
+        pointsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    HashMap<String, Object> data = (HashMap<String, Object>) dataSnapshot.getValue();
+                    if (data != null && data.containsKey("points")) {
+                        int points = (int) (long) data.get("points"); // Cast to long first, then to int
+                        listener.onPointFetchSuccess(points);
+                    } else {
+                        listener.onPointFetchFailure("User data is null");
+                    }
+                } else {
+                    listener.onPointFetchFailure("User not found");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onPointFetchFailure(databaseError.getMessage());
+            }
+        });
+    }
+
 
     public void incrementTasksDone(String userId) {
         pointsRef.child(userId).child("tasksDone").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,7 +123,6 @@ public class FirebasePointManager {
         }
     }
 
-
     public void addPointsToUser(String userId, int additionalPoints, PointUpdateListener listener) {
         pointsRef.child(userId).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -114,6 +142,7 @@ public class FirebasePointManager {
             }
         });
     }
+
     public void deductPointsFromUser(String userId, int pointsToDeduct, PointUpdateListener listener) {
         pointsRef.child(userId).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -139,6 +168,7 @@ public class FirebasePointManager {
             }
         });
     }
+
     public void addCompletedTaskToUser(String userId, CompletedTask task, PointUpdateListener listener) {
         DatabaseReference userTasksRef = pointsRef.child(userId).child("completedTasks");
         userTasksRef.push().setValue(task) // push() creates a new list item
@@ -146,19 +176,31 @@ public class FirebasePointManager {
                 .addOnFailureListener(e -> listener.onPointUpdateFailure(e.getMessage()));
     }
 
+
+
     public void fetchCompletedTasks(String userId, FirebasePointManager.ActivitiesFetchListener listener) {
         DatabaseReference userActivitiesRef = pointsRef.child(userId).child("completedTasks");
         userActivitiesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<CompletedTask> tasks = new ArrayList<>();
-                for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-                    CompletedTask task = taskSnapshot.getValue(CompletedTask.class);
-                    if (task != null) {
-                        tasks.add(task);
+                if (dataSnapshot.exists()) {
+                    // Assume each child in this snapshot is a HashMap representation of a CompletedTask
+                    HashMap<String, HashMap<String, Object>> tasksMap = (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
+
+                    ArrayList<CompletedTask> tasks = new ArrayList<>();
+                    if (tasksMap != null) {
+                        for (HashMap<String, Object> taskData : tasksMap.values()) {
+                            // Extract data for each task and create CompletedTask objects
+                            String taskName = taskData.containsKey("taskName") ? (String) taskData.get("taskName") : "";
+                            long points = taskData.containsKey("points") ? (long) taskData.get("points") : 0;
+                            CompletedTask task = new CompletedTask(taskName, (int) points);
+                            tasks.add(task);
+                        }
                     }
+                    listener.onActivitiesFetchSuccess(tasks);
+                } else {
+                    listener.onActivitiesFetchFailure("No completed tasks found for user");
                 }
-                listener.onActivitiesFetchSuccess(tasks);
             }
 
             @Override
@@ -167,9 +209,6 @@ public class FirebasePointManager {
             }
         });
     }
-
-
-
 
 
     private ArrayList<ActivitiesModels> convertToActivitiesModels(ArrayList<CompletedTask> completedTasks) {
@@ -185,15 +224,8 @@ public class FirebasePointManager {
         void onActivitiesFetchFailure(String message);
     }
 
-
-
-
     public interface PointUpdateListener {
         void onPointUpdateSuccess();
         void onPointUpdateFailure(String message);
     }
-
-
-
-
 }

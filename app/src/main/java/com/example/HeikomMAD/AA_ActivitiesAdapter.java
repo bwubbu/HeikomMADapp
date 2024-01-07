@@ -56,5 +56,6 @@ public class AA_ActivitiesAdapter extends RecyclerView.Adapter<AA_ActivitiesAdap
         this.completedTasks.addAll(newTasks);
         notifyDataSetChanged(); // Notify the adapter to refresh the data
     }
+
 }
 

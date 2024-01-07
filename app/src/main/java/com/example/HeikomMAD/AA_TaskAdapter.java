@@ -68,14 +68,14 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
         holder.imageView.setImageResource(currentTask.getImageFirst());
         holder.bindIntValue(currentTask.getPointsVal());
 
-        // Use the isClicked property of the task model
-        boolean isClicked = currentTask.isClicked();
-        holder.itemView.setAlpha(isClicked ? 0.5f : 1.0f);
-        holder.itemView.setClickable(!isClicked);
+        // Load the clicked state from SharedPreferences
+        boolean isClicked = currentTask.isClicked(context);
+
+        updateUI(holder, isClicked); // Update UI based on the clicked state
 
         holder.itemView.setOnClickListener(v -> {
             if (!isClicked && currentUser != null) {
-                currentTask.setClicked(true);
+                currentTask.setClicked(context, true); // Save clicked state
                 notifyDataSetChanged();
                 int pointsToAdd = currentTask.getPointsVal();
                 String userId = currentUser.getUid();
@@ -164,12 +164,16 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
     // Method to update completedTasksCount
     private void updateCompletedTasksCount() {
         completedTasksCount++;
-        System.out.println("Completed Task Count:" + completedTasksCount);
         dataManager.saveCompletedTasksCount(applicationContext, completedTasksCount);
         notifyDataSetChanged(); // Notify RecyclerView about the data change
     }
 
     public void setCompletedTasksCount(int count) {
         this.completedTasksCount = count;
+    }
+
+    private void updateUI(MyViewHolder holder, boolean isClicked) {
+        holder.itemView.setAlpha(isClicked ? 0.5f : 1.0f);
+        holder.itemView.setClickable(!isClicked);
     }
 }

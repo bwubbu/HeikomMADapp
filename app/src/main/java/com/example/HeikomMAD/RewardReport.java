@@ -56,6 +56,9 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
     private AA_ActivitiesAdapter adapter;
 
+    AA_ActivitiesAdapter activitiesAdapter = new AA_ActivitiesAdapter(getContext(), new ArrayList<>());
+
+
 
     private CircularProgressBar circularProgressBar;
 
@@ -120,52 +123,20 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         view = inflater.inflate(R.layout.fragment_reward_report, container, false);
         headerUser = view.findViewById(R.id.headerUser);
         headerProfilepic = view.findViewById(R.id.headerProfilepic); // Initialize ImageView
-        //FirebasePointManager firebasePointManager = new FirebasePointManager();
 
-        // Initialize RecyclerView and Adapter
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPoints);
-        adapter = new AA_ActivitiesAdapter(requireContext(), new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setAdapter(adapter);
 
-        // Fetch Completed Tasks and Update RecyclerView
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser != null) {
-            String userId = firebaseUser.getUid();
-            FirebasePointManager firebasePointManager = new FirebasePointManager();
-            firebasePointManager.fetchCompletedTasks(userId, new FirebasePointManager.ActivitiesFetchListener() {
-                @Override
-                public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
-                    // Here you can now use the tasks list to update your RecyclerView
-                    adapter.updateActivities(tasks); // Assuming updateActivities method accepts ArrayList<CompletedTask>
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onActivitiesFetchFailure(String message) {
-                    Log.e("RewardReport", "Failed to fetch completed tasks: " + message);
-                }
-            });
-        } else {
-            // Handle case when no user is logged in
-        }
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // Initialize the adapter with an empty list
+        activitiesAdapter = new AA_ActivitiesAdapter(getContext(), new ArrayList<>());
+        recyclerView.setAdapter(activitiesAdapter);
 
 
-
-
-
-        //adapter = new AA_ActivitiesAdapter(requireContext(), activitiesModels);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-
-
+        //declare fpm
+        FirebasePointManager firebasePointManager = new FirebasePointManager();
         TextView pointTextView = view.findViewById(R.id.redeemPoints);
         ImageButton pointButton = view.findViewById(R.id.rewardReportButton);
-        final int[] userPoints = { PointManager.getPoints(requireContext(), "userId") };
 
         // Get the current logged-in Firebase user
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -174,7 +145,37 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         // If the user is logged in, show the user profile
         if (firebaseUser != null) {
             showUserProfile(firebaseUser);
+
+            // Initialize user data if it doesn't exist
+            firebasePointManager.initializeUserDataIfNotExists(firebaseUser, getContext());
+
             String userId = firebaseUser.getUid();
+
+            //testing activities
+            // Fetch completed tasks
+            firebasePointManager.fetchCompletedTasks(userId, new FirebasePointManager.ActivitiesFetchListener() {
+                @Override
+                public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
+                    activitiesAdapter.updateActivities(tasks);
+                }
+
+                @Override
+                public void onActivitiesFetchFailure(String message) {
+                    Log.e("RewardReport", "Error fetching completed tasks: " + message);
+                }
+            });
+            firebasePointManager.fetchCompletedTasks(firebaseUser.getUid(), new FirebasePointManager.ActivitiesFetchListener() {
+                @Override
+                public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
+                    activitiesAdapter.updateActivities(tasks);
+                }
+
+                @Override
+                public void onActivitiesFetchFailure(String message) {
+                    Log.e("YourFragmentOrActivity", "Error fetching completed tasks: " + message);
+                    // Handle the error case
+                }
+            });
 
             firebasePointManager.fetchPointsForUser(userId, new FirebasePointManager.PointFetchListener() {
                 @Override
@@ -187,6 +188,10 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
                     Log.e("RewardReport", "Failed to fetch points: " + message);
                 }
             });
+
+
+
+
         }
 
         View.OnClickListener OCLpoint = new View.OnClickListener() {
@@ -243,13 +248,10 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         checkAndShowDailyLoginToast(); // Check for daily login achievements
     }
 
+
     @Override
     public void onActivitySaved() {
-        //activitiesModels.clear(); // Clear the current list of activities
-        activitiesModels.addAll(DataManager.getInstance().getClickedTask()); // Get the latest activities
-        if (adapter != null) {
-            adapter.notifyDataSetChanged(); // Notify adapter of data changes
-        }
+        //empty implementation
     }
 
 
@@ -283,12 +285,5 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         });
     }
 
-    private ArrayList<ActivitiesModels> convertToActivitiesModels(ArrayList<CompletedTask> completedTasks) {
-        ArrayList<ActivitiesModels> activitiesModels = new ArrayList<>();
-        for (CompletedTask task : completedTasks) {
-            activitiesModels.add(new ActivitiesModels(task.getTaskName(), String.valueOf(task.getPoints())));
-        }
-        return activitiesModels;
-    }
 
 }
