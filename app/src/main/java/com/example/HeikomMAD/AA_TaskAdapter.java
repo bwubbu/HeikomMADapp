@@ -7,9 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,12 +33,26 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
     DataManager dataManager = DataManager.getInstance();
     private int completedTasksCount = 0;
     private Context applicationContext; // Add this variable
+    FirebaseUser currentUser;
+
+    private FirebasePointManager firebasePointManager;
 
     public AA_TaskAdapter(Context context, ArrayList<TaskModel> taskModels, String userId) {
         this.context = context;
         this.taskModels = taskModels;
         this.userId = userId;
-        this.applicationContext = context.getApplicationContext(); // Assign application context
+        this.applicationContext = context.getApplicationContext();
+        this.firebasePointManager = new FirebasePointManager();
+
+        // Get the current user
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(context, "No user is logged in.", Toast.LENGTH_SHORT).show();
+
+            // You can also disable the click functionality for tasks if no user is logged in
+            //holder.itemView.setClickable(false);
+            //holder.itemView.setFocusable(false);
+        }
     }
 
     @NonNull
@@ -66,10 +84,16 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
                 notifyDataSetChanged();
 
                 int pointsToAdd = currentTask.getPointsVal();
-                if (pointAdditionListener != null) {
-                    pointAdditionListener.onAddPointClicked(position, pointsToAdd);
-                    Log.d("AA_TaskAdapter", "Points added: " + pointsToAdd);
+                // Check if a user is logged in and add points to the current user
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    firebasePointManager.addPointsToUser(userId, pointsToAdd);
+                    firebasePointManager.incrementTasksDone(userId);
+                    Log.d("AA_TaskAdapter", "Points added to current user: " + pointsToAdd);
+                } else {
+                    System.out.println("There is not user");
                 }
+
 
                 updateCompletedTasksCount();
                 if (taskCompletionListener != null) {
@@ -102,7 +126,6 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
             super(itemView);
 
             imageView = itemView.findViewById(R.id.taskIcon1);
-            imageView2 = itemView.findViewById(R.id.taskIcon2);
             textView = itemView.findViewById(R.id.TVTaskView);
             textView2 = itemView.findViewById(R.id.taskPoints);
             textView3 = itemView.findViewById(R.id.testCompletedTask);

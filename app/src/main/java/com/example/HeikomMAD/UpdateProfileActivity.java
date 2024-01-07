@@ -146,7 +146,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
                     //Enter User Data into FireBase Realtime database
-                    ReadWriteUserDetailsProfile writeUserDetails=new ReadWriteUserDetailsProfile(textDoB,textGender,textMobile);
+                    ReadWriteUserDetailsProfile writeUserDetails=new ReadWriteUserDetailsProfile(textDoB,textGender,textMobile,textFullName);
                     //Extract User Reference from Database for "Registered Users"
                     DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
                     String userID=firebaseUser.getUid();
@@ -203,7 +203,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
                 if (readUserDetails!=null){
-                    textFullName=firebaseUser.getDisplayName();
+                    textFullName=readUserDetails.fullName;
                     textDoB=readUserDetails.doB;
                     textGender=readUserDetails.gender;
                     textMobile= readUserDetails.mobile;

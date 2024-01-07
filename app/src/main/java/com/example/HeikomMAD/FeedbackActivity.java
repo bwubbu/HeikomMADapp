@@ -13,23 +13,30 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FeedbackActivity extends AppCompatActivity {
     private Firebase ref;
     private EditText feedback;
     private BottomNavigationView bottomNavigationView;
+    RelativeLayout layout;
 
     RatingBar rt;
     Button button;
@@ -40,8 +47,10 @@ public class FeedbackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         feedback=findViewById(R.id.editTextFeedback);
+        layout=findViewById(R.id.relativity);
         Firebase.setAndroidContext(this);
-        ref=new Firebase("https://console.firebase.google.com/project/heikommad/database/heikommad-default-rtdb/data/~2F");
+        ref=new Firebase("https://console.firebase.google.com/project/heikommadapp/database/heikommadapp-default-rtdb/data/~2F");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://heikommadapp-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Feedback");
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -106,25 +115,44 @@ public class FeedbackActivity extends AppCompatActivity {
 
             }
         });
+
+        Button backbtn=findViewById(R.id.btnBack);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FeedbackActivity.this,HomePageActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openPopUpWindow();
+                feedbackSent();
             }
 
             private void openPopUpWindow() {
                 Intent popUpWindow=new Intent(FeedbackActivity.this, PopUpWindow.class);
                 startActivity(popUpWindow);
             }
+            public void feedbackSent(){
+                String feedbackInput=feedback.getText().toString();
+                Firebase refFeedBack=ref.child("Feedback");
+                refFeedBack.setValue(feedbackInput);
+                mDatabase.push().setValue(feedbackInput);
+            }
+
+
+
         });
 
 
 
-    }
-    public void feedbackSent(View view){
-        String feedbackInput=feedback.getText().toString();
-        Firebase refFeedBack=ref.child("Feedback");
-        refFeedBack.setValue(feedbackInput);
-    }
 
-}
+
+
+    }}
+
+

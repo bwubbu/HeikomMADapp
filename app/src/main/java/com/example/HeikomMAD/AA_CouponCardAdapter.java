@@ -1,6 +1,7 @@
 package com.example.HeikomMAD;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +13,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 public class AA_CouponCardAdapter extends RecyclerView.Adapter<AA_CouponCardAdapter.MyViewHolder> {
     Context context;
     ArrayList<CardModel> cardModels;
+    private SharedPreferences sharedPreferences;
 
     private int completedTasks = 0;
 
     public AA_CouponCardAdapter(Context context, ArrayList<CardModel> cardModels){
         this.context = context;
         this.cardModels = cardModels;
+        this.sharedPreferences = context.getSharedPreferences("CouponPrefs", Context.MODE_PRIVATE);
+        loadClickedStates();
     }
 
 
@@ -43,9 +50,63 @@ public class AA_CouponCardAdapter extends RecyclerView.Adapter<AA_CouponCardAdap
         holder.textTitle.setText(currentCard.getCouponText());
         holder.textDesc.setText(currentCard.getCouponDesc());
 
+        FirebasePointManager pointManager = new FirebasePointManager();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         int points = currentCard.getPoints();
         holder.textPoint.setText(String.valueOf(points));
 
+        // Update UI based on the clicked state of the card
+        updateUIForClickedState(currentCard, holder);
+
+        holder.redeemButton.setOnClickListener(v -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (currentUser != null && !currentCard.isClicked()) {
+                String userId = currentUser.getUid();
+
+                pointManager.fetchPointsForUser(userId, new FirebasePointManager.PointFetchListener() {
+                    @Override
+                    public void onPointFetchSuccess(int userPoints) {
+                        if (userPoints >= points) {
+                            pointManager.deductPointsFromUser(userId, points, new FirebasePointManager.PointUpdateListener() {
+                                @Override
+                                public void onPointUpdateSuccess() {
+                                    currentCard.setClicked(true);
+                                    updateUIForClickedState(currentCard, holder);
+                                    Toast.makeText(context, "Thank you! Points have been successfully redeemed", Toast.LENGTH_SHORT).show();
+
+                                    //saving the state of the card
+                                    currentCard.setClicked(true);
+                                    saveClickedState(currentCard.getCardId(), true); // Save state
+                                    updateUIForClickedState(currentCard, holder);
+
+                                    // Create and show the coupon details dialog
+                                    CouponDetailsDialog dialog = new CouponDetailsDialog(context, position); // Pass the position
+                                    dialog.show();
+                                }
+
+                                @Override
+                                public void onPointUpdateFailure(String message) {
+                                    Toast.makeText(context, "Error: " + message, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(context, "Sorry, points are not enough", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPointFetchFailure(String message) {
+                        Toast.makeText(context, "Error fetching points: " + message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(context, "Coupon already redeemed or user not logged in", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateUIForClickedState(CardModel currentCard, MyViewHolder holder) {
         if (currentCard.isClicked()) {
             holder.itemView.setAlpha(0.5f); // Set alpha to 0.5 for clicked items
             holder.redeemButton.setEnabled(false); // Disable button for clicked items
@@ -53,36 +114,8 @@ public class AA_CouponCardAdapter extends RecyclerView.Adapter<AA_CouponCardAdap
             holder.itemView.setAlpha(1.0f); // Set alpha to 1.0 for unclicked items
             holder.redeemButton.setEnabled(true); // Enable button for unclicked items
         }
-
-        holder.redeemButton.setOnClickListener(v -> {
-            if (!currentCard.isClicked()) {
-                String userId = "userId"; // Replace this with your user ID retrieval logic
-
-                boolean isDeducted = PointManager.deductPoints(context, userId, points);
-                if (isDeducted) {
-                    currentCard.setClicked(true); // Set the clicked state in the CardModel
-                    holder.itemView.setAlpha(0.5f); // Change layout alpha to show it's not clickable
-                    holder.redeemButton.setEnabled(false); // Disable the button
-
-                    // Increment completedTasks upon successful redemption
-                    completedTasks++;
-
-                    // Update the completion status of the task
-                    currentCard.setClicked(true);
-
-
-                    // Handle redemption logic here
-                    Toast.makeText(context, "Thank you! Points have been successfully redeemed", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Insufficient points, handle this scenario
-                    Toast.makeText(context, "Sorry, points are not enough", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                // Notify the user that the coupon has already been redeemed or handle accordingly
-                Toast.makeText(context, "Coupon already redeemed", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
+
 
 
     @Override
@@ -107,4 +140,19 @@ public class AA_CouponCardAdapter extends RecyclerView.Adapter<AA_CouponCardAdap
 
         }
     }
+
+    private void loadClickedStates() {
+        for (CardModel card : cardModels) {
+            boolean isClicked = sharedPreferences.getBoolean(card.getCardId(), false);
+            card.setClicked(isClicked);
+        }
+    }
+
+    private void saveClickedState(String cardId, boolean isClicked) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(cardId, isClicked);
+        editor.apply();
+    }
+
+
 }

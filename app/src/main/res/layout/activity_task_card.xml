@@ -28,26 +28,16 @@
 
             <TextView
                 android:id="@+id/TVTaskView"
-                android:fontFamily="@font/rubik_bold"
+                android:fontFamily="@font/rubik"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Pay Your Bill"
                 android:textColor="@color/black"
-                android:textSize="22sp" />
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/taskIcon1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/TVTaskView"
-                android:layout_alignStart="@id/TVTaskView"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/ic_home" />
-
-            <ImageView
-                android:id="@+id/taskIcon2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_below="@id/TVTaskView"
@@ -59,7 +49,7 @@
                 android:id="@+id/taskPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="210dp"
+                android:layout_marginStart="240dp"
                 android:text="Points Place"
                 android:gravity="right"
                 android:fontFamily="@font/rubik_bold"
