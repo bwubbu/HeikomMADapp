@@ -29,9 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends AppCompatActivity {
-    private TextView textViewWelcome,textViewFullName,textViewEmail,textViewDob,textViewGender,textViewPhoneMobile;
+    private TextView textViewWelcome,textViewUserName,textViewEmail,textViewDob,textViewGender,textViewPhoneMobile;
     private ProgressBar progressBar;
-    private String fullName,email,doB,gender,mobile;
+    private String userName,email,doB,gender,mobile;
     private ImageView imageView;
     private FirebaseAuth authProfile;
     private BottomNavigationView bottomNavigationView;
@@ -49,7 +49,7 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewDob=findViewById(R.id.textview_show_dob);
         textViewEmail=findViewById(R.id.textview_show_email);
         textViewGender=findViewById(R.id.textview_show_gendre);
-        textViewFullName=findViewById(R.id.textview_show_full_name);
+        textViewUserName=findViewById(R.id.textview_show_full_name);
         textViewPhoneMobile=findViewById(R.id.textview_show_phone);
         progressBar = findViewById(R.id.progressBar);
 
@@ -157,16 +157,16 @@ public class UserProfileActivity extends AppCompatActivity {
         referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                ReadWriteUserDetails readUserDetails=snapshot.getValue(ReadWriteUserDetails.class);
                 if (readUserDetails!=null){
-                    fullName=firebaseUser.getDisplayName();
+                    userName=firebaseUser.getDisplayName();
                     email=firebaseUser.getEmail();
                     doB=readUserDetails.doB;
                     gender=readUserDetails.gender;
                     mobile = readUserDetails.mobile;
 
-                    textViewWelcome.setText("Welcome, "+ fullName + " !");
-                    textViewFullName.setText(fullName);
+                    textViewWelcome.setText("Welcome, "+ userName + "!");
+                    textViewUserName.setText(userName);
                     textViewEmail.setText(email);
                     textViewDob.setText(doB);
                     textViewGender.setText(gender);

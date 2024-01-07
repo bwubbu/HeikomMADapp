@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,17 +54,17 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 // Check if title and description are not empty
                 if (!title.isEmpty() && !description.isEmpty()) {
-                    // Create a new post object
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if (currentUser != null) {
+                        userId = currentUser.getUid();
+                    }
                     Post post = new Post(title, description,userId);
 
                     // Push the post to the database
-                    String timestampKey = String.valueOf(System.currentTimeMillis());
-
-                    // Push the post to the database with the timestamp as the key
-                    DatabaseReference newPostRef = databaseReference.child(timestampKey);
+                    DatabaseReference newPostRef = databaseReference.push();
                     newPostRef.setValue(post);
 
-                    post.setKey(newPostRef.getKey());
+
 
                     // Display a success message
                     Toast.makeText(getApplicationContext(), "Post successfully created", Toast.LENGTH_SHORT).show();

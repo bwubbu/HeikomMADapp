@@ -40,7 +40,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private EditText editTextUpdateName,editTextUpdateDoB,editTextUpdateMobile;
     private RadioGroup radioGroupUpdateGender;
     private RadioButton radioButtonUpdateGenderSelected;
-    private String textFullName,textDoB,textGender,textMobile;
+    private String textUserName,textDoB,textGender,textMobile;
     private FirebaseAuth authProfile;
     private ProgressBar progressBar;
     private DatePickerDialog picker;
@@ -107,7 +107,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 int selectedGenderID=radioGroupUpdateGender.getCheckedRadioButtonId();
                 radioButtonUpdateGenderSelected=findViewById(selectedGenderID);
                 textGender=radioButtonUpdateGenderSelected.getText().toString();
-                textFullName=editTextUpdateName.getText().toString();
+                textUserName=editTextUpdateName.getText().toString();
                 textDoB=editTextUpdateDoB.getText().toString();
                 textMobile=editTextUpdateMobile.getText().toString();
 
@@ -117,7 +117,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 Pattern mobilePattern = Pattern.compile(mobileRegex);
                 mobileMatcher=mobilePattern.matcher(textMobile);
 
-                if (TextUtils.isEmpty(textFullName)){
+                if (TextUtils.isEmpty(textUserName)){
                     Toast.makeText(UpdateProfileActivity.this,"Please enter your full name",Toast.LENGTH_LONG).show();
                     editTextUpdateName.setError("Full Name is Required");
                     editTextUpdateName.requestFocus();
@@ -146,7 +146,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
                     //Enter User Data into FireBase Realtime database
-                    ReadWriteUserDetailsProfile writeUserDetails=new ReadWriteUserDetailsProfile(textDoB,textGender,textMobile,textFullName);
+                    ReadWriteUserDetails writeUserDetails=new ReadWriteUserDetails(textDoB,textGender,textMobile,textUserName);
                     //Extract User Reference from Database for "Registered Users"
                     DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
                     String userID=firebaseUser.getUid();
@@ -157,7 +157,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
                                 //Setting new Diplay Name
-                                UserProfileChangeRequest profileUpdates=new UserProfileChangeRequest.Builder().setDisplayName(textFullName).build();
+                                UserProfileChangeRequest profileUpdates=new UserProfileChangeRequest.Builder().setDisplayName(textUserName).build();
                                 firebaseUser.updateProfile(profileUpdates);
                                 Toast.makeText(UpdateProfileActivity.this,"Update Successful!",Toast.LENGTH_LONG).show();
 
@@ -201,14 +201,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
         referenceProfile.child(userIDofRegistered).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ReadWriteUserDetailsProfile readUserDetails=snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                ReadWriteUserDetails readUserDetails=snapshot.getValue(ReadWriteUserDetails.class);
                 if (readUserDetails!=null){
-                    textFullName=readUserDetails.fullName;
+                    textUserName=readUserDetails.userName;
                     textDoB=readUserDetails.doB;
                     textGender=readUserDetails.gender;
                     textMobile= readUserDetails.mobile;
 
-                    editTextUpdateName.setText(textFullName);
+                    editTextUpdateName.setText(textUserName);
                     editTextUpdateDoB.setText(textDoB);
                     editTextUpdateMobile.setText(textMobile);
 
