@@ -10,6 +10,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class FirebasePointManager {
 
     private DatabaseReference pointsRef;
@@ -46,24 +48,6 @@ public class FirebasePointManager {
         });
     }
 
-    public void addPointsToUser(String userId, int additionalPoints) {
-        pointsRef.child(userId).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    Integer currentPoints = dataSnapshot.getValue(Integer.class);
-                    if (currentPoints == null) currentPoints = 0;
-                    pointsRef.child(userId).child("points").setValue(currentPoints + additionalPoints);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle database error here if needed
-            }
-        });
-    }
-
     public void incrementTasksDone(String userId) {
         pointsRef.child(userId).child("tasksDone").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,8 +78,9 @@ public class FirebasePointManager {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (!dataSnapshot.exists()) {
-                        // Initialize with the user's name and 0 points and 0 tasks done
+                        // Initialize with the user's name, 0 points, and 0 tasks done
                         UserReward newUserReward = new UserReward(userName, 0, 0);
+                        newUserReward.setCompletedTasks(new ArrayList<>()); // Initialize empty list of completed tasks
                         pointsRef.child(userId).setValue(newUserReward);
                     }
                     // Existing data handling...
@@ -108,6 +93,7 @@ public class FirebasePointManager {
             });
         }
     }
+
 
     public void addPointsToUser(String userId, int additionalPoints, PointUpdateListener listener) {
         pointsRef.child(userId).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -153,6 +139,53 @@ public class FirebasePointManager {
             }
         });
     }
+    public void addCompletedTaskToUser(String userId, CompletedTask task, PointUpdateListener listener) {
+        DatabaseReference userTasksRef = pointsRef.child(userId).child("completedTasks");
+        userTasksRef.push().setValue(task) // push() creates a new list item
+                .addOnSuccessListener(aVoid -> listener.onPointUpdateSuccess())
+                .addOnFailureListener(e -> listener.onPointUpdateFailure(e.getMessage()));
+    }
+
+    public void fetchCompletedTasks(String userId, FirebasePointManager.ActivitiesFetchListener listener) {
+        DatabaseReference userActivitiesRef = pointsRef.child(userId).child("completedTasks");
+        userActivitiesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<CompletedTask> tasks = new ArrayList<>();
+                for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    CompletedTask task = taskSnapshot.getValue(CompletedTask.class);
+                    if (task != null) {
+                        tasks.add(task);
+                    }
+                }
+                listener.onActivitiesFetchSuccess(tasks);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onActivitiesFetchFailure(databaseError.getMessage());
+            }
+        });
+    }
+
+
+
+
+
+    private ArrayList<ActivitiesModels> convertToActivitiesModels(ArrayList<CompletedTask> completedTasks) {
+        ArrayList<ActivitiesModels> activities = new ArrayList<>();
+        for (CompletedTask task : completedTasks) {
+            activities.add(new ActivitiesModels(task.getTaskName(), String.valueOf(task.getPoints())));
+        }
+        return activities;
+    }
+
+    public interface ActivitiesFetchListener {
+        void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks);
+        void onActivitiesFetchFailure(String message);
+    }
+
+
 
 
     public interface PointUpdateListener {

@@ -111,26 +111,6 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         }
     }
 
-    /*
-    private void updatePointsDisplay() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            firebasePointManager.fetchPointsForUser(userId, new FirebasePointManager.PointFetchListener() {
-                @Override
-                public void onPointFetchSuccess(int points) {
-                    TextView pointTextView = view.findViewById(R.id.redeemPoints);
-                    pointTextView.setText(String.valueOf(points));
-                }
-
-                @Override
-                public void onPointFetchFailure(String message) {
-                    Log.e("RewardReport", "Failed to fetch points: " + message);
-                }
-            });
-        }
-    }
-    */
 
 
 
@@ -140,15 +120,43 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         view = inflater.inflate(R.layout.fragment_reward_report, container, false);
         headerUser = view.findViewById(R.id.headerUser);
         headerProfilepic = view.findViewById(R.id.headerProfilepic); // Initialize ImageView
+        //FirebasePointManager firebasePointManager = new FirebasePointManager();
 
-
+        // Initialize RecyclerView and Adapter
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPoints);
+        adapter = new AA_ActivitiesAdapter(requireContext(), new ArrayList<>());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
 
-        activitiesModels = DataManager.getInstance().getClickedTask();
-        for(int i=0;i<activitiesModels.size();i++){
-            System.out.println(activitiesModels);
+        // Fetch Completed Tasks and Update RecyclerView
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            String userId = firebaseUser.getUid();
+            FirebasePointManager firebasePointManager = new FirebasePointManager();
+            firebasePointManager.fetchCompletedTasks(userId, new FirebasePointManager.ActivitiesFetchListener() {
+                @Override
+                public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
+                    // Here you can now use the tasks list to update your RecyclerView
+                    adapter.updateActivities(tasks); // Assuming updateActivities method accepts ArrayList<CompletedTask>
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onActivitiesFetchFailure(String message) {
+                    Log.e("RewardReport", "Failed to fetch completed tasks: " + message);
+                }
+            });
+        } else {
+            // Handle case when no user is logged in
         }
-        adapter = new AA_ActivitiesAdapter(requireContext(), activitiesModels);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+
+
+
+        //adapter = new AA_ActivitiesAdapter(requireContext(), activitiesModels);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -168,12 +176,10 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
             showUserProfile(firebaseUser);
             String userId = firebaseUser.getUid();
 
-            // Fetch the user's points from the database
             firebasePointManager.fetchPointsForUser(userId, new FirebasePointManager.PointFetchListener() {
                 @Override
                 public void onPointFetchSuccess(int points) {
-                    // Set the text of the TextView with the fetched points
-                    pointTextView.setText(String.valueOf(points));
+                    pointTextView.setText(String.valueOf(points) + " Points"); // Update TextView
                 }
 
                 @Override
@@ -277,12 +283,12 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         });
     }
 
-
-
-
-
-
-
-
+    private ArrayList<ActivitiesModels> convertToActivitiesModels(ArrayList<CompletedTask> completedTasks) {
+        ArrayList<ActivitiesModels> activitiesModels = new ArrayList<>();
+        for (CompletedTask task : completedTasks) {
+            activitiesModels.add(new ActivitiesModels(task.getTaskName(), String.valueOf(task.getPoints())));
+        }
+        return activitiesModels;
+    }
 
 }

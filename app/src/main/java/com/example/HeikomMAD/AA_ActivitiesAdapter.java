@@ -14,50 +14,47 @@ import java.util.ArrayList;
 
 public class AA_ActivitiesAdapter extends RecyclerView.Adapter<AA_ActivitiesAdapter.MyViewHolder> {
     Context context;
-    ArrayList<ActivitiesModels> activitiesModels;
+    ArrayList<CompletedTask> completedTasks;
 
-    public AA_ActivitiesAdapter(Context context, ArrayList<ActivitiesModels> activitiesModels){
+    public AA_ActivitiesAdapter(Context context, ArrayList<CompletedTask> completedTasks){
         this.context = context;
-        this.activitiesModels = activitiesModels;
+        this.completedTasks = completedTasks;
     }
-
 
     @NonNull
     @Override
     public AA_ActivitiesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //inflate layout and show the row
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.points_rewards, parent, false);
-
         return new AA_ActivitiesAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@  NonNull AA_ActivitiesAdapter.MyViewHolder holder, int position) {
-        System.out.println(position + " : " + activitiesModels.get(position).toString());
-        //assign value to view we created
-        holder.activityRep.setText(activitiesModels.get(position).getActivity());
-        holder.pointsRep.setText(activitiesModels.get(position).getPoints());
-
+    public void onBindViewHolder(@NonNull AA_ActivitiesAdapter.MyViewHolder holder, int position) {
+        CompletedTask task = completedTasks.get(position);
+        holder.activityRep.setText(task.getTaskName());
+        holder.pointsRep.setText(String.valueOf(task.getPoints()));
     }
 
     @Override
     public int getItemCount() {
-        return activitiesModels.size();
+        return completedTasks.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        //grabbing view from recycle view and put the data into the layout
-
-
-        TextView activityRep,pointsRep;
+        TextView activityRep, pointsRep;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            activityRep =  itemView.findViewById(R.id.textActions);
+            activityRep = itemView.findViewById(R.id.textActions);
             pointsRep = itemView.findViewById(R.id.textShowPoints);
-
         }
     }
+
+    public void updateActivities(ArrayList<CompletedTask> newTasks) {
+        this.completedTasks.clear();
+        this.completedTasks.addAll(newTasks);
+        notifyDataSetChanged(); // Notify the adapter to refresh the data
+    }
 }
+

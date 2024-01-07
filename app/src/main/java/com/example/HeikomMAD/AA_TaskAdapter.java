@@ -48,15 +48,12 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(context, "No user is logged in.", Toast.LENGTH_SHORT).show();
-
-            // You can also disable the click functionality for tasks if no user is logged in
-            //holder.itemView.setClickable(false);
-            //holder.itemView.setFocusable(false);
         }
     }
 
     @NonNull
     @Override
+
     public AA_TaskAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate layout and show the row
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -67,45 +64,58 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull AA_TaskAdapter.MyViewHolder holder, int position) {
         TaskModel currentTask = taskModels.get(position);
-
         holder.textView.setText(currentTask.getTaskText());
         holder.imageView.setImageResource(currentTask.getImageFirst());
         holder.bindIntValue(currentTask.getPointsVal());
 
-
-        boolean isClicked = currentTask.isClicked(context);
+        // Use the isClicked property of the task model
+        boolean isClicked = currentTask.isClicked();
         holder.itemView.setAlpha(isClicked ? 0.5f : 1.0f);
         holder.itemView.setClickable(!isClicked);
 
         holder.itemView.setOnClickListener(v -> {
-            if (!isClicked) {
-                currentTask.setClicked(context, true);
-                //updateCompletedTasksCount(); // Update completed task count in DataManager
+            if (!isClicked && currentUser != null) {
+                currentTask.setClicked(true);
                 notifyDataSetChanged();
-
                 int pointsToAdd = currentTask.getPointsVal();
-                // Check if a user is logged in and add points to the current user
-                if (currentUser != null) {
-                    String userId = currentUser.getUid();
-                    firebasePointManager.addPointsToUser(userId, pointsToAdd);
-                    firebasePointManager.incrementTasksDone(userId);
-                    Log.d("AA_TaskAdapter", "Points added to current user: " + pointsToAdd);
-                } else {
-                    System.out.println("There is not user");
-                }
+                String userId = currentUser.getUid();
 
+                // Adding points to the user
+                firebasePointManager.addPointsToUser(userId, pointsToAdd, new FirebasePointManager.PointUpdateListener() {
+                    @Override
+                    public void onPointUpdateSuccess() {
+                        // Creating a CompletedTask object for the completed task
+                        CompletedTask completedTask = new CompletedTask(currentTask.getTaskText(), pointsToAdd);
+                        // Adding the completed task to the user's record in Firebase
+                        firebasePointManager.addCompletedTaskToUser(userId, completedTask, new FirebasePointManager.PointUpdateListener() {
+                            @Override
+                            public void onPointUpdateSuccess() {
+                                Log.d("AA_TaskAdapter", "Task added to completed tasks for user: " + userId);
+                            }
 
+                            @Override
+                            public void onPointUpdateFailure(String message) {
+                                Log.e("AA_TaskAdapter", "Error adding task to completed tasks: " + message);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onPointUpdateFailure(String message) {
+                        Log.e("AA_TaskAdapter", "Error adding points to user: " + message);
+                    }
+                });
+
+                firebasePointManager.incrementTasksDone(userId);
+                Log.d("AA_TaskAdapter", "Points added to current user: " + pointsToAdd);
                 updateCompletedTasksCount();
                 if (taskCompletionListener != null) {
-                    //taskCompletionListener.onTaskCompleted(completedTasksCount);
                     Log.d("AA_TaskAdapter", "Task completed. Total completed tasks: " + completedTasksCount);
                 }
-
             }
         });
-
-
     }
+
 
 
 
