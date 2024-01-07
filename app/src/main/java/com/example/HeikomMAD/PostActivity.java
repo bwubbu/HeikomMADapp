@@ -52,7 +52,7 @@ public class PostActivity extends AppCompatActivity {
     private String username;
     private BottomNavigationView bottomNavigationView;
 
-    private TextView headerUser, usernamePosts;
+    private TextView headerUser;
 
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
@@ -68,6 +68,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
 
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
@@ -118,10 +119,12 @@ public class PostActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.titleTextView);
 
 
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         postAdapter = new PostAdapter(postList);
+
         recyclerView.setAdapter(postAdapter);
 //        fetchPostsFromFirebase("timestamp");
         showUserProfile(firebaseUser);
@@ -130,7 +133,7 @@ public class PostActivity extends AppCompatActivity {
         // Initialize Firebase Realtime Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
 
-
+        readPosts();
 
 
         Button mostRecentButton = findViewById(R.id.mostRecent);
@@ -139,9 +142,8 @@ public class PostActivity extends AppCompatActivity {
         Button myBookmarksButton = findViewById(R.id.myBookmarks);
 
 
+        titleTextView.setText("Click on any button to start sorting your posts!☝️");
 
-        titleTextView.setText("Click on any of the buttons to begin!");
-        fetchPostsFromFirebase("timestamp");
 
 
         myBookmarksButton.setOnClickListener(v -> {
@@ -161,12 +163,14 @@ public class PostActivity extends AppCompatActivity {
 
 
         mostLikedButton.setOnClickListener(v -> {
-            sortPostsByLikesCount();
-            fetchPostsFromFirebase("likesCount");
+            titleTextView.setText("Most Liked");
+            sortPostsByCommentCount();
+            fetchPostsFromFirebases("commentCount");
+
 
         });
 
-        readPosts();
+
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -298,16 +302,7 @@ public class PostActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void sortPostsByLikesCount() {
-        Collections.sort(postList, new Comparator<Post>() {
-            @Override
-            public int compare(Post post1, Post post2) {
-                return Integer.compare(post2.getLikesCount(), post1.getLikesCount());
-            }
-        });
 
-        postAdapter.notifyDataSetChanged();
-    }
 
     private void sortPostsByCommentCount() {
         Collections.sort(postList, new Comparator<Post>() {
@@ -352,6 +347,35 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    private void fetchPostsFromFirebases(String orderBy) {
+        postList.clear();
+        postAdapter.notifyDataSetChanged();
+
+        databaseReference.orderByChild(orderBy).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Log.d("FirebaseData", "Post key from dataSnapshot: " + dataSnapshot.getKey());
+                    Post post = dataSnapshot.getValue(Post.class);
+                    if (post != null) {
+                        post.setKey(String.valueOf(dataSnapshot.getKey()));
+                        postList.add(0, post);
+                    }
+                }
+
+                Log.d("FirebaseData", "Number of posts retrieved: " + postList.size());
+                postAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("MostRecent", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
     private void updateTitle(String orderBy) {
         switch (orderBy) {
             case "timestamp":
@@ -386,7 +410,9 @@ public class PostActivity extends AppCompatActivity {
                 }
                 Log.d("FirebaseData", "Number of bookmarks: " + myBookmarks.size());
                 readBookmarks(myBookmarks);
+                postAdapter.notifyDataSetChanged();
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

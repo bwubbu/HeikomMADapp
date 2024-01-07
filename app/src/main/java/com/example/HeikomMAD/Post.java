@@ -1,7 +1,18 @@
 package com.example.HeikomMAD;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class Post {
     public String title;
+
+    private FirebaseUser firebaseUser;
     public String description;
     private long timestamp;
     private String key;
@@ -27,6 +38,13 @@ public class Post {
         this.key = key;
         this.titleLowerCase = title.toLowerCase();
     }
+    
+    // Callback interface for likes count
+    public interface OnLikesCountCallback {
+        void onLikesCountReceived(long likesCount);
+
+        void onLikesCountError(DatabaseError error);
+    }
 
     public String getTitleLowerCase() {
         return titleLowerCase;
@@ -42,6 +60,10 @@ public class Post {
 
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setKey(String key) {

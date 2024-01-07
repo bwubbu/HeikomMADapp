@@ -34,7 +34,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     private FirebaseUser firebaseUser;
 
-
     private List<Post> postList;
 
     public PostAdapter(List<Post> postList) {
@@ -53,15 +52,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
 
         Post post = postList.get(position);
-        holder.getComments(post.getKey(), holder.commentCounts);
+
 
         if (post != null) {
             Log.d("PostAdapter", "Post key: " + post.getKey());
-            // ... (rest of your code)
+            holder.getComments(post.getKey(), holder.commentCounts);
         } else {
             Log.e("PostAdapter", "Post is null at position: " + position);
-        }
 
+        }
+        holder.setPostPublisherId(post.getUserId());
         holder.commentIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +133,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
-        holder.showPostsDetails(firebaseUser);
+        holder.showPostsDetails(post.getUserId(), post.getKey());
         holder.isLikes(post.getKey(), holder.likes, post);
         holder.nrLikes(holder.likesCounter, post.getKey());
 
@@ -148,8 +148,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getKey())
                             .child(firebaseUser.getUid()).removeValue();
                 }
-            }
-        });
+
+            }});
 
         holder.commentCounts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +181,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
 
+        private String postPublisherId;
         private Context context;
         private TextView postTitle, postDescription, likesCounter, commentCounts, usernamePosts;
 
@@ -200,92 +201,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             postTitle = itemView.findViewById(R.id.postTitle);
             postDescription = itemView.findViewById(R.id.postDescription);
 
-//            likes.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = getAbsoluteAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        Post post = postList.get(position);
-//                        handleLikeClick(post, likes, position);
-//                    }
-//                }
-//            });
-//        }
 
-//        public void handleLikeClick(Post post, ImageView likesImageView, int position) {
-//            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//            if (firebaseUser != null) {
-//                String postKey = post.getKey();
-//                if (postKey != null) {
-//                    DatabaseReference likesRef = FirebaseDatabase.getInstance().getReference().child("Posts").child(postKey).child("Likes");
-//
-//                    likesRef.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            if (dataSnapshot.exists()) {
-//                                // User has already liked, remove the like
-//                                likesRef.child(firebaseUser.getUid()).removeValue();
-//                                post.setLiked(false);
-//
-//                            } else {
-//                                // User has not liked, add the like
-//                                likesRef.child(firebaseUser.getUid()).setValue(true);
-//                                post.setLiked(true);
-//                            }
-//
-//                            // Update the likes count in the database
-//                            updateLikesCount(postKey, post);
-//
-//                            // Update the UI immediately after the like is clicked
-//                            updateLikeUI(position, post, likesImageView);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                            // Handle the error if needed
-//                        }
-//                    });
-//                } else {
-//                    // Handle the case where postKey is null
-//                    Log.e("FirebaseData", "Post key is null in handleLikeClick");
-//                }
-//            } else {
-//                // Handle the case where firebaseUser is null
-//                Log.e("FirebaseData", "FirebaseUser is null in handleLikeClick");
-//            }
-//        }
-//
-//        private void updateLikeUI(int position, Post post, ImageView likesImageView) {
-//            if (post.isLiked()) {
-//                likesImageView.setImageResource(R.drawable.likedicon);
-//            } else {
-//                likesImageView.setImageResource(R.drawable.likeicon);
-//            }
-//
-//            likesImageView.setTag(post.isLiked() ? "Liked" : "NotLiked");
-//
-//            // Notify only the specific item that needs to be updated
-//            postList.get(position).setLikesCount(post.getLikesCount());
-//            notifyItemChanged(position);
-//        }
-//
-//
+        }
 
-
-//
-//                    // Update the likes count in the database
-//                    likesCountRef.setValue(currentLikesCount);
-//                    post.setLikesCount((int) currentLikesCount);
-//
-//                    // Update the UI
-//                    runOnUiThread(() -> notifyDataSetChanged());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    // Handle the error if needed
-//                }
-//            });
+        public void setPostPublisherId(String postPublisherId) {
+            this.postPublisherId = postPublisherId;
         }
 
 
@@ -313,7 +233,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                             imageView.setImageResource(R.drawable.likeicon);
                             imageView.setTag("like");
                         }
+
                     }
+
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -327,32 +249,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
-        private void updateLikesCount(String postKey, Post post) {
-            DatabaseReference likesCountRef = FirebaseDatabase.getInstance().getReference().child("Posts").child(postKey).child("likesCount");
-
-            likesCountRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    long currentLikesCount = dataSnapshot.getValue(Long.class);
-                    if (post.isLiked()) {
-                        // User liked the post, increase the likes count
-                        currentLikesCount++;
-                    } else {
-                        // User unliked the post, decrease the likes count
-                        currentLikesCount = Math.max(0, currentLikesCount - 1);
-                    }
-                    likesCountRef.setValue(currentLikesCount);
-                    post.setLikesCount((int) currentLikesCount);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-
-
         private void nrLikes(TextView likes, String postid) {
             if (postid != null && !postid.isEmpty()) {
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postid);
@@ -360,7 +256,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        long likesCount = dataSnapshot.getChildrenCount();
                         likes.setText(dataSnapshot.getChildrenCount() + " likes");
+
                     }
 
                     @Override
@@ -401,10 +299,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         }
 
-        private void runOnUiThread(Runnable action) {
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(action);
-        }
+
+//        private void runOnUiThread(Runnable action) {
+//            Handler handler = new Handler(Looper.getMainLooper());
+//            handler.post(action);
+//        }
 
         private void updateCommentCountInDatabase(String postKey, long commentsCount) {
             DatabaseReference postReference = FirebaseDatabase.getInstance().getReference("Posts").child(postKey);
@@ -451,18 +350,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         }
 
-        private void showPostsDetails(FirebaseUser firebaseUser) {
-            String userID = firebaseUser.getUid();
+        private void showPostsDetails(String userId, String postid) {
 
 
-            //Extracting User Reference from Database "Registezd Users"
+
             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
-            referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            referenceProfile.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ReadWriteUserDetailsProfile readUserDetails = snapshot.getValue(ReadWriteUserDetailsProfile.class);
+                        ReadWriteUserDetails readUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
                     if (readUserDetails != null) {
-                        String username = firebaseUser.getDisplayName();
+                        String username = readUserDetails.userName;
                         usernamePosts.setText(username);
 
                         //Set user DP
