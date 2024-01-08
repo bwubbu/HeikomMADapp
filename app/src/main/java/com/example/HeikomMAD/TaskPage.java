@@ -6,11 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -23,7 +27,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
     //private ArrayList<ActivitiesModels> activitiesModels = new ArrayList<>();
 
-
+    private FirebasePointManager firebasePointManager;
     DataManager dataManager = DataManager.getInstance();
 
     //for progress bar
@@ -47,6 +51,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         super.onCreate(savedInstanceState);
         // Set this fragment as the observer for activity saved events
         DataManager.getInstance().setActivitySavedListener(this);
+        firebasePointManager = new FirebasePointManager();
     }
 
     @Override
@@ -71,7 +76,8 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
 
         System.out.println("Task Model Size:" + taskModel.size());
-        String userId = "userId";
+         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();;
+         String userId = currentUser.getUid();
         //AA_TaskAdapter adapter = new AA_TaskAdapter(getActivity(), taskModel, userId);
 
         adapter = new AA_TaskAdapter(requireContext(), taskModel, userId);
@@ -81,36 +87,55 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
         progressBar = view.findViewById(R.id.progressBarTP);
         //final int[] userPoints = {PointManager.getPoints(requireContext(), "userId")};
-        int userPoints = PointManager.getPoints(requireContext(), "userId"); // Fetch the user's points as an integer
+        //int userPoints = PointManager.getPoints(requireContext(), "userId"); // Fetch the user's points as an integer
         progressBar.setMax(30000);
 
-        dataManager.saveTotalTask(taskModel.size());
+        //dataManager.saveTotalTask(taskModel.size());
         setActivitiesModel();
         adapter.notifyDataSetChanged();
+        // Fetch and set initial user points
+        fetchAndUpdateUserPoints();
 
         return view;
+
     }
 
 
     public void onAddPointClicked(int position, int pointsToAdd) {
-        // Implement logic to add points for the user
-        String userId = "userId"; // Simulating a user ID for testing purposes
-        PointManager.addPoints(requireContext(), userId, pointsToAdd);
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        firebasePointManager.addPointsToUser(userId, pointsToAdd, new FirebasePointManager.PointUpdateListener() {
+            @Override
+            public void onPointUpdateSuccess() {
+                // Points successfully added, now fetch the updated points
+                fetchAndUpdateUserPoints();
+            }
+
+            @Override
+            public void onPointUpdateFailure(String message) {
+                // Handle failure to add points
+            }
+        });
 
         // Update the clicked status for the respective task
         TaskModel task = taskModel.get(position);
         task.setClicked(true); // Assuming the task was clicked
         adapter.notifyItemChanged(position); // Update the RecyclerView item
-
-        // Update the progress bar with the new points
-        updateProgressBar();
     }
 
+    private void fetchAndUpdateUserPoints() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Fetch the current user ID
+        firebasePointManager.fetchPointsForUser(userId, new FirebasePointManager.PointFetchListener() {
+            @Override
+            public void onPointFetchSuccess(int points) {
+                progressBar.setProgress(points); // Update the progress bar
+            }
 
-    private void updateProgressBar() {
-        String userId = "userId"; // Simulating a user ID for testing purposes
-        int userPoints = PointManager.getPoints(requireContext(), userId);
-        progressBar.setProgress(userPoints);
+            @Override
+            public void onPointFetchFailure(String message) {
+                Log.e("TaskPage", "Error fetching points: " + message);
+                // Handle error
+            }
+        });
     }
 
 
@@ -134,14 +159,14 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         }
     }
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();
+        // Refresh the progress bar when fragment resumes
+        fetchAndUpdateUserPoints();
         if (adapter != null) {
-            int completedTaskCount = DataManager.getInstance().getCompletedTasksCount(this.getContext());
+            fetchAndUpdateUserPoints(); // Fetch and update user points when fragment is resumed
+            int completedTaskCount = DataManager.getInstance().getCompletedTasksCount(getContext());
             adapter.setCompletedTasksCount(completedTaskCount);
             adapter.notifyDataSetChanged();
         }
