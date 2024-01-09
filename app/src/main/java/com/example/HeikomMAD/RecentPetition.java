@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class RecentPetition extends Fragment {
 private BottomNavigationView bottomNavigationView;
@@ -69,6 +65,7 @@ private BottomNavigationView bottomNavigationView;
         ArrayList<PetitionListItem> list = new ArrayList<>();
 
         bottomNavigationView = rootView.findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bmPetition);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -77,8 +74,8 @@ private BottomNavigationView bottomNavigationView;
                     Intent homeIntent = new Intent(getContext(), HomePageActivity.class);
                     startActivity(homeIntent);
                     return true;
-                } else if (itemId == R.id.bmReward) {
-                    Intent rewardIntent = new Intent(getContext(), RewardsMainActivity.class);
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(getContext(), PetitionMainActivity.class);
                     startActivity(rewardIntent);
                     return true;
                 } else if (itemId == R.id.bmForum) {

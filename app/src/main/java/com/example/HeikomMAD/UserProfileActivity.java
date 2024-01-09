@@ -63,8 +63,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     Intent homeIntent = new Intent(UserProfileActivity.this, HomePageActivity.class);
                     startActivity(homeIntent);
                     return true;
-                } else if (itemId == R.id.bmReward) {
-                    Intent rewardIntent = new Intent(UserProfileActivity.this, RewardsMainActivity.class);
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(UserProfileActivity.this, PetitionMainActivity.class);
                     startActivity(rewardIntent);
                     return true;
                 } else if (itemId == R.id.bmForum) {

@@ -38,8 +38,8 @@ public class PhoneCallPermission extends AppCompatActivity {
                     Intent homeIntent = new Intent(PhoneCallPermission.this, HomePageActivity.class);
                     startActivity(homeIntent);
                     return true;
-                } else if (itemId == R.id.bmReward) {
-                    Intent rewardIntent = new Intent(PhoneCallPermission.this, RewardsMainActivity.class);
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(PhoneCallPermission.this, PetitionMainActivity.class);
                     startActivity(rewardIntent);
                     return true;
                 } else if (itemId == R.id.bmForum) {

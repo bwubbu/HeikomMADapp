@@ -5,25 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -61,8 +50,8 @@ public class FeedbackActivity extends AppCompatActivity {
                     Intent homeIntent = new Intent(FeedbackActivity.this, HomePageActivity.class);
                     startActivity(homeIntent);
                     return true;
-                } else if (itemId == R.id.bmReward) {
-                    Intent rewardIntent = new Intent(FeedbackActivity.this, RewardsMainActivity.class);
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(FeedbackActivity.this, PetitionMainActivity.class);
                     startActivity(rewardIntent);
                     return true;
                 } else if (itemId == R.id.bmForum) {

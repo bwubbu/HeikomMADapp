@@ -29,6 +29,7 @@
             android:layout_width="409dp"
             android:layout_height="60dp"
             android:background="@color/off_white"
+
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +92,7 @@
             android:id="@+id/rewardsHomePage"
             android:layout_width="180dp"
             android:layout_height="140dp"
+
             android:layout_marginBottom="220dp"
             android:background="@drawable/rectangle_rewards_button"
             android:fontFamily="@font/rubik_bold"

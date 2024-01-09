@@ -1,7 +1,6 @@
 package com.example.HeikomMAD;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -13,8 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -29,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -73,8 +69,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     Intent homeIntent = new Intent(HomePageActivity.this, HomePageActivity.class);
                     startActivity(homeIntent);
                     return true;
-                } else if (itemId == R.id.bmReward) {
-                    Intent rewardIntent = new Intent(HomePageActivity.this, RewardsMainActivity.class);
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(HomePageActivity.this, PetitionMainActivity.class);
                     startActivity(rewardIntent);
                     return true;
                 } else if (itemId == R.id.bmForum) {

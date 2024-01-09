@@ -5,9 +5,10 @@
         android:title="Home"
         android:icon="@drawable/ic_home" />
 
-    <item android:id="@+id/bmReward"
-        android:title="Reward"
-        android:icon="@drawable/ic_circle" />
+    <item
+        android:id="@+id/bmPetition"
+        android:icon="@drawable/ic_circle"
+        android:title="Petition" />
 
     <item
         android:id="@+id/bmForum"
