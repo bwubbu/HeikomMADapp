@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name = "AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">#00000000</item>
+
+    </style>
 
     <style name = "ToolbarStyle" parent = "@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:fontFamily">@font/rubik_bold</item>
