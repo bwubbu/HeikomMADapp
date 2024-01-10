@@ -149,7 +149,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         String userID=firebaseUser.getUid();
 
 
-        //Extracting User Reference from Database "Registezd Users"
+        //Extracting User Reference from Database "Registered Users"
         DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
         referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -176,6 +176,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Log Out");
         builder.setMessage("Are you sure you want to log out?")
                 .setPositiveButton("Yes", (dialogInterface, i) -> logoutUser())
                 .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())

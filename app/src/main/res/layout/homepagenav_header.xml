@@ -7,11 +7,11 @@
     android:gravity="bottom">
 
     <TextView
-        android:id="@+id/textview_show_welcome"
+        android:id="@+id/textview_show_welcome_navbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="Loading...."
+        android:text="HeiKom"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/white"
         android:textSize="50dp" />

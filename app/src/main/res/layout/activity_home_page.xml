@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/off_white"
+    android:background="@color/off_blue"
     android:id="@+id/drawer_layout"
     tools:context=".HomePageActivity"
     android:fitsSystemWindows="true"
@@ -28,8 +28,6 @@
             android:id="@+id/toolbar"
             android:layout_width="409dp"
             android:layout_height="60dp"
-            android:background="@color/off_white"
-
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +39,7 @@
             android:id="@+id/textview_show_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="80dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:textAlignment="textStart"
@@ -54,9 +52,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/forumHomePage"
-            android:layout_width="370dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="330dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="28dp"
             android:background="@drawable/rectangle_forum_buttons"
             android:fontFamily="@font/rubik_bold"
             android:text="Join Discussions"
@@ -65,35 +63,17 @@
             android:textSize="24dp"
             app:layout_constraintBottom_toTopOf="@+id/petitionHomePage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </androidx.appcompat.widget.AppCompatButton>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/feedbackHomePage"
-            android:layout_width="180dp"
-            android:layout_height="140dp"
-            android:layout_marginBottom="220dp"
-            android:background="@drawable/rectangle_petition_button"
-            android:fontFamily="@font/rubik_bold"
-            android:text="Send us your feedback"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.912"
+            app:layout_constraintHorizontal_bias="0.518"
             app:layout_constraintStart_toStartOf="parent">
 
         </androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/rewardsHomePage"
-            android:layout_width="180dp"
-            android:layout_height="140dp"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
 
-            android:layout_marginBottom="220dp"
+            android:layout_marginBottom="188dp"
             android:background="@drawable/rectangle_rewards_button"
             android:fontFamily="@font/rubik_bold"
             android:text="Claim Your Rewards"
@@ -102,16 +82,16 @@
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.066"
+            app:layout_constraintHorizontal_bias="0.16"
             app:layout_constraintStart_toStartOf="parent">
 
         </androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/articleHomePage"
-            android:layout_width="370dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="330dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="28dp"
             android:background="@drawable/rectangle_infosect_button"
             android:fontFamily="@font/rubik_bold"
             android:text="Read Daily News"
@@ -120,16 +100,16 @@
             android:textSize="24dp"
             app:layout_constraintBottom_toTopOf="@+id/rewardsHomePage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintHorizontal_bias="0.518"
             app:layout_constraintStart_toStartOf="parent">
 
         </androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/petitionHomePage"
-            android:layout_width="370dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="330dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="36dp"
             android:background="@drawable/rectangle_petition_button"
             android:fontFamily="@font/rubik_bold"
             android:text="Host A Petition"
@@ -138,11 +118,28 @@
             android:textSize="24dp"
             app:layout_constraintBottom_toTopOf="@+id/articleHomePage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintHorizontal_bias="0.518"
             app:layout_constraintStart_toStartOf="parent">
 
         </androidx.appcompat.widget.AppCompatButton>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/feedbackHomePage"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="188dp"
+            android:background="@drawable/rectangle_petition_button"
+            android:fontFamily="@font/rubik_bold"
+            android:text="Send us your feedback"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.842"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </androidx.appcompat.widget.AppCompatButton>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

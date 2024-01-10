@@ -15,6 +15,10 @@
         <item name="android:colorPrimary">#FFFFFF</item>
         <item name="android:colorAccent">#FFFFFF</item>
         <!-- Add more color attributes as needed -->
-    </style>
 
+    </style>
+    <style name="RoundedBottomAppBar" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>
