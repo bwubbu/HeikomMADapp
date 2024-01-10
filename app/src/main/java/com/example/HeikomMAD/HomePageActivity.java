@@ -1,19 +1,23 @@
 package com.example.HeikomMAD;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AlertDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,10 +25,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
     private FirebaseAuth authProfile;
     private BottomNavigationView bottomNavigationView;
     private String userName;
@@ -33,6 +39,29 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        /*------------------------Hooks----------------------*/
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        /*------------------------Tool Bar---------------------*/
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        /*------------------------Nav Drawer Menu---------------------*/
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        MenuItem logoutMenuItem = navigationView.getMenu().findItem(R.id.logout);
+        logoutMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                showLogoutConfirmationDialog();
+                return true;
+            }
+        });
 
         textViewWelcome=findViewById(R.id.textview_show_welcome);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -47,8 +76,8 @@ public class HomePageActivity extends AppCompatActivity {
                     Intent homeIntent = new Intent(HomePageActivity.this, HomePageActivity.class);
                     startActivity(homeIntent);
                     return true;
-                } else if (itemId == R.id.bmReward) {
-                    Intent rewardIntent = new Intent(HomePageActivity.this, RewardsMainActivity.class);
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(HomePageActivity.this, PetitionMainActivity.class);
                     startActivity(rewardIntent);
                     return true;
                 } else if (itemId == R.id.bmForum) {
@@ -66,17 +95,16 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        TextView feedbackHomepage = findViewById(R.id.feedbackHomepage);
-
-        feedbackHomepage.setOnClickListener(new View.OnClickListener() {
+        AppCompatButton forumHomepage = findViewById(R.id.forumHomePage);
+        forumHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomePageActivity.this, FeedbackActivity.class);
+                Intent intent = new Intent(HomePageActivity.this, PostActivity.class);
                 startActivity(intent);
             }
         });
 
-        TextView petitionHomepage = findViewById(R.id.petitionHomePage);
+        AppCompatButton petitionHomepage = findViewById(R.id.petitionHomePage);
 
         petitionHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,16 +114,17 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        TextView forumHomepage = findViewById(R.id.forumHomepage);
-        forumHomepage.setOnClickListener(new View.OnClickListener() {
+        AppCompatButton articleHomepage = findViewById(R.id.articleHomePage);
+
+        articleHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomePageActivity.this, PostActivity.class);
+                Intent intent = new Intent(HomePageActivity.this, PhoneCallPermission.class);
                 startActivity(intent);
             }
         });
 
-        TextView rewardsHomepage = findViewById(R.id.rewardsHomepage);
+        AppCompatButton rewardsHomepage = findViewById(R.id.rewardsHomePage);
 
         rewardsHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,21 +134,22 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        TextView articleHomepage = findViewById(R.id.articleHomepage);
+        AppCompatButton feedbackHomepage = findViewById(R.id.feedbackHomePage);
 
-        articleHomepage.setOnClickListener(new View.OnClickListener() {
+        feedbackHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomePageActivity.this, PhoneCallPermission.class);
+                Intent intent = new Intent(HomePageActivity.this, FeedbackActivity.class);
                 startActivity(intent);
             }
         });
     }
+
     private void showUserProfile(FirebaseUser firebaseUser){
         String userID=firebaseUser.getUid();
 
 
-        //Extracting User Reference from Database "Registezd Users"
+        //Extracting User Reference from Database "Registered Users"
         DatabaseReference referenceProfile=FirebaseDatabase.getInstance().getReference("Registered Users");
         referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -143,5 +173,34 @@ public class HomePageActivity extends AppCompatActivity {
                 Toast.makeText(HomePageActivity.this,"Something went wrong!",Toast.LENGTH_LONG).show();
             }
         });
+    }
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Log Out");
+        builder.setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Yes", (dialogInterface, i) -> logoutUser())
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
+                .show();
+    }
+
+    private void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(HomePageActivity.this, AuthActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    // ... (Your existing methods)
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.logout) {
+            showLogoutConfirmationDialog();
+            return true;
+        }
+        // Handle other menu items as needed
+        return true;
     }
 }
