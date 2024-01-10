@@ -36,6 +36,7 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
     FirebaseUser currentUser;
 
     private FirebasePointManager firebasePointManager;
+    private OnPointsAddedListener onPointsAddedListener;
 
     public AA_TaskAdapter(Context context, ArrayList<TaskModel> taskModels, String userId) {
         this.context = context;
@@ -112,8 +113,24 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
                 if (taskCompletionListener != null) {
                     Log.d("AA_TaskAdapter", "Task completed. Total completed tasks: " + completedTasksCount);
                 }
+
+                firebasePointManager.addPointsToUser(userId, pointsToAdd, new FirebasePointManager.PointUpdateListener() {
+                    @Override
+                    public void onPointUpdateSuccess() {
+                        if (onPointsAddedListener != null) {
+                            onPointsAddedListener.onPointsAdded(pointsToAdd);
+                            notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onPointUpdateFailure(String message) {
+                        // Handle failure
+                    }
+                });
             }
         });
+
     }
 
 
@@ -171,9 +188,15 @@ public class AA_TaskAdapter extends RecyclerView.Adapter<AA_TaskAdapter.MyViewHo
     public void setCompletedTasksCount(int count) {
         this.completedTasksCount = count;
     }
-
     private void updateUI(MyViewHolder holder, boolean isClicked) {
         holder.itemView.setAlpha(isClicked ? 0.5f : 1.0f);
         holder.itemView.setClickable(!isClicked);
     }
+    public interface OnPointsAddedListener {
+        void onPointsAdded(int addedPoints);
+    }
+    public void setOnPointsAddedListener(OnPointsAddedListener listener) {
+        this.onPointsAddedListener = listener;
+    }
+
 }

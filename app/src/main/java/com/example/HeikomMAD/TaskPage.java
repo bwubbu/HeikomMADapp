@@ -1,7 +1,9 @@
 package com.example.HeikomMAD;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,16 +13,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
 
-public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionListener, DataManager.ActivitySavedListener {
+public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionListener, DataManager.ActivitySavedListener, AA_TaskAdapter.OnPointsAddedListener {
     ArrayList<TaskModel> taskModel = new ArrayList<>();
 
     AA_TaskAdapter adapter;
@@ -34,6 +45,11 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
     private int CurrentProgress = 0;
     private ProgressBar progressBar;
     private Button startProgress;
+
+    private ImageView headerProfilepic;
+    private TextView headerUser;
+
+    private String username;
     public TaskPage() {
         // Required empty public constructor
     }
@@ -44,7 +60,10 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         TaskPage fragment = new TaskPage();
         return fragment;
     }
-
+    @Override
+    public void onPointsAdded(int addedPoints) {
+        fetchAndUpdateUserPoints(); // This will fetch the latest points and update the progress bar
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,26 +90,31 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         View view = inflater.inflate(R.layout.fragment_task_page, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.taskRecycleViewTP);
+        headerUser = view.findViewById(R.id.headerUser);
+        headerProfilepic = view.findViewById(R.id.headerProfilepic);
+
 
         setTaskModel();
 
 
-        System.out.println("Task Model Size:" + taskModel.size());
+
+         System.out.println("Task Model Size:" + taskModel.size());
          FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();;
          String userId = currentUser.getUid();
-        //AA_TaskAdapter adapter = new AA_TaskAdapter(getActivity(), taskModel, userId);
+         if(currentUser!=null){
+             showUserProfile(currentUser);
+         }
+
 
         adapter = new AA_TaskAdapter(requireContext(), taskModel, userId);
         adapter.setPointAdditionListener(this); // Set the listener to this fragment
+        adapter.setOnPointsAddedListener(this); // Set the listener
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         progressBar = view.findViewById(R.id.progressBarTP);
-        //final int[] userPoints = {PointManager.getPoints(requireContext(), "userId")};
-        //int userPoints = PointManager.getPoints(requireContext(), "userId"); // Fetch the user's points as an integer
         progressBar.setMax(30000);
 
-        //dataManager.saveTotalTask(taskModel.size());
         setActivitiesModel();
         adapter.notifyDataSetChanged();
         // Fetch and set initial user points
@@ -170,5 +194,31 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
             adapter.setCompletedTasksCount(completedTaskCount);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private void showUserProfile(FirebaseUser firebaseUser) {
+        String userID = firebaseUser.getUid();
+        DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
+        referenceProfile.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ReadWriteUserDetails readUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
+                if (readUserDetails != null) {
+                    username = firebaseUser.getDisplayName();
+                    headerUser.setText("Welcome, " + username + "!");
+                    Uri uri = firebaseUser.getPhotoUrl();
+                    if (uri != null && headerProfilepic != null && getContext() != null) {
+                        Picasso.with(getContext()).load(uri).into(headerProfilepic);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

@@ -81,42 +81,6 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
     }
 
 
-    private void checkAndShowDailyLoginToast() {
-        SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        long lastToastTime = prefs.getLong(ACHIEVEMENT_TIMESTAMP_KEY, 0);
-        long currentTime = System.currentTimeMillis();
-        long elapsedTime = currentTime - lastToastTime;
-        if (elapsedTime > TimeUnit.HOURS.toMillis(24)) {
-            // Award 10 points for daily login
-            awardDailyLoginPoints();
-            prefs.edit().putLong(ACHIEVEMENT_TIMESTAMP_KEY, currentTime).apply();
-        }
-    }
-
-    private void awardDailyLoginPoints() {
-        int pointsToAdd = 10; // Points to add for daily login
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            // Add points to the user in Firebase
-            firebasePointManager.addPointsToUser(userId, pointsToAdd, new FirebasePointManager.PointUpdateListener() {
-                @Override
-                public void onPointUpdateSuccess() {
-                    Toast.makeText(requireContext(), "Daily Login achieved! " + pointsToAdd + " points awarded.", Toast.LENGTH_SHORT).show();
-                    //updatePointsDisplay();
-                }
-
-                @Override
-                public void onPointUpdateFailure(String message) {
-                    Toast.makeText(requireContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -196,19 +160,23 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
 
 
-        //Making icon clickbale redirect to another fragment
+        //Making icon clickable for daily reward
         dailyIcon = view.findViewById(R.id.dailyIcon);
         dailyIcon.setOnClickListener(v -> {
-            // Set the background color of the ImageView to transparent
-            dailyIcon.setBackgroundColor(Color.TRANSPARENT);
-            // Change the background color temporarily
-            int originalColor = ((ColorDrawable) dailyIcon.getBackground()).getColor();
-            dailyIcon.setBackgroundColor(Color.parseColor("#f2d37c")); // Change this to your desired color
-            new Handler().postDelayed(() -> dailyIcon.setBackgroundColor(originalColor), 200); // Change back after a delay
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            firebasePointManager.checkAndAddDailyPoints(userId, new FirebasePointManager.PointUpdateListener() {
+                @Override
+                public void onPointUpdateSuccess() {
+                    Toast.makeText(getContext(), "Daily points added!", Toast.LENGTH_SHORT).show();
+                }
 
-            // Navigate to another fragment using Navigation Component
-            Navigation.findNavController(view).navigate(R.id.rewardTask);
+                @Override
+                public void onPointUpdateFailure(String message) {
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
+
 
 
         weeklyIcon = view.findViewById(R.id.weeklyIcon);
@@ -250,7 +218,6 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataManager.getInstance().setActivitySavedListener(this); // Set this fragment as the observer for activity saved events
-        checkAndShowDailyLoginToast(); // Check for daily login achievements
     }
 
 
@@ -276,16 +243,16 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
                     headerUser.setText("Welcome, " + username + "!");
                     Uri uri = firebaseUser.getPhotoUrl();
                     if (uri != null && headerProfilepic != null && getActivity() != null) {
-                        Picasso.with(getActivity()).load(uri).into(headerProfilepic);
+                        Picasso.with(getContext()).load(uri).into(headerProfilepic);
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
     }

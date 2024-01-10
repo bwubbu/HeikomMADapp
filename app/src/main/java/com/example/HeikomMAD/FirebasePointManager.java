@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class FirebasePointManager {
 
@@ -229,6 +230,45 @@ public class FirebasePointManager {
             }
         });
     }
+    //daily login for user
+    public void checkAndAddDailyPoints(String userId, PointUpdateListener listener) {
+        pointsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    HashMap<String, Object> data = (HashMap<String, Object>) dataSnapshot.getValue();
+                    long lastLoginTime = 0;
+                    if (data.containsKey("lastLoginTime")) {
+                        lastLoginTime = (long) data.get("lastLoginTime");
+                    }
+
+                    long currentTime = System.currentTimeMillis();
+                    long hoursElapsed = TimeUnit.MILLISECONDS.toHours(currentTime - lastLoginTime);
+
+                    if (hoursElapsed >= 24) {
+                        int currentPoints = data.containsKey("points") ? (int) (long) data.get("points") : 0;
+                        pointsRef.child(userId).child("points").setValue(currentPoints + 10); // Add 10 points
+                        pointsRef.child(userId).child("lastLoginTime").setValue(currentTime); // Update last login time
+
+                        // Add to completed tasks
+                        CompletedTask dailyLoginTask = new CompletedTask("Daily login", 10);
+                        addCompletedTaskToUser(userId, dailyLoginTask, listener);
+                    } else {
+                        listener.onPointUpdateFailure("24 hours have not passed yet");
+                    }
+                } else {
+                    listener.onPointUpdateFailure("User data not found");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onPointUpdateFailure(databaseError.getMessage());
+            }
+        });
+    }
+
+
 
 
 
