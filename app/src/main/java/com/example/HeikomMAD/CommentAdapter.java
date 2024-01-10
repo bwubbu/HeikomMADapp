@@ -78,9 +78,6 @@
 
         }
 
-        private void showCommentDetails(FirebaseUser firebaseuser) {
-        }
-
         @Override
         public int getItemCount() {
             return mComment.size();
@@ -115,11 +112,6 @@
                             String username = readUserDetails.userName;
                             usernameComment.setText(username);
 
-                        //Set user DP
-//                        Uri uri = firebaseUser.getPhotoUrl();
-//                        Picasso.with(mContext).load(uri).into(image_profile_comment);
-
-
                         } else {
                             Toast.makeText(mContext, "Something went wrong!", Toast.LENGTH_LONG).show();
                         }
@@ -128,6 +120,23 @@
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Toast.makeText(mContext, "Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                });
+                DatabaseReference imageRef = FirebaseDatabase.getInstance().getReference("Registered Users")
+                        .child(publisherId).child("profileImageUrl");
+
+                imageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            String imageUrl = dataSnapshot.getValue(String.class);
+                            Picasso.with(context).load(imageUrl).into(image_profile_comment);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
             }

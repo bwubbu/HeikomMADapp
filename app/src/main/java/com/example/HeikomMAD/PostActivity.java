@@ -404,7 +404,6 @@ public class PostActivity extends AppCompatActivity {
                     String key = String.valueOf(snapshot.getKey());
                     myBookmarks.add(key);
                 }
-                Log.d("FirebaseData", "Number of bookmarks: " + myBookmarks.size());
                 readBookmarks(myBookmarks);
                 postAdapter.notifyDataSetChanged();
             }
@@ -424,7 +423,7 @@ public class PostActivity extends AppCompatActivity {
         if (myBookmarks.isEmpty()) {
             // If no bookmarks, clear the post list
             postList.clear();
-            postAdapter.notifyDataSetChanged();
+//            postAdapter.notifyDataSetChanged();
         } else {
             DatabaseReference bookmarksRef = FirebaseDatabase.getInstance().getReference("Bookmarks").child(firebaseUser.getUid());
 

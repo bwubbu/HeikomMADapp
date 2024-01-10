@@ -71,7 +71,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik_bold"
-
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -150,6 +149,24 @@
 
 
             </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/timeStamp"
+                android:text="placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingLeft="3dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/rubik"
+                android:gravity="start"
+                android:layout_gravity="center"
+                android:textSize="11dp" />
         </LinearLayout>
     </LinearLayout>
 

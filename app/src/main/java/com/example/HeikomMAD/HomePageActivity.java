@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,11 +36,14 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private FirebaseAuth authProfile;
     private BottomNavigationView bottomNavigationView;
     private String userName;
+    private ImageView imageProfile;
     private TextView textViewWelcome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
 
         /*------------------------Hooks----------------------*/
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -63,11 +68,13 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+        imageProfile = findViewById(R.id.homepageProfilePic);
         textViewWelcome=findViewById(R.id.textview_show_welcome);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         authProfile=FirebaseAuth.getInstance();
         FirebaseUser firebaseUser=authProfile.getCurrentUser();
         showUserProfile(firebaseUser);
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -93,6 +100,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 }
                 return false;
             }
+        });
+
+        imageProfile.setOnClickListener(v -> {
+            Intent profileIntent = new Intent(HomePageActivity.this, UserProfileActivity.class);
+            startActivity(profileIntent);
         });
 
         AppCompatButton forumHomepage = findViewById(R.id.forumHomePage);
@@ -162,6 +174,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
                     //Set user DP
                     Uri uri=firebaseUser.getPhotoUrl();
+                    Picasso.with(HomePageActivity.this).load(uri).into(imageProfile);
 
 
                 }else{
@@ -203,4 +216,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         // Handle other menu items as needed
         return true;
     }
+
+
 }
