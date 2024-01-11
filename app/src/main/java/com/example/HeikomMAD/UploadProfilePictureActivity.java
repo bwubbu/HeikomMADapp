@@ -20,9 +20,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 
@@ -85,12 +88,18 @@ public class UploadProfilePictureActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             Uri downloadUri=uri;
                             firebaseUser=authProfile.getCurrentUser();
+                            // Sending to Realtime database too
+                            String imageUrl = downloadUri.toString();
+                            DatabaseReference imageRef = FirebaseDatabase.getInstance().getReference("Registered Users")
+                                    .child(firebaseUser.getUid());
+                            imageRef.child("profileImageUrl").setValue(imageUrl);
                             //Finally set the display image of the user after upload
                             UserProfileChangeRequest profileUpdates=new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build() ;
                             firebaseUser.updateProfile(profileUpdates);
                             Picasso.with(UploadProfilePictureActivity.this).invalidate(uri);
                             // Load the new image into the ImageView
-                            Picasso.with(UploadProfilePictureActivity.this).load(uri).into(imageViewUploadPic);
+                            Picasso.with(UploadProfilePictureActivity.this).load(uri)
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageViewUploadPic);
                         }
                     });
                     progressBar.setVisibility(View.GONE);
@@ -98,7 +107,6 @@ public class UploadProfilePictureActivity extends AppCompatActivity {
                     Intent intent=new Intent(UploadProfilePictureActivity.this,UserProfileActivity.class);
                     startActivity(intent);
                     finish();
-
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

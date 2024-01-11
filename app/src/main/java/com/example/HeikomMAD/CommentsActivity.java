@@ -132,8 +132,8 @@ public class CommentsActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Notify the adapter about the new comment
                         commentAdapter.notifyItemInserted(commentList.size() - 1);
-
                         addComment.setText("");
+                        commentAdapter.notifyDataSetChanged();
                     } else {
                         // Handle the case where adding the comment to the database failed
                         Toast.makeText(CommentsActivity.this, "Failed to add comment", Toast.LENGTH_SHORT).show();
@@ -145,32 +145,6 @@ public class CommentsActivity extends AppCompatActivity {
             Toast.makeText(CommentsActivity.this, "User not authenticated", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-//    private void getImage(){
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-//
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                User user = snapshot.getValue(User.class);
-//                if (user != null) {
-//                    Glide.with(getApplicationContext()).load(user.getImageUrl()).into(image_profile);
-//                } else {
-//                    image_profile.setImageResource(R.drawable.avatar);
-//
-//
-//                }
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     private void showCommentDetails(FirebaseUser firebaseUser) {
         String userID = firebaseUser.getUid();

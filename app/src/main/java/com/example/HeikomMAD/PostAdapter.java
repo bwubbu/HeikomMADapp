@@ -27,7 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 // PostAdapter.java
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -183,7 +188,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         private String postPublisherId;
         private Context context;
-        private TextView postTitle, postDescription, likesCounter, commentCounts, usernamePosts;
+        private TextView postTitle, postDescription, likesCounter, commentCounts, usernamePosts, timeStamp;
 
         private ImageView likes, profilepicPosts, commentIcon, bookmark;
 
@@ -198,6 +203,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             // imageProfile = itemView.findViewById(R.id.image_profile);
             likes = itemView.findViewById(R.id.likes);
             likesCounter = itemView.findViewById(R.id.likesCount);
+            timeStamp = itemView.findViewById(R.id.timeStamp);
             postTitle = itemView.findViewById(R.id.postTitle);
             postDescription = itemView.findViewById(R.id.postDescription);
 
@@ -313,6 +319,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public void bind(Post post) {
             postTitle.setText(post.getTitle());
             postDescription.setText(post.getDescription());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.getDefault());
+            sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kuala_Lumpur"));
+            String currentDateandTime = sdf.format(new Date());
+            timeStamp.setText(currentDateandTime);
         }
 
         private void isBookmarked(String postid, ImageView imageView) {
@@ -353,7 +363,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private void showPostsDetails(String userId, String postid) {
 
 
-
             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered Users");
             referenceProfile.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -363,10 +372,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         String username = readUserDetails.userName;
                         usernamePosts.setText(username);
 
-                        //Set user DP
-                        Uri uri = firebaseUser.getPhotoUrl();
-                        Picasso.with(context).load(uri).into(profilepicPosts);
+                        //
+                        DatabaseReference imageRef = FirebaseDatabase.getInstance().getReference("Registered Users")
+                                .child(userId).child("profileImageUrl");
 
+                        imageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    String imageUrl = dataSnapshot.getValue(String.class);
+                                    Picasso.with(context).load(imageUrl).into(profilepicPosts);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show();
+                            }
+                        });
 
                     } else {
                         Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show();
