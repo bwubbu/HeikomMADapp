@@ -109,7 +109,9 @@ public class PetitionDetail extends Fragment {
                 imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
-                        Glide.with(getContext()).load(bytes).into(profile);
+                        if (getContext() != null && isAdded()) {
+                            Glide.with(getContext()).load(bytes).into(profile);
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
