@@ -14,6 +14,7 @@
         <include layout="@layout/header" />
 
         <LinearLayout
+            android:translationY="-35dp"
             android:id="@+id/page"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
