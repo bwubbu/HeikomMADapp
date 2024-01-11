@@ -10,19 +10,41 @@
         android:name="com.example.HeikomMAD.RewardReport"
         android:label="RewardHome"
         tools:layout="@layout/fragment_reward_report"/>
+
     <fragment
         android:id="@+id/rewardTask"
         android:name="com.example.HeikomMAD.TaskPage"
         android:label="fragment_reward_page"
         tools:layout="@layout/fragment_task_page" />
+
     <fragment
         android:id="@+id/rewardRedeem"
         android:name="com.example.HeikomMAD.RewardCoupon"
         android:label="fragment_reward_home"
         tools:layout="@layout/fragment_reward_coupon" />
+
     <fragment
         android:id="@+id/rewardReport"
         android:name="com.example.HeikomMAD.RewardReport"
         android:label="fragment_reward_report"
         tools:layout="@layout/fragment_reward_report" />
+
+
+    <action
+        android:id="@+id/action_rewardHome_to_rewardTask"
+        app:destination="@id/rewardTask"
+        app:popUpTo="@id/rewardHome"
+        app:popUpToInclusive="false" />
+
+    <action
+        android:id="@+id/action_rewardTask_to_rewardRedeem"
+        app:destination="@id/rewardRedeem"
+        app:popUpTo="@id/rewardHome"
+        app:popUpToInclusive="false" />
+
+    <action
+        android:id="@+id/action_rewardRedeem_to_rewardReport"
+        app:destination="@id/rewardReport"
+        app:popUpTo="@id/rewardHome"
+        app:popUpToInclusive="false" />
 </navigation>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,7 +66,7 @@ public class RewardCoupon extends Fragment {
         headerProfilepic = view.findViewById(R.id.headerProfilepic); // Initialize ImageView
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null){
-
+            showUserProfile(firebaseUser);
         }
         RecyclerView recyclerView = view.findViewById(R.id.couponRV);
 
@@ -76,7 +77,13 @@ public class RewardCoupon extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        return view; // Return the inflated view, not a new inflation
+        ImageView backButton = view.findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate((R.id.rewardReport));
+        });
+
+
+        return view;
     }
 
     // Save the clicked states of coupons in SharedPreferences
@@ -155,4 +162,6 @@ public class RewardCoupon extends Fragment {
             }
         });
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.HeikomMAD;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -184,23 +185,6 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
             Navigation.findNavController(view).navigate((R.id.rewardTask));
         });
 
-        // Fetch the completed tasks count for the user
-        /*
-        firebasePointManager.fetchCompletedTaskCount(firebaseUser.getUid(), new FirebasePointManager.PointFetchListener() {
-            @Override
-            public void onPointFetchSuccess(int completedTaskCount) {
-                // Update circular progress bar
-                circularProgressBar.setProgress(completedTaskCount);
-                circularProgressBar.setProgressMax(dataManager.getTaskCount()); // Assuming this is the total task count
-            }
-
-            @Override
-            public void onPointFetchFailure(String message) {
-                Log.e("RewardReport", "Error fetching completed tasks count: " + message);
-            }
-        });
-
-         */
         // Fetch the completed tasks count
         int completedTasksCount = 1;
         int taskCount = dataManager.getTaskCount();
@@ -210,6 +194,18 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         circularProgressBar = view.findViewById(R.id.weeklyProgressBar);
         circularProgressBar.setProgress(completedTasksCount);
         circularProgressBar.setProgressMax(taskCount);
+
+        //back button to the homepage
+        ImageView backButton = view.findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View V) {
+                Intent intent = new Intent(getActivity(), HomePageActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
         return view;
     }

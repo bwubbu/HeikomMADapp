@@ -14,6 +14,17 @@
         android:layout_height="180dp">
     </View>
 
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:contentDescription="Back Button"
+        android:src="@drawable/back_ic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/headerUser"
         android:layout_width="wrap_content"
@@ -35,7 +46,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="113dp"
         android:fontFamily="@font/rubik_medium"
-        android:text="The Community's Platform for change"
+        android:text="The harmony is a priceless reward, so cherish it!"
         android:textColor="#ffffff"
         android:textSize="40px"
         app:layout_constraintEnd_toEndOf="parent"

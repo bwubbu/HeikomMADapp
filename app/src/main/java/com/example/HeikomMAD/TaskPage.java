@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -119,6 +120,11 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         adapter.notifyDataSetChanged();
         // Fetch and set initial user points
         fetchAndUpdateUserPoints();
+
+        ImageView backButton = view.findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate((R.id.rewardReport));
+        });
 
         return view;
 
