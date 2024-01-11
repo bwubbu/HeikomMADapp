@@ -88,6 +88,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //initialize the view
         View view = inflater.inflate(R.layout.fragment_task_page, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.taskRecycleViewTP);

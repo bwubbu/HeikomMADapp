@@ -202,6 +202,7 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
+    //searchPost with debug
     private void searchPosts(String s) {
         Query query = FirebaseDatabase.getInstance().getReference("Posts")
                 .orderByChild("titleLowerCase")
@@ -213,11 +214,17 @@ public class PostActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    // Directly retrieve the post details from the current snapshot
-                    Post post = postSnapshot.getValue(Post.class);
-                    if (post != null) {
-                        post.setKey(postSnapshot.getKey());
-                        postList.add(post);
+                    Log.d("PostActivity", "Search Snapshot: " + postSnapshot.toString()); // Debug log
+                    try {
+                        Post post = postSnapshot.getValue(Post.class);
+                        if (post != null) {
+                            post.setKey(postSnapshot.getKey());
+                            postList.add(post);
+                        } else {
+                            Log.d("PostActivity", "Search Post is null for snapshot: " + postSnapshot.getKey());
+                        }
+                    } catch (Exception e) {
+                        Log.e("PostActivity", "Error in search converting snapshot to Post", e);
                     }
                 }
                 postAdapter.notifyDataSetChanged();
@@ -229,7 +236,6 @@ public class PostActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void showUserProfile(FirebaseUser firebaseUser){
         String userID=firebaseUser.getUid();
@@ -267,30 +273,38 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-
-    private void readPosts(){
+    private void readPosts() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (searchBar.getText().toString().equals("")){
+                if (searchBar.getText().toString().equals("")) {
                     postList.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        Post post = snapshot.getValue(Post.class);
-                        postList.add(post);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d("PostActivity", "Snapshot: " + snapshot.toString()); // Debug log
+                        try {
+                            Post post = snapshot.getValue(Post.class);
+                            if (post != null) {
+                                post.setKey(snapshot.getKey());
+                                postList.add(post);
+                            } else {
+                                Log.d("PostActivity", "Post is null for snapshot: " + snapshot.getKey());
+                            }
+                        } catch (Exception e) {
+                            Log.e("PostActivity", "Error converting snapshot to Post", e);
+                        }
                     }
+                    postAdapter.notifyDataSetChanged();
                 }
-                postAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("PostActivity", "Failed to read posts", error.toException());
             }
         });
-
-
     }
+
 
     private void showCreatePostDialog() {
         // Launch CreatePostActivity
@@ -321,18 +335,20 @@ public class PostActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Log.d("FirebaseData", "Post key from dataSnapshot: " + dataSnapshot.getKey());
-                    Post post = dataSnapshot.getValue(Post.class);
-                    if (post != null) {
-                        post.setKey(String.valueOf(dataSnapshot.getKey()));
-                        postList.add(0, post);
+                    Log.d("FirebaseData", "Fetch Snapshot: " + dataSnapshot.toString());
+                    try {
+                        Post post = dataSnapshot.getValue(Post.class);
+                        if (post != null) {
+                            post.setKey(String.valueOf(dataSnapshot.getKey()));
+                            postList.add(0, post);
+                        } else {
+                            Log.d("FirebaseData", "Fetch Post is null for snapshot: " + dataSnapshot.getKey());
+                        }
+                    } catch (Exception e) {
+                        Log.e("FirebaseData", "Error in fetchPostsFromFirebase", e);
                     }
                 }
-
-                Log.d("FirebaseData", "Number of posts retrieved: " + postList.size());
                 postAdapter.notifyDataSetChanged();
-
-                // Explicitly set the title based on the orderBy value
                 updateTitle(orderBy);
             }
 
@@ -342,6 +358,9 @@ public class PostActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     private void fetchPostsFromFirebases(String orderBy) {
         postList.clear();

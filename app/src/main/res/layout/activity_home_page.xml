@@ -40,24 +40,24 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="#4C9A2A"
-            android:layout_marginTop="45dp"
-            android:layout_centerHorizontal="true"
-            app:cardCornerRadius="250dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/homepageProfilePic"
+            <androidx.cardview.widget.CardView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/avatar"
-                />
-        </androidx.cardview.widget.CardView>
+                android:background="#4C9A2A"
+                android:layout_marginTop="45dp"
+                android:layout_centerHorizontal="true"
+                app:cardCornerRadius="250dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/homepageProfilePic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/avatar"
+                    />
+            </androidx.cardview.widget.CardView>
 
             <TextView
 

@@ -367,7 +367,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             referenceProfile.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ReadWriteUserDetails readUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
+                    ReadWriteUserDetails readUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
                     if (readUserDetails != null) {
                         String username = readUserDetails.userName;
                         usernamePosts.setText(username);
