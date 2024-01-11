@@ -63,7 +63,7 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
     private CircularProgressBar circularProgressBar;
 
-    DataManager dataManager = DataManager.getInstance();
+    //DataManager dataManager = DataManager.getInstance();
 
     FirebaseUser firebaseUser;
 
@@ -91,7 +91,6 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPoints);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //recyclerView.setAdapter(adapter);
 
         // Initialize the adapter with an empty list
         activitiesAdapter = new AA_ActivitiesAdapter(getContext(), new ArrayList<>());
@@ -160,8 +159,9 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         redirectTextRedeem(redeemTV);
 
 
-
         //Making icon clickable for daily reward
+        // Inside onCreateView or onViewCreated of RewardReport fragment
+
         dailyIcon = view.findViewById(R.id.dailyIcon);
         dailyIcon.setOnClickListener(v -> {
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -169,6 +169,19 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
                 @Override
                 public void onPointUpdateSuccess() {
                     Toast.makeText(getContext(), "Daily points added!", Toast.LENGTH_SHORT).show();
+
+                    // Fetch the updated list of completed tasks
+                    firebasePointManager.fetchCompletedTasks(firebaseUser.getUid(), new FirebasePointManager.ActivitiesFetchListener() {
+                        @Override
+                        public void onActivitiesFetchSuccess(ArrayList<CompletedTask> tasks) {
+                            activitiesAdapter.updateActivities(tasks); // Update the adapter with new data
+                        }
+
+                        @Override
+                        public void onActivitiesFetchFailure(String message) {
+                            Log.e("RewardReport", "Error fetching completed tasks: " + message);
+                        }
+                    });
                 }
 
                 @Override
@@ -180,20 +193,20 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
 
 
+
         weeklyIcon = view.findViewById(R.id.weeklyIcon);
         weeklyIcon.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate((R.id.rewardTask));
         });
 
         // Fetch the completed tasks count
-        int completedTasksCount = 1;
-        int taskCount = dataManager.getTaskCount();
+        int completedTasksCount =  1;//firebasePointManager.fetchCompletedTasks(firebaseUser,);
         System.out.println("Task Count:" + completedTasksCount);
         System.out.println("Model Size:" + taskModels.size());
 
         circularProgressBar = view.findViewById(R.id.weeklyProgressBar);
         circularProgressBar.setProgress(completedTasksCount);
-        circularProgressBar.setProgressMax(taskCount);
+        circularProgressBar.setProgressMax(5);
 
         //back button to the homepage
         ImageView backButton = view.findViewById(R.id.backButton);

@@ -160,10 +160,7 @@ public class PostActivity extends AppCompatActivity {
 
         mostLikedButton.setOnClickListener(v -> {
             titleTextView.setText("Most Liked");
-            sortPostsByCommentCount();
             fetchPostsFromFirebases("commentCount");
-
-
         });
 
 
@@ -202,7 +199,6 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-    //searchPost with debug
     private void searchPosts(String s) {
         Query query = FirebaseDatabase.getInstance().getReference("Posts")
                 .orderByChild("titleLowerCase")
@@ -359,9 +355,6 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-
-
-
     private void fetchPostsFromFirebases(String orderBy) {
         postList.clear();
         postAdapter.notifyDataSetChanged();
@@ -371,17 +364,21 @@ public class PostActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Log.d("FirebaseData", "Post key from dataSnapshot: " + dataSnapshot.getKey());
-                    Post post = dataSnapshot.getValue(Post.class);
-                    if (post != null) {
-                        post.setKey(String.valueOf(dataSnapshot.getKey()));
-                        postList.add(0, post);
+                    Log.d("FirebaseData", "Fetch Snapshot: " + dataSnapshot.toString());
+                    try {
+                        Post post = dataSnapshot.getValue(Post.class);
+                        if (post != null) {
+                            post.setKey(String.valueOf(dataSnapshot.getKey()));
+                            postList.add(0, post);
+                        } else {
+                            Log.d("FirebaseData", "Fetch Post is null for snapshot: " + dataSnapshot.getKey());
+                        }
+                    } catch (Exception e) {
+                        Log.e("FirebaseData", "Error in fetchPostsFromFirebase", e);
                     }
                 }
-
-                Log.d("FirebaseData", "Number of posts retrieved: " + postList.size());
                 postAdapter.notifyDataSetChanged();
-
+                //updateTitle(orderBy);
             }
 
             @Override
@@ -408,7 +405,6 @@ public class PostActivity extends AppCompatActivity {
             // Add cases for other orderBy values as needed
         }
     }
-
 
 
     private void mybookmarks(){
