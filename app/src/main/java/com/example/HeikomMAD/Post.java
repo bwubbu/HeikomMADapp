@@ -40,11 +40,7 @@ public class Post {
     }
     
     // Callback interface for likes count
-    public interface OnLikesCountCallback {
-        void onLikesCountReceived(long likesCount);
 
-        void onLikesCountError(DatabaseError error);
-    }
 
     public String getTitleLowerCase() {
         return titleLowerCase;

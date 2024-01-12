@@ -63,7 +63,7 @@ public class RewardCoupon extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reward_coupon, container, false);
         headerUser = view.findViewById(R.id.headerUser);
-        //headerProfilepic = view.findViewById(R.id.headerProfilepic); // Initialize ImageView
+        headerProfilepic = view.findViewById(R.id.headerReward); // Initialize ImageView
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null){
             showUserProfile(firebaseUser);
@@ -148,9 +148,8 @@ public class RewardCoupon extends Fragment {
                     username = firebaseUser.getDisplayName();
                     headerUser.setText("Welcome, " + username + "!");
                     Uri uri = firebaseUser.getPhotoUrl();
-                    if (uri != null && headerProfilepic != null && getContext() != null) {
-                        Picasso.with(getContext()).load(uri).into(headerProfilepic);
-                    }
+                    Picasso.with(getContext()).load(uri).into(headerProfilepic);
+
                 } else {
                     Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }

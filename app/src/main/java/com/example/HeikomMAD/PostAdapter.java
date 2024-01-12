@@ -319,10 +319,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public void bind(Post post) {
             postTitle.setText(post.getTitle());
             postDescription.setText(post.getDescription());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.getDefault());
-            sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kuala_Lumpur"));
-            String currentDateandTime = sdf.format(new Date());
-            timeStamp.setText(currentDateandTime);
+
+//            timeStamp.setText(currentDateandTime);
         }
 
         private void isBookmarked(String postid, ImageView imageView) {

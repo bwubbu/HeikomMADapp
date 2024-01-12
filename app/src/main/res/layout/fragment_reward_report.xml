@@ -11,9 +11,11 @@
     <include layout="@layout/header_reward" />
 
     <View
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/page"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="700dp"
         android:background="@drawable/roundedpage"
         android:translationY="145dp">
     </View>

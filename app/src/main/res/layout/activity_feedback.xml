@@ -16,8 +16,7 @@
         android:layout_height="49dp"
         android:fontFamily="@font/rubik_medium"
         android:text="Care to share more about it?"
-        android:textSize="24sp"
-        android:textStyle=""
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -30,8 +29,8 @@
         android:layout_width="387dp"
         android:layout_height="49dp"
         android:fontFamily="@font/rubik_medium"
-        android:text="(Dont worry its anonymous)"
-        android:textSize="24sp"
+        android:text="(Dont worry, its anonymous)"
+        android:textSize="20sp"
         android:textStyle=""
         android:gravity="bottom"
         app:layout_constraintBottom_toBottomOf="@id/textView13"
@@ -45,7 +44,7 @@
         android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_bold"
+        android:fontFamily="@font/dm_sans_bold"
         android:text="Feedback"
         android:textColor="#050505"
         android:textSize="50sp"
@@ -57,21 +56,7 @@
         app:layout_constraintVertical_bias="0.037" />
 
 
-    <TextView
-        android:id="@+id/tv13"
-        android:layout_width="248dp"
-        android:layout_height="33dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="How did we do?"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -126,13 +111,15 @@
     <RatingBar
         android:progressTint="#FFDF00"
         android:progressBackgroundTint="#FFFFFF"
+        android:theme="@style/GreenRatingBar"
         android:id="@+id/ratingBar"
         android:layout_width="231dp"
         android:layout_height="52dp"
         android:numStars="5"
         android:stepSize="0.5"
         android:isIndicator="false"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="44dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textView13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"

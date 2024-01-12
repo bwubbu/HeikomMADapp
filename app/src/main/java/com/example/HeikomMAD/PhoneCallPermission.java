@@ -4,19 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class PhoneCallPermission extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +71,8 @@ public class PhoneCallPermission extends AppCompatActivity {
             }
         });
 
+
+
     }
 
 
@@ -72,6 +88,14 @@ public class PhoneCallPermission extends AppCompatActivity {
         } else {
             // If not, proceed with the default back button behavior
             super.onBackPressed();
+            Intent intent = new Intent(this, AuthActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
+
     }
+
+
+
 }

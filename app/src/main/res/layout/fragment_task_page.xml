@@ -8,11 +8,12 @@
     android:id="@+id/taskPage"
     tools:context=".TaskPage">
 
-    <include layout="@layout/header_reward" />
+    <!-- <include layout="@layout/header_tasks" /> -->
 
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"
+        android:translationY="-18dp"
         android:background="@drawable/roundedpage"/>
 
     <FrameLayout

@@ -6,13 +6,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +31,7 @@ public class RewardsMainActivity extends AppCompatActivity {
     private TextView headerUser;
 
     private String username;
+    private BottomNavigationView bottomNavigationView;
 
     private ImageView headerProfilepic;
 
@@ -35,9 +39,39 @@ public class RewardsMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewards_main);
-
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         headerUser = findViewById(R.id.headerUser);
-        //headerProfilepic = findViewById(R.id.headerProfilepic);
+        headerProfilepic = findViewById(R.id.headerReward);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.bmHome) {
+                    Intent homeIntent = new Intent(RewardsMainActivity.this, HomePageActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                } else if (itemId == R.id.bmPetition) {
+                    Intent rewardIntent = new Intent(RewardsMainActivity.this, PetitionMainActivity.class);
+                    startActivity(rewardIntent);
+                    return true;
+                } else if (itemId == R.id.bmForum) {
+                    Intent forumIntent = new Intent(RewardsMainActivity.this, PostActivity.class);
+                    startActivity(forumIntent);
+                    return true;
+                } else if (itemId == R.id.bmInfo) {
+                    Intent infoIntent = new Intent(RewardsMainActivity.this, PhoneCallPermission.class);
+                    startActivity(infoIntent);
+                } else if (itemId == R.id.bmUser) {
+                    Intent profileIntent = new Intent(RewardsMainActivity.this, UserProfileActivity.class);
+                    startActivity(profileIntent);
+                }
+                return false;
+            }
+        });
+
+
+        // Pull user image
 
         // Find the NavHostFragment
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_heikom);
@@ -47,6 +81,7 @@ public class RewardsMainActivity extends AppCompatActivity {
 
         // Navigate to the rewardReport destination
         navController.navigate(R.id.rewardReport);
+//        showDetails(firebaseUser);
         /*
         // Assuming you have a logged-in FirebaseUser
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -58,6 +93,14 @@ public class RewardsMainActivity extends AppCompatActivity {
 
          */
     }
+
+
+}
+
+
+
+
+
 
     /*
     private void showUserProfile(FirebaseUser firebaseUser){
@@ -94,6 +137,6 @@ public class RewardsMainActivity extends AppCompatActivity {
 
      */
 
-}
+
 
 

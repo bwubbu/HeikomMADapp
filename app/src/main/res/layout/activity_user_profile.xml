@@ -48,6 +48,7 @@
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageVIew_profile_dp"
+                android:fontFamily="@font/dm_sans"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:hint="Loading...."

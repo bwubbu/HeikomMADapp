@@ -21,4 +21,8 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+    <style name="GreenRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="colorControlNormal">@color/light_green_outline</item> <!-- color for unrated stars -->
+        <item name="colorControlActivated">@color/white</item> <!-- color for rated stars -->
+    </style>
 </resources>

@@ -15,4 +15,5 @@
     <color name="red">#FF0000</color>
     <color name="off_white">#FAF9F6</color>
     <color name="off_blue">#F4F5FF</color>
+    <color name="light_green_outline">#1E5631</color>
 </resources>

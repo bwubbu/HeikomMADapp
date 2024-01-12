@@ -1,5 +1,6 @@
 package com.example.HeikomMAD;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +49,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
     private ProgressBar progressBar;
     private Button startProgress;
 
+    private FirebaseUser firebaseUser;
     private ImageView headerProfilepic;
     private TextView headerUser;
 
@@ -93,7 +96,6 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
         RecyclerView recyclerView = view.findViewById(R.id.taskRecycleViewTP);
         headerUser = view.findViewById(R.id.headerUser);
-        //headerProfilepic = view.findViewById(R.id.headerProfilepic);
 
 
         setTaskModel();
@@ -101,13 +103,8 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
 
          System.out.println("Task Model Size:" + taskModel.size());
-         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();;
-         String userId = currentUser.getUid();
-         if(currentUser!=null){
-             showUserProfile(currentUser);
-         }
-
-
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();;
+        String userId = currentUser.getUid();
         adapter = new AA_TaskAdapter(requireContext(), taskModel, userId);
         adapter.setPointAdditionListener(this); // Set the listener to this fragment
         adapter.setOnPointsAddedListener(this); // Set the listener
@@ -121,6 +118,8 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         adapter.notifyDataSetChanged();
         // Fetch and set initial user points
         fetchAndUpdateUserPoints();
+        showUserProfile(currentUser);
+
 
         ImageView backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
@@ -190,6 +189,8 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
         }
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -213,10 +214,6 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
                 if (readUserDetails != null) {
                     username = firebaseUser.getDisplayName();
                     headerUser.setText("Welcome, " + username + "!");
-                    Uri uri = firebaseUser.getPhotoUrl();
-                    if (uri != null && headerProfilepic != null && getContext() != null) {
-                        Picasso.with(getContext()).load(uri).into(headerProfilepic);
-                    }
                 } else {
                     Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }
