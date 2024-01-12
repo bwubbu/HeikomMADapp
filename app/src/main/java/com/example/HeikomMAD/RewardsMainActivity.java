@@ -37,7 +37,7 @@ public class RewardsMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rewards_main);
 
         headerUser = findViewById(R.id.headerUser);
-        headerProfilepic = findViewById(R.id.headerProfilepic);
+        //headerProfilepic = findViewById(R.id.headerProfilepic);
 
         // Find the NavHostFragment
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_heikom);

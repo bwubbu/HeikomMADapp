@@ -20,7 +20,7 @@
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Popular"
+        android:text="Coupon to Redeem!!!"
         android:textSize="20dp"
         android:fontFamily="@font/rubik_bold"/>
 
@@ -28,7 +28,8 @@
         android:id="@+id/couponRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="240dp"/>
+        android:layout_marginTop="240dp"
+        android:layout_marginBottom="60dp"/>
 </FrameLayout>
 
 

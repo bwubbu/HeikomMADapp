@@ -37,11 +37,11 @@
             android:progressDrawable="@drawable/custom_progress_bar"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="40dp"
+            android:layout_height="43dp"
             android:layout_gravity="left|center"
-            android:src="@drawable/ba"
-            />
+            android:src="@drawable/medal_black_ic" />
     </FrameLayout>
 
 

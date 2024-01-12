@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     >
 
+
     <include layout="@layout/header_reward" />
 
     <View
@@ -69,6 +70,7 @@
     <TextView
         android:id="@+id/redeemPoints"
         android:fontFamily="@font/rubik"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -160,6 +162,10 @@
             app:layout_constraintVertical_bias="0.533" />
 
 
+
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -236,6 +242,16 @@
         android:text="Weekly Reward"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <ImageView
+        android:id="@+id/tutorialImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/reward_tutorial"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:contentDescription="Tutorial Image for the reward report"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

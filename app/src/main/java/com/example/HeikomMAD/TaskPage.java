@@ -93,7 +93,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
         RecyclerView recyclerView = view.findViewById(R.id.taskRecycleViewTP);
         headerUser = view.findViewById(R.id.headerUser);
-        headerProfilepic = view.findViewById(R.id.headerProfilepic);
+        //headerProfilepic = view.findViewById(R.id.headerProfilepic);
 
 
         setTaskModel();
