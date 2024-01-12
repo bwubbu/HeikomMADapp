@@ -1,6 +1,7 @@
 package com.example.HeikomMAD;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class CreatePostActivity extends AppCompatActivity {
 
@@ -53,6 +59,9 @@ public class CreatePostActivity extends AppCompatActivity {
                 // Get the title and description entered by the user
                 String title = titleInput.getText().toString();
                 String description = descriptionInput.getText().toString();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.getDefault());
+                sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kuala_Lumpur"));
+                String currentDateandTime = sdf.format(new Date());
 
                 // Check if title and description are not empty
                 if (!title.isEmpty() && !description.isEmpty()) {
@@ -65,6 +74,7 @@ public class CreatePostActivity extends AppCompatActivity {
                     // Push the post to the database
                     DatabaseReference newPostRef = databaseReference.push();
                     newPostRef.setValue(post);
+//                    databaseReference.child("timePosted").push().setValue(currentDateandTime);
 
 
 

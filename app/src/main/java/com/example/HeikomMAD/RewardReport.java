@@ -87,7 +87,7 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_reward_report, container, false);
         headerUser = view.findViewById(R.id.headerUser);
-        headerProfilepic = view.findViewById(R.id.headerProfilepic); // Initialize ImageView
+        headerProfilepic = view.findViewById(R.id.headerReward); // Initialize ImageView
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPoints);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -251,9 +251,9 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
                     username = firebaseUser.getDisplayName();
                     headerUser.setText("Welcome, " + username + "!");
                     Uri uri = firebaseUser.getPhotoUrl();
-                    if (uri != null && headerProfilepic != null && getActivity() != null) {
-                        Picasso.with(getContext()).load(uri).into(headerProfilepic);
-                    }
+
+                    Picasso.with(getContext()).load(uri).into(headerProfilepic);
+
                 } else {
                     Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }

@@ -305,6 +305,7 @@ public class PostActivity extends AppCompatActivity {
     private void showCreatePostDialog() {
         // Launch CreatePostActivity
         Intent intent = new Intent(this, CreatePostActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
