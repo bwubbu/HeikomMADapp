@@ -96,6 +96,7 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
 
         RecyclerView recyclerView = view.findViewById(R.id.taskRecycleViewTP);
         headerUser = view.findViewById(R.id.headerUser);
+        headerProfilepic = view.findViewById(R.id.headerReward); // Initialize ImageView
 
 
         setTaskModel();
@@ -214,6 +215,10 @@ public class TaskPage extends Fragment implements AA_TaskAdapter.PointAdditionLi
                 if (readUserDetails != null) {
                     username = firebaseUser.getDisplayName();
                     headerUser.setText("Welcome, " + username + "!");
+                    Uri uri = firebaseUser.getPhotoUrl();
+
+                    Picasso.with(getContext()).load(uri).into(headerProfilepic);
+
                 } else {
                     Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
                 }

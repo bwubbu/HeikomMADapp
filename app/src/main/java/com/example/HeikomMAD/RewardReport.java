@@ -105,22 +105,7 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         // Get the current logged-in Firebase user
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //getting tutorial image
-        ImageView tutorialImageView = view.findViewById(R.id.tutorialImageView);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-        boolean hasSeenTutorial = sharedPreferences.getBoolean("hasSeenTutorial", false);
-        if (!hasSeenTutorial) {
-            tutorialImageView.setVisibility(View.VISIBLE);
-            tutorialImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tutorialImageView.setVisibility(View.GONE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("hasSeenTutorial", true);
-                    editor.apply();
-                }
-            });
-        }
+
 
 
         // If the user is logged in, show the user profile
