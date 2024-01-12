@@ -8,7 +8,7 @@
     android:id="@+id/taskPage"
     tools:context=".TaskPage">
 
-    <include layout="@layout/header_tasks" />
+    <!-- <include layout="@layout/header_tasks" /> -->
 
     <View
         android:layout_width="match_parent"
