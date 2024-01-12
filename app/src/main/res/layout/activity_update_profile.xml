@@ -14,27 +14,46 @@
         android:layout_margin="15dp"
         android:background="@drawable/rounded_border"
         >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack5"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:contentDescription="return button"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/backarrow"
+            app:iconSize="36dp"
+            app:iconTint="@color/black"
+            android:layout_marginBottom="0dp"
+
+
+             />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/textView_update_profile_head"
-            android:layout_marginTop="30dp"
-            android:text="Update Profile Picture "
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/dm_sans_bold"
+            android:text="Update Profile Picture "
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+
+        <TextView
             android:id="@+id/textView_update_profile_name"
+            android:layout_width="341dp"
+            android:layout_height="31dp"
             android:layout_below="@id/textView_update_profile_head"
-            android:text="Name"
+            android:fontFamily="@font/dm_sans"
             android:layout_marginTop="30dp"
             android:padding="6dp"
-            android:textSize="17dp"
-            android:textColor="#555555"/>
+            android:text="Name"
+            android:drawableLeft="@drawable/user_name"
+            android:textColor="#555555"
+            android:textSize="17dp" />
 
         <EditText
             android:id="@+id/editText_update_profile_name"
@@ -51,11 +70,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView_update_profile_doB"
             android:layout_below="@id/editText_update_profile_name"
+            android:fontFamily="@font/dm_sans"
             android:text="Date Of Birth(dd/mm/yyyy)"
             android:focusable="false"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:padding="6dp"
             android:textSize="17dp"
+            android:drawableLeft="@drawable/user_dob"
             android:textColor="#555555"/>
 
         <EditText
@@ -72,9 +93,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView_update_profile_gender"
+            android:fontFamily="@font/dm_sans"
             android:layout_below="@id/editText_update_doB"
             android:text="Gender"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/user_gender"
             android:padding="6dp"
             android:textSize="17dp"
             android:textColor="#555555"/>
@@ -109,6 +132,8 @@
             android:layout_below="@id/radio_group_update_gender"
             android:text="Mobile Number"
             android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/user_phone"
+            android:fontFamily="@font/dm_sans"
             android:padding="6dp"
             android:textSize="17dp"
             android:textColor="#555555"/>
@@ -129,6 +154,7 @@
             android:layout_width="400dp"
             android:layout_height="50dp"
             android:layout_below="@id/editText_update_mobile"
+            android:fontFamily="@font/dm_sans_bold"
             android:layout_marginLeft="78dp"
             android:layout_marginTop="23dp"
             android:layout_marginRight="78dp"
@@ -140,19 +166,20 @@
             android:textSize="16dp" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_update_profile"
             android:layout_width="400dp"
             android:layout_height="50dp"
-            android:id="@+id/button_update_profile"
-            android:text="Update Profile"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="78dp"
-            android:layout_marginRight="78dp"
-            android:textColor="@color/white"
-            android:textAlignment="center"
             android:layout_below="@id/button_upload_picture"
-            android:textSize="20dp"
+            android:layout_marginLeft="78dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="78dp"
+            android:background="@drawable/rectangle"
+            android:fontFamily="@font/dm_sans_bold"
             android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/rectangle"/>
+            android:text="Update Profile"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleLarge"

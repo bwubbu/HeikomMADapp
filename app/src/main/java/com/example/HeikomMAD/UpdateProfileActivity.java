@@ -74,6 +74,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
             }
         });
+        Button backbtn=findViewById(R.id.btnBack5);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UpdateProfileActivity.this,UserProfileActivity.class);
+                startActivity(intent);
+
+            }
+        });
         editTextUpdateDoB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

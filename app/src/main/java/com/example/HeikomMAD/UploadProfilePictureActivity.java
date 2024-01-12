@@ -65,6 +65,15 @@ public class UploadProfilePictureActivity extends AppCompatActivity {
 
             }
         });
+        Button backbtn=findViewById(R.id.btnBack6);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UploadProfilePictureActivity.this,UserProfileActivity.class);
+                startActivity(intent);
+
+            }
+        });
         //Upload Image
         buttonUploadPic.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,17 @@
         android:padding="15dp"
         android:background="@color/white"
         >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack6"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:contentDescription="return button"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/backarrow"
+            app:iconSize="36dp"
+            app:iconTint="@color/black"
+            android:layout_marginBottom="0dp"/>
 
         <TextView
             android:id="@+id/textView_upload_pic_head"

@@ -3,6 +3,8 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/comfortaa</item>
         <item>@font/comfortaa_bold</item>
+        <item>@font/dm_sans</item>
+        <item>@font/dm_sans_bold</item>
         <item>@font/open_sans_extrabold</item>
         <item>@font/poppins_bold</item>
     </array>
