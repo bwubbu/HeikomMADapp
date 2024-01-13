@@ -107,7 +107,7 @@ public class InformativeSection extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_informative_section, container, false);
-        headerProfilepic = view.findViewById(R.id.headerProfilepic);
+        headerProfilepic = view.findViewById(R.id.profilePic);
         headerUser = view.findViewById(R.id.headerUser);
         IVHelpline = view.findViewById(R.id.IVHelpline);
         //=====
@@ -198,16 +198,16 @@ public class InformativeSection extends Fragment {
                     headerUser.setText("Welcome, " + username + "!");
                     Uri uri = firebaseUser.getPhotoUrl();
 
-                    //Picasso.with(IVHelpline.getContext()).load(uri).into(headerProfilepic);
+                    Picasso.with(IVHelpline.getContext()).load(uri).into(headerProfilepic);
 
-                    if (isAdded()) {
-                        ImageView imageView = getView().findViewById(R.id.headerProfilepic);
-                        Uri imageUrl = uri;
-
-                        if (imageView != null && imageUrl != null) {
-                            Glide.with(IVHelpline.getContext()).load(uri).into(headerProfilepic);
-                        }
-                    }
+//                    if (isAdded()) {
+//                        ImageView imageView = getView().findViewById(R.id.headerProfilepic);
+//                        Uri imageUrl = uri;
+//
+//                        if (imageView != null && imageUrl != null) {
+//                            Glide.with(IVHelpline.getContext()).load(uri).into(headerProfilepic);
+//                        }
+//                    }
 
 
                 } else {

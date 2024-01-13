@@ -103,6 +103,7 @@ public class CommentsActivity extends AppCompatActivity {
                     addComment();
                     Toast.makeText(CommentsActivity.this, "You commented", Toast.LENGTH_SHORT).show();
 
+
                 }
             }
         });
@@ -119,12 +120,14 @@ public class CommentsActivity extends AppCompatActivity {
 
             // Get a new unique key for the comment
             String commentId = reference.child("Comments").push().getKey();
-
             DatabaseReference commentsReference = reference.child("Comments").child(commentId);
+
 
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("comment", addComment.getText().toString());
             hashMap.put("publisher", firebaseUser.getUid());
+//            hashMap.put("postid", postid);
+
 
             commentsReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -140,6 +143,7 @@ public class CommentsActivity extends AppCompatActivity {
                     }
                 }
             });
+
         } else {
             // Handle the case where the user is not authenticated
             Toast.makeText(CommentsActivity.this, "User not authenticated", Toast.LENGTH_SHORT).show();

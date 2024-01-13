@@ -74,7 +74,9 @@ public class CreatePostActivity extends AppCompatActivity {
                     // Push the post to the database
                     DatabaseReference newPostRef = databaseReference.push();
                     newPostRef.setValue(post);
-//                    databaseReference.child("timePosted").push().setValue(currentDateandTime);
+                    String postId = newPostRef.getKey();
+                    DatabaseReference timeRef = databaseReference.child(postId);
+                    timeRef.child("timeStamp").setValue(currentDateandTime);
 
 
 
@@ -87,6 +89,9 @@ public class CreatePostActivity extends AppCompatActivity {
 
                     // Dismiss the dialog
                     createPostDialog.dismiss();
+                    setResult(RESULT_OK);
+                    Intent intent = new Intent(CreatePostActivity.this, PostActivity.class);
+                    startActivity(intent);
                     //MostRecent fragment = (MostRecent) getSupportFragmentManager().findFragmentById(R.id.recycler_view);
 //                    if (fragment != null) {
 //                        fragment.addNewPost(post);
@@ -95,9 +100,14 @@ public class CreatePostActivity extends AppCompatActivity {
                 } else {
                     // Display an error message if title or description is empty
                     Toast.makeText(getApplicationContext(), "Title and description cannot be empty", Toast.LENGTH_SHORT).show();
+                    titleInput.setError("Enter Title");
+                    titleInput.requestFocus();
+                    descriptionInput.setError("Enter description");
+                    descriptionInput.requestFocus();
+
                 }
-                setResult(RESULT_OK);
-                finish();
+
+
             }
 
         });

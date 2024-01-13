@@ -2,7 +2,7 @@ package com.example.HeikomMAD;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +45,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item, viewGroup, false);
         return new CommentAdapter.ViewHolder(view, mContext);
 
+
     }
 
     @Override
@@ -53,8 +53,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
         final Comment comment = mComment.get(i);
 
+
+
         viewHolder.comment.setText(comment.getComment());
         viewHolder.showCommentDetails(comment.getPublisher());
+
+
 
         viewHolder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +67,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 Intent intent = new Intent(mContext, PostActivity.class);
                 intent.putExtra("publisherid", comment.getPublisher());
                 mContext.startActivity(intent);
+
             }
         });
+
 
         viewHolder.image_profile_comment.setOnClickListener(new View.OnClickListener() {
             @Override

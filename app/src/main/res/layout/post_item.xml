@@ -157,10 +157,10 @@
             android:gravity="center">
             <TextView
                 android:id="@+id/timeStamp"
-                android:text="placeholder"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="7dp"
                 android:paddingLeft="3dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/rubik"

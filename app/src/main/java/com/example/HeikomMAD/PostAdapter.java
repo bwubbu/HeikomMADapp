@@ -1,5 +1,7 @@
 package com.example.HeikomMAD;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -83,6 +85,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
+
+
 //            holder.likes.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -138,6 +142,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
+        holder.displayTime(post.getKey());
         holder.showPostsDetails(post.getUserId(), post.getKey());
         holder.isLikes(post.getKey(), holder.likes, post);
         holder.nrLikes(holder.likesCounter, post.getKey());
@@ -400,5 +405,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 }
             });
         }
+
+        public void displayTime(String postId) {
+            if (postId != null) {
+                DatabaseReference timeRef = FirebaseDatabase.getInstance().getReference("Posts").child(postId).child("timeStamp");
+
+                timeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String timePosted = snapshot.getValue(String.class);
+
+                        if (timePosted != null) {
+                            timeStamp.setText(timePosted);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle the error if needed
+                    }
+                });
+            } else {
+                // Handle the case where postId is null
+                Log.e("PostAdapter", "postId is null in displayTime");
+            }
+        }
+
     }
 }
