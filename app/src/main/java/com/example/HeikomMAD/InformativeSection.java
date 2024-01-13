@@ -146,11 +146,11 @@ public class InformativeSection extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intentArticle1 = new Intent(Intent.ACTION_VIEW);
-                intentArticle1.setData(Uri.parse("https://www.thestar.com.my"));
+                intentArticle1.setData(Uri.parse("https://www.thestar.com.my/news/nation/2023/10/19/klang-valley-and-parts-of-johor-to-be-shrouded-in-haze-today"));
                 startActivity(intentArticle1);
                 String articleUrl = "https://www.thestar.com.my";
-                ArticleFetcher articleFetcher = new ArticleFetcher();
-                articleFetcher.execute(articleUrl);
+//                ArticleFetcher articleFetcher = new ArticleFetcher();
+//                articleFetcher.execute(articleUrl);
 
             }
         });
@@ -159,7 +159,7 @@ public class InformativeSection extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intentArticle1 = new Intent(Intent.ACTION_VIEW);
-                intentArticle1.setData(Uri.parse("https://www.thestar.com.my/lifestyle/travel/2023/06/11/whatever-happened-to-the-dream-of-making-kuala-lumpur-a-great-city"));
+                intentArticle1.setData(Uri.parse("https://www.freemalaysiatoday.com/category/nation/2023/12/22/2-dead-in-3-vehicle-collision-in-klang/"));
                 startActivity(intentArticle1);
             }
         });
@@ -168,7 +168,7 @@ public class InformativeSection extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intentArticle1 = new Intent(Intent.ACTION_VIEW);
-                intentArticle1.setData(Uri.parse("https://www.nst.com.my"));
+                intentArticle1.setData(Uri.parse("https://www.thestar.com.my/news/nation/2024/01/12/number-of-flood-victims-in-johor-pahang-up-slightly-to-5839-on-friday-night-says-nadma"));
                 startActivity(intentArticle1);
             }
         });
@@ -177,7 +177,7 @@ public class InformativeSection extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intentArticle1 = new Intent(Intent.ACTION_VIEW);
-                intentArticle1.setData(Uri.parse("https://www.malaymail.com"));
+                intentArticle1.setData(Uri.parse("https://www.thestar.com.my/business/business-news/2023/09/11/balancing-food-inflation-and-subsidy-reforms"));
                 startActivity(intentArticle1);
             }
         });

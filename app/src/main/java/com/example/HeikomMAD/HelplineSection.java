@@ -25,7 +25,7 @@ public class HelplineSection extends Fragment {
                                          public void onClick(View v) {
 
                                              Intent policeIntent = new Intent(Intent.ACTION_DIAL);
-                                             policeIntent.setData(Uri.parse("tel:0173948957"));
+                                             policeIntent.setData(Uri.parse("tel:999"));
                                              getActivity().startActivity(policeIntent);
                                          }
                                      }
@@ -36,7 +36,7 @@ public class HelplineSection extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent ambulanceIntent = new Intent(Intent.ACTION_DIAL);
-                ambulanceIntent.setData(Uri.parse("tel:0173948957"));
+                ambulanceIntent.setData(Uri.parse("tel:999"));
                 startActivity(ambulanceIntent);
             }
         });
@@ -45,7 +45,7 @@ public class HelplineSection extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent firemenIntent = new Intent(Intent.ACTION_DIAL);
-                firemenIntent.setData(Uri.parse("tel:0173948957"));
+                firemenIntent.setData(Uri.parse("tel:994"));
                 startActivity(firemenIntent);
 //                call(btnFiremen);
             }

@@ -51,7 +51,7 @@
             android:layout_marginStart="52dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/rubik"
-            android:text="Haze In KL"
+            android:text="Klang in haze"
             android:textSize="19dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/IVArticle1" />
