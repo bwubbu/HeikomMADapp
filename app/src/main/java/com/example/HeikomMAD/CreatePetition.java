@@ -71,12 +71,10 @@ public class CreatePetition extends Fragment {
 
 
         if (firebaseUser != null) {
-            // Set userID and name based on the current user
             userID = firebaseUser.getUid();
             name = firebaseUser.getDisplayName();
 
-            // Create a User object
-            currentUser = new User(userID, name, null);  // Set imageUrl to null for now, you can set it if needed
+            currentUser = new User(userID, name, null);
         }
 
         imagePlaceholder = Inflater.findViewById(R.id.imagePlaceholder);
@@ -191,7 +189,6 @@ public class CreatePetition extends Fragment {
 
     private void displaySelectedImage(Uri selectedImageUri) {
         try {
-            // Decode the image and set it to the image holder
             Bitmap bitmap = BitmapFactory.decodeStream(requireActivity().getContentResolver().openInputStream(selectedImageUri));
             selectedImage = bitmap;
             imagePlaceholder.setImageBitmap(bitmap);

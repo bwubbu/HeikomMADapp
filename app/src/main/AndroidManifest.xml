@@ -28,9 +28,6 @@
             android:name=".RewardsMainActivity"
             android:exported="false" />
         <activity
-            android:name=".PetitionPendingItem"
-            android:exported="false" />
-        <activity
             android:name=".PetitionMainActivity"
             android:exported="false" />
         <activity
