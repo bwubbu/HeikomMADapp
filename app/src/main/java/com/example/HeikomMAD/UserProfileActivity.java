@@ -91,6 +91,16 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        Button refreshBtn=findViewById(R.id.refresh_button);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(getIntent());
+                finish();
+                overridePendingTransition(0,0);
+            }
+        });
+
 
         authProfile=FirebaseAuth.getInstance();
         FirebaseUser firebaseUser=authProfile.getCurrentUser();
