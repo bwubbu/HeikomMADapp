@@ -6,13 +6,13 @@
 
     <!-- shape property for the view based on the value particular view would be drawn -->
     <corners
-        android:radius="45dp"
+        android:radius="25dp"
         />
     <gradient
         android:startColor="#F5F5F5"/>
 
 
-    <stroke android:width="0.9dp"
+    <stroke android:width="3dp"
         android:color="@color/black" />
     <!--  stroke for defining a border for view -->
 

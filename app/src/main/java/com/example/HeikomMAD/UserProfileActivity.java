@@ -113,16 +113,6 @@ public class UserProfileActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             showUserProfile(firebaseUser);
         }
-        Button backbtn=findViewById(R.id.btnBack4);
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(UserProfileActivity.this,HomePageActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
 
         Button btnUpdateProfile=findViewById(R.id.update_profile_button);
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {

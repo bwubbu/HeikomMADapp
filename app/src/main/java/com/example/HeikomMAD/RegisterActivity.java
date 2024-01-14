@@ -166,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                     registerConfirmPassword.requestFocus();
                 } else if (!textPassword.equals(textConfirmPassword)) {
                     Toast.makeText(RegisterActivity.this, "Incorrect password confirmation", Toast.LENGTH_LONG).show();
-                    registerConfirmPassword.setError("Password Confirmation is required");
+                    registerConfirmPassword.setError("Password is not the same!");
                     registerConfirmPassword.requestFocus();
                     //clear entered passwords
                     registerPassword.clearComposingText();
