@@ -15,17 +15,23 @@
         <item>coupon1</item>
         <item>coupon2</item>
         <item>coupon3</item>
+        <item>coupon4</item>
+        <item>coupon5</item>
     </string-array>
 
     <string-array name="couponText">
         <item>Grab Coupon</item>
         <item>AEON Coupon</item>
         <item>Cat Food Coupon</item>
+        <item>House Cleaning Coupon</item>
+        <item>Free Ramen Coupon</item>
     </string-array>
 
     <string-array name="couponDesc">
         <item>Enjoy the 10 Ringgit off in your next order</item>
         <item>5% off on your next bill</item>
         <item>High quality cat food can be redeemed in the Community Hall</item>
+        <item>Get 10% off on your house cleaning service when you use this coupon on the next appointment</item>
+        <item>Free ramen at lot 10! Claim it now.</item>
     </string-array>
 </resources>

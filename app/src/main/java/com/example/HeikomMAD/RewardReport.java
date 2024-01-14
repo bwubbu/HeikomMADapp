@@ -51,7 +51,7 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
     ArrayList<TaskModel> taskModels = new ArrayList<>();
 
-    private static final String PREFS_KEY = "FragmentEntryTimestamp";
+    private static final String FIRST_TIME_KEY = "IsFirstTime";
 
     private static final String ACHIEVEMENT_TIMESTAMP_KEY = "achievementTimestamp";
 
@@ -91,6 +91,27 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPoints);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean("IsFirstTime", true);
+
+        ImageView imageTutor = view.findViewById(R.id.tutorialImageView);
+
+        if (isFirstTime) {
+            imageTutor.setVisibility(View.VISIBLE); // Show the tutorial image
+        }
+
+        imageTutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the tutorial image
+                v.setVisibility(View.GONE);
+
+                // Update SharedPreferences
+                prefs.edit().putBoolean("IsFirstTime", false).apply();
+            }
+        });
+
 
         // Initialize the adapter with an empty list
         activitiesAdapter = new AA_ActivitiesAdapter(getContext(), new ArrayList<>());
@@ -206,9 +227,12 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
         System.out.println("Task Count:" + completedTasksCount);
         System.out.println("Model Size:" + taskModels.size());
 
+        // Initialize the circular progress bar (if not already initialized)
         circularProgressBar = view.findViewById(R.id.weeklyProgressBar);
-        circularProgressBar.setProgress(completedTasksCount);
-        circularProgressBar.setProgressMax(5);
+        circularProgressBar.setProgressMax(6);  // Assuming 6 is the maximum number of weekly tasks
+
+        // Update the task progress
+        updateTaskProgress();
 
         //back button to the homepage
         ImageView backButton = view.findViewById(R.id.backButton);
@@ -267,6 +291,22 @@ public class RewardReport extends Fragment implements AA_TaskAdapter.TaskComplet
             }
         });
     }
+
+    private void updateTaskProgress() {
+        String userId = firebaseUser.getUid();
+        firebasePointManager.fetchCompletedTaskCount(userId, new FirebasePointManager.CompletedTaskCountListener() {
+            @Override
+            public void onCompletedTaskCountFetchSuccess(int taskCount) {
+                circularProgressBar.setProgress(taskCount);
+            }
+
+            @Override
+            public void onCompletedTaskCountFetchFailure(String message) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
 }

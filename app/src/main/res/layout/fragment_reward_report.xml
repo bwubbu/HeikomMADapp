@@ -116,7 +116,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:cpb_indeterminate_mode="false"
-            app:cpb_progress="40"
+            app:cpb_progress="0"
 
             />
 

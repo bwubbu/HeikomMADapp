@@ -211,25 +211,31 @@ public class FirebasePointManager {
         });
     }
 
-    public void fetchCompletedTaskCount(String userId, PointFetchListener listener) {
+    public void fetchCompletedTaskCount(String userId, CompletedTaskCountListener listener) {
         DatabaseReference userActivitiesRef = pointsRef.child(userId).child("completedTasks");
         userActivitiesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     int completedTaskCount = (int) dataSnapshot.getChildrenCount();
-                    listener.onPointFetchSuccess(completedTaskCount);
+                    listener.onCompletedTaskCountFetchSuccess(completedTaskCount);
                 } else {
-                    listener.onPointFetchFailure("No completed tasks found for user");
+                    listener.onCompletedTaskCountFetchFailure("No completed tasks found for user");
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                listener.onPointFetchFailure(databaseError.getMessage());
+                listener.onCompletedTaskCountFetchFailure(databaseError.getMessage());
             }
         });
     }
+
+    public interface CompletedTaskCountListener {
+        void onCompletedTaskCountFetchSuccess(int taskCount);
+        void onCompletedTaskCountFetchFailure(String message);
+    }
+
     //daily login for user
     public void checkAndAddDailyPoints(String userId, PointUpdateListener listener) {
         pointsRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {

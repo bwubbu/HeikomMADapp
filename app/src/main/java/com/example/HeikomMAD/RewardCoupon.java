@@ -33,7 +33,7 @@ public class RewardCoupon extends Fragment {
 
     ArrayList<CardModel> cardModels = new ArrayList<>();
 
-    int[] couponImages = {R.drawable.coupon1,R.drawable.coupon2,R.drawable.coupon3};
+    int[] couponImages = {R.drawable.coupon1,R.drawable.coupon2,R.drawable.coupon3, R.drawable.coupon4, R.drawable.coupon5};
 
     private String username;
     private ImageView headerProfilepic;
@@ -130,7 +130,7 @@ public class RewardCoupon extends Fragment {
         //String[] imageName = getResources().getStringArray(R.array.couponImage);
         String[] cardText = getResources().getStringArray(R.array.couponText);
         String[] cardDesc = getResources().getStringArray(R.array.couponDesc);
-        int[] points = {100,200,300};
+        int[] points = {100,200,300,1000,500};
 
         for(int i=0; i< cardText.length; i++){
             cardModels.add(new CardModel(couponImages[i], cardText[i], cardDesc[i], points[i]));
